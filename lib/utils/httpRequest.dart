@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -11,22 +9,14 @@ void httpFailureNotice() {
       snackPosition: SnackPosition.BOTTOM);
 }
 
-Future<int> httpGet({required String path}) async {
-  String baseUrl = 'https://172.30.1.51:8080$path';
+httpGet({required String path}) async {
+  String baseUrl = 'http://172.30.1.51:8080$path';
   try {
     http.Response response = await http.get(Uri.parse(baseUrl), headers: {
       "accept": "application/json",
       "Content-Type": "application/json",
     });
-    try {
-      Map<String, dynamic> resBody =
-          jsonDecode(utf8.decode(response.bodyBytes));
-      resBody['statusCode'] = response.statusCode;
-      return resBody['statusCode'];
-    } catch (e) {
-      // response body가 json이 아닌 경우
-      return 490;
-    }
+    return response;
   } catch (e) {
     // 서버가 응답하지 않는 경우
     httpFailureNotice();
