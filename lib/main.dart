@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:home_therapy_app/utils/deviceIPAddress.dart';
+import 'package:home_therapy_app/widgets/ipScannDialog-widget.dart';
 import 'package:home_therapy_app/routes.dart';
 import 'package:home_therapy_app/utils/httpRequest.dart';
 import 'package:home_therapy_app/widgets/CustomButton-widget.dart';
@@ -42,6 +46,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final MainColor mainColor = MainColor();
 
   late List<String> trackPlayList;
   String? trackTitle;
@@ -52,6 +57,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initTrackTitle();
+    getDeviceIPAddress().then((value) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('deviceIPAddress', value[0].address);
+    });
     playList().then((value) {
       setState(() {
         trackPlayList = jsonDecode(utf8.decode(value.bodyBytes)).cast<String>();
@@ -62,6 +71,43 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: SpeedDial(
+          icon: Icons.add_to_queue_outlined,
+          activeIcon: Icons.close,
+          visible: true,
+          childMargin: const EdgeInsets.all(15),
+          children: [
+            SpeedDialChild(
+              backgroundColor: mainColor.mainColor(),
+              labelBackgroundColor: mainColor.mainColor(),
+              shape: const CircleBorder(
+                  side: BorderSide(color: Colors.transparent)),
+              child: const Icon(Icons.zoom_in_outlined),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return IPScannDrawer();
+                  },
+                );
+              },
+              label: '기기 검색',
+              labelStyle: const TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            SpeedDialChild(
+              backgroundColor: mainColor.mainColor(),
+              labelBackgroundColor: mainColor.mainColor(),
+              shape: const CircleBorder(
+                  side: BorderSide(color: Colors.transparent)),
+              child: const Icon(Icons.phonelink_erase_outlined),
+              onTap: () {},
+              label: '기기 삭제',
+              labelStyle: const TextStyle(fontSize: 18, color: Colors.white),
+            )
+          ],
+        ),
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         key: _scaffoldKey,
         appBar: basicAppBar(context, _scaffoldKey),
         body: Center(
@@ -125,6 +171,7 @@ class _HomePageState extends State<HomePage> {
             ])));
   }
 
+//여기서부턴 함수들을 정의합니다.
   void fastRewindClick() async {
     int currentIndex = trackPlayList.indexOf('${trackTitle!}.wav');
     if (currentIndex != -1) {
@@ -155,6 +202,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       isPlaying = true;
     });
+  }
+
+  Future<void> getCacheDeviceIP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? deviceIPAddress = prefs.getString('deviceIPAddress');
+    print(deviceIPAddress);
   }
 
   Future<void> initTrackTitle() async {

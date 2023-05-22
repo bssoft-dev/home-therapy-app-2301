@@ -12,15 +12,13 @@ basicAppBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) {
           30,
           () => scaffoldKey.currentState?.openDrawer(),
         ),
-
-        actions: [
-          simpleIconButton(
-            Icons.settings,
-            30,
-            () => scaffoldKey.currentState?.openEndDrawer(),
-          ),
-        ],
-        // backgroundColor: Colors.transparent,
+        // actions: [
+        //   simpleIconButton(
+        //     Icons.settings,
+        //     30,
+        //     () => scaffoldKey.currentState?.openEndDrawer(),
+        //   ),
+        // ],
         elevation: 0,
       ));
 }
