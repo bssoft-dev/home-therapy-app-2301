@@ -1,18 +1,16 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:home_therapy_app/utils/deviceIPAddress.dart';
-import 'package:home_therapy_app/widgets/ipScannDialog-widget.dart';
+import 'package:home_therapy_app/widgets/ipscann_dialog_widget.dart';
 import 'package:home_therapy_app/routes.dart';
-import 'package:home_therapy_app/utils/httpRequest.dart';
-import 'package:home_therapy_app/widgets/CustomButton-widget.dart';
-import 'package:home_therapy_app/widgets/appBar-widget.dart';
-import 'package:home_therapy_app/widgets/mainColor-widget.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_app/widgets/appbar_widget.dart';
+import 'package:home_therapy_app/widgets/main_color_widget.dart';
 
 void main() {
   runApp(HomeTherapyApp());
@@ -57,10 +55,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initTrackTitle();
-    getDeviceIPAddress().then((value) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('deviceIPAddress', value[0].address);
-    });
     playList().then((value) {
       setState(() {
         trackPlayList = jsonDecode(utf8.decode(value.bodyBytes)).cast<String>();
@@ -85,6 +79,7 @@ class _HomePageState extends State<HomePage> {
               child: const Icon(Icons.zoom_in_outlined),
               onTap: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {
                     return IPScannDrawer();
@@ -202,12 +197,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       isPlaying = true;
     });
-  }
-
-  Future<void> getCacheDeviceIP() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? deviceIPAddress = prefs.getString('deviceIPAddress');
-    print(deviceIPAddress);
   }
 
   Future<void> initTrackTitle() async {
