@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
-import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class IPScannDrawer extends StatefulWidget {
-  const IPScannDrawer({Key? key}) : super(key: key);
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
+
+class DeviceScannDialog extends StatefulWidget {
+  const DeviceScannDialog({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _IPScannDrawerState();
+  State<StatefulWidget> createState() => _DeviceScannDialogState();
 }
 
-class _IPScannDrawerState extends State<IPScannDrawer> {
+class _DeviceScannDialogState extends State<DeviceScannDialog> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final List<String> liveIpAddresses = [];
   bool _isScanning = false;
@@ -62,8 +63,8 @@ class _IPScannDrawerState extends State<IPScannDrawer> {
                           const SizedBox(width: 8),
                           ElevatedButton(
                             onPressed: () {
-                              saveDeviceToSharedPreferences(
-                                  liveIpAddresses[index]);
+                              saveStoredValue(
+                                  'therapy-device', liveIpAddresses[index]);
                               successSnackBar(
                                   context, '등록완료', '홈세라피 기가가 등록되었습니다.');
                               Navigator.of(context).pop();
@@ -125,10 +126,10 @@ class _IPScannDrawerState extends State<IPScannDrawer> {
 
   Future<List<String>> scanIpAddress() async {
     liveIpAddresses.clear();
-    const port = [80, 8080, 443, 8443];
+    const port = [80, 8080];
     final stream80 = NetworkAnalyzer.discover2(
       '192.168.0',
-      port[0],
+      port[1],
       timeout: Duration(milliseconds: 1000),
     );
 
@@ -136,7 +137,7 @@ class _IPScannDrawerState extends State<IPScannDrawer> {
     await for (NetworkAddress addr in stream80) {
       if (addr.exists) {
         found++;
-        print('Found device: ${addr.ip}:${port[0]}');
+        print('Found device: ${addr.ip}:${port[1]}');
         liveIpAddresses.add('${addr.ip}');
       }
     }
@@ -148,25 +149,5 @@ class _IPScannDrawerState extends State<IPScannDrawer> {
       return aLastNumber.compareTo(bLastNumber);
     });
     return liveIpAddresses;
-  }
-
-  void saveDeviceToSharedPreferences(String ipAddress) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('therapy-device', ipAddress);
-  }
-
-  Future<void> checkStoredValues() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // 모든 키(key)와 해당 값을 출력합니다.
-    prefs.getKeys().forEach((key) {
-      dynamic value = prefs.get(key);
-      print('$key: $value');
-    });
-  }
-
-  Future<void> removeStoredValue(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove(key);
   }
 }
