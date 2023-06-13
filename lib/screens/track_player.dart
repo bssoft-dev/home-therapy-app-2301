@@ -10,8 +10,9 @@ import 'package:home_therapy_app/widgets/track_widget.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/widgets/main_color_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
-import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
+import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
 
 class trackPlayer extends StatefulWidget {
   const trackPlayer({super.key});
@@ -28,19 +29,22 @@ class _trackPlayerState extends State<trackPlayer> {
   String? trackTitle;
   String? trackAuthor;
   bool isPlaying = false;
-
-  // Duration duration = Duration();
-  // Duration position = Duration();
-
+  bool? deviceConnected;
   @override
   void initState() {
     super.initState();
     initTrackTitle();
-    playList().then((value) {
-      setState(() {
-        trackPlayList = jsonDecode(utf8.decode(value.bodyBytes)).cast<String>();
-      });
-    });
+    checkDeviceConnected().then((value) => setState(() {
+          deviceConnected = value;
+          if (deviceConnected == true) {
+            playList().then((value) {
+              setState(() {
+                trackPlayList =
+                    jsonDecode(utf8.decode(value.bodyBytes)).cast<String>();
+              });
+            });
+          }
+        }));
   }
 
   @override
@@ -99,80 +103,78 @@ class _trackPlayerState extends State<trackPlayer> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-              SizedBox(
-                  width: 304,
-                  height: 304,
-                  child:
-                      Image.asset('assets/app_icon.png', fit: BoxFit.contain)),
-              const SizedBox(height: 24),
-              Column(children: [
-                Column(
+              if (deviceConnected == false)
+                const Column(
                   children: [
-                    Text('$trackTitle ',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontFamily: "Pretendard",
-                          fontWeight: FontWeight.w500,
-                        )),
-                    const Text('author', style: TextStyle(fontSize: 17)),
-                    const SizedBox(height: 34),
+                    Icon(
+                      Icons.phonelink_erase_outlined,
+                      size: 304,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      '등록된 기기가 없습니다.',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: "Pretendard",
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
                   ],
                 ),
-                // Text('재생바부분'),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       formatDuration(position),
-                //       style: TextStyle(fontSize: 16),
-                //     ),
-                //     Slider(
-                //       value: position.inSeconds.toDouble(),
-                //       min: 0.0,
-                //       max: duration.inSeconds.toDouble(),
-                //       onChanged: (double value) {
-                //         setState(() {
-                //           // audioPlayer.seek(Duration(seconds: value.toInt()));
-                //         });
-                //       },
-                //     ),
-                //     Text(
-                //       formatDuration(duration),
-                //       style: TextStyle(fontSize: 16),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(height: 48),
-                Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              if (deviceConnected == true)
+                Column(children: [
+                  Column(
                     children: [
-                      simpleIconButton(Icons.skip_previous, 40, () async {
-                        fastRewindClick();
-                        await saveSelectedTrack(trackTitle!);
-                      }),
-                      const SizedBox(width: 28),
-                      playIconButton(Icons.play_arrow,
-                          Icons.pause_circle_outline, 40, isPlaying, () async {
-                        setState(() {
-                          isPlaying = !isPlaying;
-                        });
-                        if (isPlaying) {
-                          await trackPlay('ready', '${trackTitle!}.wav');
-                        } else {
-                          await playStop();
-                        }
-                      }),
-                      const SizedBox(width: 28),
-                      simpleIconButton(Icons.skip_next, 40, () async {
-                        setState(() {
-                          fastForwardClick();
-                          isPlaying = true;
-                        });
-                        await saveSelectedTrack(trackTitle!);
-                      })
-                    ])
-              ])
+                      SizedBox(
+                          width: 304,
+                          height: 304,
+                          child: Image.asset('assets/app_icon.png',
+                              fit: BoxFit.contain)),
+                      const SizedBox(height: 24),
+                      Text('$trackTitle ',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontFamily: "Pretendard",
+                            fontWeight: FontWeight.w500,
+                          )),
+                      const Text('author', style: TextStyle(fontSize: 17)),
+                      const SizedBox(height: 34),
+                    ],
+                  ),
+                  Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        simpleIconButton(Icons.skip_previous, 40, () async {
+                          fastRewindClick();
+                          await saveSelectedTrack(trackTitle!);
+                        }),
+                        const SizedBox(width: 28),
+                        playIconButton(
+                            Icons.play_arrow,
+                            Icons.pause_circle_outline,
+                            40,
+                            isPlaying, () async {
+                          setState(() {
+                            isPlaying = !isPlaying;
+                          });
+                          if (isPlaying) {
+                            await trackPlay('ready', '${trackTitle!}.wav');
+                          } else {
+                            await playStop();
+                          }
+                        }),
+                        const SizedBox(width: 28),
+                        simpleIconButton(Icons.skip_next, 40, () async {
+                          setState(() {
+                            fastForwardClick();
+                            isPlaying = true;
+                          });
+                          await saveSelectedTrack(trackTitle!);
+                        })
+                      ])
+                ])
             ])));
   }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:home_therapy_app/screens/track_player.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 
@@ -16,7 +18,7 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
   @override
   void initState() {
     super.initState();
-    getStoredValue('therapy-device').then((value) {
+    getStoredValue('therapy_device').then((value) {
       setState(() {
         deviceIPName = value;
       });
@@ -64,10 +66,14 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
             children: [
               ElevatedButton.icon(
                 onPressed: () {
-                  removeStoredValue('therapy-device');
+                  removeStoredValue('therapy_device');
                   successSnackBar(
                       context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
                   Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const trackPlayer()));
                 },
                 icon: const Icon(Icons.close),
                 label: const Text("삭제"),

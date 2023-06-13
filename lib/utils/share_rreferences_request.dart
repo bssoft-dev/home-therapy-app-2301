@@ -1,5 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+// 기기가 등록되어 있는지 확인합니다.
+Future<bool> checkDeviceConnected() async {
+  String? connected = await getStoredValue('therapy_device');
+  bool deviceConnected;
+  if (connected == null) {
+    deviceConnected = false;
+  } else {
+    deviceConnected = true;
+  }
+  return deviceConnected;
+}
+
 // 모든 키(key)와 해당 값을 출력합니다.
 Future<void> checkStoredValues() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

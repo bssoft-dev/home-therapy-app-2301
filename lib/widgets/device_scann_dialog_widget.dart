@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
+import 'package:home_therapy_app/screens/track_player.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
@@ -64,10 +65,15 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                           ElevatedButton(
                             onPressed: () {
                               saveStoredValue(
-                                  'therapy-device', liveIpAddresses[index]);
+                                  'therapy_device', liveIpAddresses[index]);
                               successSnackBar(
                                   context, '등록완료', '홈세라피 기가가 등록되었습니다.');
-                              Navigator.of(context).pop();
+                              Navigator.pop(context);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const trackPlayer()));
                               checkStoredValues();
                             },
                             child: const Text('선택'),
@@ -128,7 +134,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
     liveIpAddresses.clear();
     const port = [80, 8080];
     final stream80 = NetworkAnalyzer.discover2(
-      '192.168.0',
+      '172.30.1',
       port[1],
       timeout: Duration(milliseconds: 1000),
     );
