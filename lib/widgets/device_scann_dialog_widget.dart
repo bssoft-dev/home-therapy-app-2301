@@ -8,8 +8,9 @@ import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
 
 class DeviceScannDialog extends StatefulWidget {
-  const DeviceScannDialog({Key? key}) : super(key: key);
+  final List<String> ipv4addresses;
 
+  const DeviceScannDialog(this.ipv4addresses, {Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _DeviceScannDialogState();
 }
@@ -134,7 +135,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
     liveIpAddresses.clear();
     const port = [80, 8080];
     final stream80 = NetworkAnalyzer.discover2(
-      '172.30.1',
+      widget.ipv4addresses[0],
       port[1],
       timeout: Duration(milliseconds: 1000),
     );

@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +24,7 @@ class trackPlayer extends StatefulWidget {
 class _trackPlayerState extends State<trackPlayer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
+  List<String> ipv4Addresses = [];
 
   late List<String> trackPlayList;
   String? trackTitle;
@@ -34,6 +35,7 @@ class _trackPlayerState extends State<trackPlayer> {
   void initState() {
     super.initState();
     initTrackTitle();
+    getIpAddress();
     checkDeviceConnected().then((value) => setState(() {
           deviceConnected = value;
           if (deviceConnected == true) {
@@ -67,7 +69,7 @@ class _trackPlayerState extends State<trackPlayer> {
                   barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {
-                    return const DeviceScannDialog();
+                    return DeviceScannDialog(ipv4Addresses);
                   },
                 );
               },
@@ -216,6 +218,25 @@ class _trackPlayerState extends State<trackPlayer> {
     String? savedTrackTitle = prefs.getString('selected_track');
     setState(() {
       trackTitle = savedTrackTitle ?? trackPlayList[0].split('.wav')[0];
+    });
+  }
+
+  Future<void> getIpAddress() async {
+    await NetworkInterface.list().then((interfaces) {
+      for (var interface in interfaces) {
+        for (var address in interface.addresses) {
+          if (address.type == InternetAddressType.IPv4) {
+            String ipAddress = address.address;
+            int dotIndex = ipAddress.lastIndexOf('.');
+            if (dotIndex != -1) {
+              ipv4Addresses.add(ipAddress.substring(0, dotIndex));
+            } else {
+              ipv4Addresses.add(ipAddress);
+            }
+          }
+        }
+      }
+      print(ipv4Addresses);
     });
   }
 }
