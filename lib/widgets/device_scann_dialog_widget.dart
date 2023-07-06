@@ -34,11 +34,6 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
         children: [
           const SizedBox(height: 16),
           const Center(child: Text('홈테라피 선택', style: TextStyle(fontSize: 20))),
-          if (Platform.isIOS)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Text('주변기기가 검색되지 않는 경우,\n블루투스가 켜져있는지 확인해주세요.'),
-            ),
           if (liveIpAddresses.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 20),
@@ -137,7 +132,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
     final stream80 = NetworkAnalyzer.discover2(
       widget.ipv4addresses[0],
       port[1],
-      timeout: Duration(milliseconds: 1000),
+      // timeout: Duration(milliseconds: 1000),
     );
 
     int found = 0;

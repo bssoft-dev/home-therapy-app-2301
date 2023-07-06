@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -34,7 +32,7 @@ class _trackPlayerState extends State<trackPlayer> {
   @override
   void initState() {
     super.initState();
-    initTrackTitle();
+    // initTrackTitle();
     getIpAddress();
     checkDeviceConnected().then((value) => setState(() {
           deviceConnected = value;
