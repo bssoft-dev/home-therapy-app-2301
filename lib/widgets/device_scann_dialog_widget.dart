@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import 'package:home_therapy_app/screens/track_player.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
@@ -60,17 +59,24 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                           const SizedBox(width: 8),
                           ElevatedButton(
                             onPressed: () {
-                              saveStoredValue(
-                                  'therapy_device', liveIpAddresses[index]);
-                              successSnackBar(
-                                  context, '등록완료', '홈세라피 기가가 등록되었습니다.');
-                              Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const trackPlayer()));
-                              checkStoredValues();
+                              if (liveIpAddresses[index] == '172.30.1.51') {
+                                saveStoredValue(
+                                    'therapy_device', liveIpAddresses[index]);
+                                successSnackBar(
+                                    context, '등록완료', '홈세라피 기가가 등록되었습니다.');
+                                Navigator.pop(context);
+                                Get.offAllNamed('/therapyDevice',
+                                    arguments: Get.context);
+                                // Navigator.pushReplacement(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             const TrackPlayer()));
+                                checkStoredValues();
+                              } else {
+                                failureSnackBar(context, '기기 선택 오류',
+                                    '홈 세라피 기기가 아닙니다. 다시 선택해주세요');
+                              }
                             },
                             child: const Text('선택'),
                           ),

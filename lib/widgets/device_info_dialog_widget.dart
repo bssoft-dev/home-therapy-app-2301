@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import 'package:home_therapy_app/screens/track_player.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 
@@ -70,10 +70,11 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
                   successSnackBar(
                       context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
                   Navigator.pop(context);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const trackPlayer()));
+                  Get.offAllNamed('/home');
+                  // Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const TrackPlayer()));
                 },
                 icon: const Icon(Icons.close),
                 label: const Text("삭제"),

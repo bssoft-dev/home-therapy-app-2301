@@ -12,33 +12,33 @@ import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
 import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
 
-class trackPlayer extends StatefulWidget {
-  const trackPlayer({super.key});
+class TrackPlayer extends StatefulWidget {
+  const TrackPlayer({super.key});
 
   @override
-  State<trackPlayer> createState() => _trackPlayerState();
+  State<TrackPlayer> createState() => _TrackPlayerState();
 }
 
-class _trackPlayerState extends State<trackPlayer> {
+class _TrackPlayerState extends State<TrackPlayer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
   List<String> ipv4Addresses = [];
-
   late List<String> trackPlayList;
   String? trackTitle;
   String? trackAuthor;
   bool isPlaying = false;
   bool? deviceConnected;
+
   @override
   void initState() {
     super.initState();
-    // initTrackTitle();
     getIpAddress();
     checkDeviceConnected().then((value) => setState(() {
           deviceConnected = value;
           if (deviceConnected == true) {
             playList().then((value) {
               setState(() {
+                initTrackTitle();
                 trackPlayList =
                     jsonDecode(utf8.decode(value.bodyBytes)).cast<String>();
               });
@@ -103,84 +103,69 @@ class _trackPlayerState extends State<trackPlayer> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-              if (deviceConnected == false)
-                const Column(
+              Column(children: [
+                Column(
                   children: [
-                    Icon(
-                      Icons.phonelink_erase_outlined,
-                      size: 304,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(height: 24),
-                    Text(
-                      '등록된 기기가 없습니다.',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontFamily: "Pretendard",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
+                    SizedBox(
+                        width: 304,
+                        height: 304,
+                        child: Image.asset('assets/app_icon.png',
+                            fit: BoxFit.contain)),
+                    const SizedBox(height: 24),
+                    Text('$trackTitle ',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontFamily: "Pretendard",
+                          fontWeight: FontWeight.w500,
+                        )),
+                    const Text('author', style: TextStyle(fontSize: 17)),
+                    const SizedBox(height: 34),
                   ],
                 ),
-              if (deviceConnected == true)
-                Column(children: [
-                  Column(
+                Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                          width: 304,
-                          height: 304,
-                          child: Image.asset('assets/app_icon.png',
-                              fit: BoxFit.contain)),
-                      const SizedBox(height: 24),
-                      Text('$trackTitle ',
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontFamily: "Pretendard",
-                            fontWeight: FontWeight.w500,
-                          )),
-                      const Text('author', style: TextStyle(fontSize: 17)),
-                      const SizedBox(height: 34),
-                    ],
-                  ),
-                  Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        simpleIconButton(Icons.skip_previous, 40, () async {
-                          fastRewindClick();
-                          await saveSelectedTrack(trackTitle!);
-                        }),
-                        const SizedBox(width: 28),
-                        playIconButton(
-                            Icons.play_arrow,
-                            Icons.pause_circle_outline,
-                            40,
-                            isPlaying, () async {
-                          setState(() {
-                            isPlaying = !isPlaying;
-                          });
-                          if (isPlaying) {
-                            await trackPlay('ready', '${trackTitle!}.wav');
-                          } else {
-                            await playStop();
-                          }
-                        }),
-                        const SizedBox(width: 28),
-                        simpleIconButton(Icons.skip_next, 40, () async {
-                          setState(() {
-                            fastForwardClick();
-                            isPlaying = true;
-                          });
-                          await saveSelectedTrack(trackTitle!);
-                        })
-                      ])
-                ])
+                      simpleIconButton(Icons.skip_previous, 40, () async {
+                        fastRewindClick();
+                        await saveSelectedTrack(trackTitle!);
+                      }),
+                      const SizedBox(width: 28),
+                      playIconButton(Icons.play_arrow,
+                          Icons.pause_circle_outline, 40, isPlaying, () async {
+                        setState(() {
+                          isPlaying = !isPlaying;
+                        });
+                        if (isPlaying) {
+                          await trackPlay('ready', '$trackTitle.wav');
+                        } else {
+                          await playStop();
+                        }
+                      }),
+                      const SizedBox(width: 28),
+                      simpleIconButton(Icons.skip_next, 40, () async {
+                        setState(() {
+                          fastForwardClick();
+                          isPlaying = true;
+                        });
+                        await saveSelectedTrack(trackTitle!);
+                      }),
+                      // if (trackPlayList.isNotEmpty)
+                    ]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    simpleIconButton(Icons.volume_up_outlined, 40, () {}),
+                    simpleIconButton(Icons.volume_down_outlined, 40, () {}),
+                  ],
+                )
+              ])
             ])));
   }
 
 //여기서부턴 함수들을 정의합니다.
   void fastRewindClick() async {
-    int currentIndex = trackPlayList.indexOf('${trackTitle!}.wav');
+    int currentIndex = trackPlayList.indexOf('$trackTitle.wav');
     if (currentIndex != -1) {
       if (currentIndex - 1 >= 0) {
         trackTitle = trackPlayList[currentIndex - 1].split('.wav')[0];
@@ -196,7 +181,7 @@ class _trackPlayerState extends State<trackPlayer> {
   }
 
   void fastForwardClick() async {
-    int currentIndex = trackPlayList.indexOf('${trackTitle!}.wav');
+    int currentIndex = trackPlayList.indexOf('$trackTitle.wav');
     if (currentIndex != -1) {
       if (currentIndex + 1 < trackPlayList.length) {
         trackTitle = trackPlayList[currentIndex + 1].split('.wav')[0];
@@ -218,6 +203,13 @@ class _trackPlayerState extends State<trackPlayer> {
       trackTitle = savedTrackTitle ?? trackPlayList[0].split('.wav')[0];
     });
   }
+
+  // Future<void> volumeUp() async {
+  //   await
+  // }
+  // Future<void> volumeDown() async {
+  //   await
+  // }
 
   Future<void> getIpAddress() async {
     await NetworkInterface.list().then((interfaces) {
