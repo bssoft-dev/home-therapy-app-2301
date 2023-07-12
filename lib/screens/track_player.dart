@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:home_therapy_app/widgets/track_widget.dart';
@@ -28,6 +31,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
   String? trackAuthor;
   bool isPlaying = false;
   bool? deviceConnected;
+  int? currentVolume;
 
   @override
   void initState() {
@@ -155,8 +159,26 @@ class _TrackPlayerState extends State<TrackPlayer> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    simpleIconButton(Icons.volume_up_outlined, 40, () {}),
-                    simpleIconButton(Icons.volume_down_outlined, 40, () {}),
+                    simpleOutlineButton('UP', Icons.volume_up_outlined, 40, () {
+                      statusVolume().then((value) {
+                        currentVolume = value;
+                        volumeUp(currentVolume!);
+                        // if (currentVolume == 100) {
+                        //   warningSnackBar(context, '최대 볼륨.', '현재 최대 볼륨입니다.');
+                        // }
+                      });
+                    }),
+                    const SizedBox(width: 10),
+                    simpleOutlineButton('DOWN', Icons.volume_down_outlined, 40,
+                        () {
+                      statusVolume().then((value) {
+                        currentVolume = value;
+                        volumeDown(currentVolume!);
+                        // if (currentVolume! < 10) {
+                        //   warningSnackBar(context, '최저 볼륨.', '현재 최저 볼륨입니다.');
+                        // }
+                      });
+                    }),
                   ],
                 )
               ])
@@ -204,12 +226,21 @@ class _TrackPlayerState extends State<TrackPlayer> {
     });
   }
 
-  // Future<void> volumeUp() async {
-  //   await
-  // }
-  // Future<void> volumeDown() async {
-  //   await
-  // }
+  Future<void> volumeUp(int currentVolume) async {
+    int volumeUp = currentVolume + 10;
+    await httpGet(path: '/control/volume/$volumeUp');
+  }
+
+  Future<void> volumeDown(int currentVolume) async {
+    int volumeDown = currentVolume - 10;
+    await httpGet(path: '/control/volume/$volumeDown');
+  }
+
+  Future<int> statusVolume() async {
+    http.Response resp = await httpGet(path: '/api/status/volume');
+    Map<String, dynamic> jsonResp = jsonDecode(resp.body);
+    return jsonResp['res'];
+  }
 
   Future<void> getIpAddress() async {
     await NetworkInterface.list().then((interfaces) {

@@ -151,7 +151,7 @@ warningSnackBar(BuildContext context, String notiTitle, String notiContent) {
   return scaffoldMessenger.showSnackBar(
     SnackBar(
       content: Container(
-        height: 45,
+        height: 50,
         margin: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: waringColor,

@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
     getIpAddress();
     checkDeviceConnected().then((value) => setState(() {
           if (value == true) {
+            Navigator.of(context).pop();
             Get.toNamed(RouteName.therapyDevice);
           }
         }));
