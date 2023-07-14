@@ -36,19 +36,21 @@ class _TrackPlayerState extends State<TrackPlayer> {
   @override
   void initState() {
     super.initState();
-    getIpAddress();
-    checkDeviceConnected().then((value) => setState(() {
-          deviceConnected = value;
-          if (deviceConnected == true) {
-            playList().then((value) {
-              setState(() {
-                initTrackTitle();
-                trackPlayList =
-                    jsonDecode(utf8.decode(value.bodyBytes)).cast<String>();
-              });
-            });
-          }
-        }));
+  }
+
+  Future<bool> _asyncMethod() async {
+    await getIpAddress();
+    bool isDeviceConnected = await checkDeviceConnected();
+    if (isDeviceConnected == true) {
+      var response = await playList();
+      if (response == 503) {
+        return false;
+      }
+      trackPlayList =
+          jsonDecode(utf8.decode(response.bodyBytes)).cast<String>();
+      await initTrackTitle(trackPlayList);
+    }
+    return isDeviceConnected;
   }
 
   @override
@@ -107,82 +109,97 @@ class _TrackPlayerState extends State<TrackPlayer> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-              Column(children: [
-                Column(
-                  children: [
-                    SizedBox(
-                        width: 304,
-                        height: 304,
-                        child: Image.asset('assets/app_icon.png',
-                            fit: BoxFit.contain)),
-                    const SizedBox(height: 24),
-                    Text('$trackTitle ',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontFamily: "Pretendard",
-                          fontWeight: FontWeight.w500,
-                        )),
-                    const Text('author', style: TextStyle(fontSize: 17)),
-                    const SizedBox(height: 34),
-                  ],
-                ),
-                Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      simpleIconButton(Icons.skip_previous, 40, () async {
-                        fastRewindClick();
-                        await saveSelectedTrack(trackTitle!);
-                      }),
-                      const SizedBox(width: 28),
-                      playIconButton(Icons.play_arrow,
-                          Icons.pause_circle_outline, 40, isPlaying, () async {
-                        setState(() {
-                          isPlaying = !isPlaying;
-                        });
-                        if (isPlaying) {
-                          await trackPlay('ready', '$trackTitle.wav');
-                        } else {
-                          await playStop();
-                        }
-                      }),
-                      const SizedBox(width: 28),
-                      simpleIconButton(Icons.skip_next, 40, () async {
-                        setState(() {
-                          fastForwardClick();
-                          isPlaying = true;
-                        });
-                        await saveSelectedTrack(trackTitle!);
-                      }),
-                      // if (trackPlayList.isNotEmpty)
-                    ]),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    simpleOutlineButton('UP', Icons.volume_up_outlined, 40, () {
-                      statusVolume().then((value) {
-                        currentVolume = value;
-                        volumeUp(currentVolume!);
-                        // if (currentVolume == 100) {
-                        //   warningSnackBar(context, '최대 볼륨.', '현재 최대 볼륨입니다.');
-                        // }
-                      });
-                    }),
-                    const SizedBox(width: 10),
-                    simpleOutlineButton('DOWN', Icons.volume_down_outlined, 40,
-                        () {
-                      statusVolume().then((value) {
-                        currentVolume = value;
-                        volumeDown(currentVolume!);
-                        // if (currentVolume! < 10) {
-                        //   warningSnackBar(context, '최저 볼륨.', '현재 최저 볼륨입니다.');
-                        // }
-                      });
-                    }),
-                  ],
-                )
-              ])
+              FutureBuilder(
+                  future: _asyncMethod(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data == true) {
+                        return playerBody();
+                      } else {
+                        return const Text('기기를 찾을 수 없습니다.');
+                      }
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  }),
             ])));
+  }
+
+  Widget playerBody() {
+    return Column(children: [
+      Column(
+        children: [
+          SizedBox(
+              width: 304,
+              height: 304,
+              child: Image.asset('assets/app_icon.png', fit: BoxFit.contain)),
+          const SizedBox(height: 24),
+          Text('$trackTitle ',
+              style: const TextStyle(
+                fontSize: 22,
+                fontFamily: "Pretendard",
+                fontWeight: FontWeight.w500,
+              )),
+          const Text('author', style: TextStyle(fontSize: 17)),
+          const SizedBox(height: 34),
+        ],
+      ),
+      Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            simpleIconButton(Icons.skip_previous, 40, () async {
+              fastRewindClick();
+              await saveSelectedTrack(trackTitle!);
+            }),
+            const SizedBox(width: 28),
+            playIconButton(
+                Icons.play_arrow, Icons.pause_circle_outline, 40, isPlaying,
+                () async {
+              setState(() {
+                isPlaying = !isPlaying;
+              });
+              if (isPlaying) {
+                await trackPlay('ready', '$trackTitle.wav');
+              } else {
+                await playStop();
+              }
+            }),
+            const SizedBox(width: 28),
+            simpleIconButton(Icons.skip_next, 40, () async {
+              setState(() {
+                fastForwardClick();
+                isPlaying = true;
+              });
+              await saveSelectedTrack(trackTitle!);
+            }),
+            // if (trackPlayList.isNotEmpty)
+          ]),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          simpleOutlineButton('UP', Icons.volume_up_outlined, 40, () {
+            statusVolume().then((value) {
+              currentVolume = value;
+              volumeUp(currentVolume!);
+              // if (currentVolume == 100) {
+              //   warningSnackBar(context, '최대 볼륨.', '현재 최대 볼륨입니다.');
+              // }
+            });
+          }),
+          const SizedBox(width: 10),
+          simpleOutlineButton('DOWN', Icons.volume_down_outlined, 40, () {
+            statusVolume().then((value) {
+              currentVolume = value;
+              volumeDown(currentVolume!);
+              // if (currentVolume! < 10) {
+              //   warningSnackBar(context, '최저 볼륨.', '현재 최저 볼륨입니다.');
+              // }
+            });
+          }),
+        ],
+      )
+    ]);
   }
 
 //여기서부턴 함수들을 정의합니다.
@@ -218,12 +235,10 @@ class _TrackPlayerState extends State<TrackPlayer> {
     });
   }
 
-  Future<void> initTrackTitle() async {
+  Future<void> initTrackTitle(trackPlayList) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedTrackTitle = prefs.getString('selected_track');
-    setState(() {
-      trackTitle = savedTrackTitle ?? trackPlayList[0].split('.wav')[0];
-    });
+    trackTitle = savedTrackTitle ?? trackPlayList[0].split('.wav')[0];
   }
 
   Future<void> volumeUp(int currentVolume) async {

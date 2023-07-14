@@ -10,7 +10,7 @@ void httpFailureNotice() {
 }
 
 httpGet({required String path}) async {
-  String baseUrl = 'http://172.30.1.51:8080$path';
+  String baseUrl = 'http://172.30.1.86:8080$path';
   try {
     http.Response response = await http.get(Uri.parse(baseUrl), headers: {
       "accept": "application/json",

@@ -58,12 +58,12 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton(
-                            onPressed: () {
-                              if (liveIpAddresses[index] == '172.30.1.51') {
-                                saveStoredValue(
+                            onPressed: () async {
+                              if (liveIpAddresses[index] == '172.30.1.86') {
+                                await saveStoredValue(
                                     'therapy_device', liveIpAddresses[index]);
                                 successSnackBar(
-                                    context, '등록완료', '홈세라피 기가가 등록되었습니다.');
+                                    context, '등록완료', '홈 스피커 기기가 등록되었습니다.');
                                 Navigator.pop(context);
                                 Get.offAllNamed('/therapyDevice',
                                     arguments: Get.context);
@@ -72,10 +72,10 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                                 //     MaterialPageRoute(
                                 //         builder: (context) =>
                                 //             const TrackPlayer()));
-                                checkStoredValues();
+                                await checkStoredValues();
                               } else {
                                 failureSnackBar(context, '기기 선택 오류',
-                                    '홈 세라피 기기가 아닙니다. 다시 선택해주세요');
+                                    '홈 스피커 기기가 아닙니다. 다시 선택해주세요');
                               }
                             },
                             child: const Text('선택'),
