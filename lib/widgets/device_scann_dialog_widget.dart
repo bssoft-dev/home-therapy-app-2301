@@ -59,24 +59,16 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                           const SizedBox(width: 8),
                           ElevatedButton(
                             onPressed: () async {
-                              if (liveIpAddresses[index] == '172.30.1.86') {
-                                await saveStoredValue(
-                                    'therapy_device', liveIpAddresses[index]);
-                                successSnackBar(
-                                    context, '등록완료', '홈 스피커 기기가 등록되었습니다.');
-                                Navigator.pop(context);
-                                Get.offAllNamed('/therapyDevice',
-                                    arguments: Get.context);
-                                // Navigator.pushReplacement(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             const TrackPlayer()));
-                                await checkStoredValues();
-                              } else {
-                                failureSnackBar(context, '기기 선택 오류',
-                                    '홈 스피커 기기가 아닙니다. 다시 선택해주세요');
-                              }
+                              await saveStoredValue(
+                                  'therapy_device', liveIpAddresses[index]);
+                              print(liveIpAddresses[index]);
+                              // ignore: use_build_context_synchronously
+                              successSnackBar(
+                                  context, '등록완료', '홈 스피커 기기가 등록되었습니다.');
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+                              Get.offAllNamed('/therapyDevice',
+                                  arguments: Get.context);
                             },
                             child: const Text('선택'),
                           ),
@@ -134,7 +126,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
 
   Future<List<String>> scanIpAddress() async {
     liveIpAddresses.clear();
-    const port = [80, 8080];
+    const port = [80, 23019];
     final stream80 = NetworkAnalyzer.discover2(
       widget.ipv4addresses[0],
       port[1],

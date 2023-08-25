@@ -242,17 +242,23 @@ class _TrackPlayerState extends State<TrackPlayer> {
   }
 
   Future<void> volumeUp(int currentVolume) async {
+    String? deviceIP = await getStoredValue('therapy_device');
+
     int volumeUp = currentVolume + 10;
-    await httpGet(path: '/control/volume/$volumeUp');
+    await httpGet(path: '/control/volume/$volumeUp', deviceIP: deviceIP!);
   }
 
   Future<void> volumeDown(int currentVolume) async {
+    String? deviceIP = await getStoredValue('therapy_device');
+
     int volumeDown = currentVolume - 10;
-    await httpGet(path: '/control/volume/$volumeDown');
+    await httpGet(path: '/control/volume/$volumeDown', deviceIP: deviceIP!);
   }
 
   Future<int> statusVolume() async {
-    http.Response resp = await httpGet(path: '/api/status/volume');
+    String? deviceIP = await getStoredValue('therapy_device');
+    http.Response resp =
+        await httpGet(path: '/api/status/volume', deviceIP: deviceIP!);
     Map<String, dynamic> jsonResp = jsonDecode(resp.body);
     return jsonResp['res'];
   }

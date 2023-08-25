@@ -9,8 +9,8 @@ void httpFailureNotice() {
       snackPosition: SnackPosition.BOTTOM);
 }
 
-httpGet({required String path}) async {
-  String baseUrl = 'http://172.30.1.86:8080$path';
+httpGet({required String path, required String deviceIP}) async {
+  String baseUrl = 'http://$deviceIP:23019$path';
   try {
     http.Response response = await http.get(Uri.parse(baseUrl), headers: {
       "accept": "application/json",
