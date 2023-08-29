@@ -42,6 +42,7 @@ dependencies:
   flutter_speed_dial: ^6.2.0
   ping_discover_network_forked: ^0.0.1
   shared_preferences_foundation: ^2.2.2
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/lottie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

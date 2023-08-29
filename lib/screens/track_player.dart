@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:home_therapy_app/widgets/track_widget.dart';
@@ -27,15 +27,18 @@ class _TrackPlayerState extends State<TrackPlayer> {
   final MainColor mainColor = MainColor();
   List<String> ipv4Addresses = [];
   late List<String> trackPlayList;
+  late List<bool> trackPlayIndex;
   String? trackTitle;
-  String? trackAuthor;
   bool isPlaying = false;
+  bool isListPlaying = false;
   bool? deviceConnected;
   int? currentVolume;
+  Future<bool>? asyncMethodFuture;
 
   @override
   void initState() {
     super.initState();
+    asyncMethodFuture = _asyncMethod();
   }
 
   Future<bool> _asyncMethod() async {
@@ -50,6 +53,9 @@ class _TrackPlayerState extends State<TrackPlayer> {
           jsonDecode(utf8.decode(response.bodyBytes)).cast<String>();
       await initTrackTitle(trackPlayList);
     }
+    trackPlayIndex = List<bool>.generate(
+        trackPlayList.length, (int index) => false,
+        growable: true);
     return isDeviceConnected;
   }
 
@@ -107,10 +113,9 @@ class _TrackPlayerState extends State<TrackPlayer> {
         body: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-              FutureBuilder(
-                  future: _asyncMethod(),
+              FutureBuilder<bool>(
+                  future: asyncMethodFuture,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data == true) {
@@ -127,23 +132,31 @@ class _TrackPlayerState extends State<TrackPlayer> {
 
   Widget playerBody() {
     return Column(children: [
-      Column(
+      trackList(trackPlayList, trackPlayIndex),
+      const Divider(
+        color: Colors.black,
+        thickness: 1,
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-              width: 304,
-              height: 304,
-              child: Image.asset('assets/app_icon.png', fit: BoxFit.contain)),
-          const SizedBox(height: 24),
-          Text('$trackTitle ',
-              style: const TextStyle(
-                fontSize: 22,
-                fontFamily: "Pretendard",
-                fontWeight: FontWeight.w500,
-              )),
-          const Text('author', style: TextStyle(fontSize: 17)),
-          const SizedBox(height: 34),
+          Padding(
+            padding: const EdgeInsets.only(right: 10, left: 10),
+            child: Lottie.asset('assets/lottie/recommend_title.json',
+                width: 50, height: 50, fit: BoxFit.fill, animate: true),
+          ),
+          const Text('Recommend Track',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ))
         ],
       ),
+      Lottie.asset('assets/lottie/recommend_playing.json',
+          width: 200, height: 200, fit: BoxFit.fill, animate: isPlaying),
       Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,6 +188,9 @@ class _TrackPlayerState extends State<TrackPlayer> {
             }),
             // if (trackPlayList.isNotEmpty)
           ]),
+      const SizedBox(
+        height: 20,
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -200,6 +216,80 @@ class _TrackPlayerState extends State<TrackPlayer> {
         ],
       )
     ]);
+  }
+
+  Widget trackList(trackPlayList, trackPlayIndex) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: mainColor.mainColor(),
+                  ),
+                  child: Lottie.asset('assets/lottie/track_list.json',
+                      width: 40, height: 40, fit: BoxFit.fill, animate: true),
+                )),
+            const Text('Track List',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ))
+          ],
+        ),
+        // SizedBox(
+        //   height: 20,
+        // ),
+        SingleChildScrollView(
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: trackPlayList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10, left: 10),
+                      child: Lottie.asset('assets/lottie/sound_play.json',
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.fill,
+                          animate: trackPlayIndex[index]),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('${trackPlayList[index]}'),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: playIconButton(
+                                Icons.play_arrow,
+                                Icons.pause_circle_outline,
+                                40,
+                                trackPlayIndex[index], () async {
+                              setState(() {
+                                trackPlayIndex[index] = !trackPlayIndex[index];
+                              });
+                              if (trackPlayIndex[index]) {
+                                await trackPlay(
+                                    'ready', '${trackPlayList[index]}');
+                              } else {
+                                await playStop();
+                              }
+                            }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }),
+        ),
+      ],
+    );
   }
 
 //여기서부턴 함수들을 정의합니다.
@@ -278,7 +368,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
           }
         }
       }
-      print(ipv4Addresses);
+      // print(ipv4Addresses);
     });
   }
 }
