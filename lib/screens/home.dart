@@ -9,6 +9,7 @@ import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/widgets/main_color_widget.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
 import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
+import 'package:home_therapy_app/widgets/text_field_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,9 +22,13 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
   List<String> ipv4Addresses = [];
+  TextEditingController nameController = TextEditingController();
+  TextEditingController installLocationController = TextEditingController();
+  TextEditingController installIdController = TextEditingController();
 
   @override
   void initState() {
+    // removeStoredValue('infoinit');
     super.initState();
     getIpAddress();
     checkDeviceConnected().then((value) => setState(() {
@@ -32,6 +37,23 @@ class _HomeState extends State<Home> {
             Get.toNamed(RouteName.therapyDevice);
           }
         }));
+    getStoredValue('infoinit').then((infoinitCheck) {
+      if (infoinitCheck == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showUserInfoDialog(
+              context: context,
+              title: '개인정보 입력',
+              subtitle: '',
+              nameController: nameController,
+              installLocationController: installLocationController,
+              installIdController: installIdController,
+              editContentOnPressed: () {},
+              editTitleOnPressed: () {},
+              cancelText: '취소',
+              saveText: '저장');
+        });
+      }
+    });
   }
 
   @override

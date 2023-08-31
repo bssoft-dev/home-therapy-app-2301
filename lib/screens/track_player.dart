@@ -1,14 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:home_therapy_app/utils/http_request.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/widgets/track_widget.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
+import 'package:home_therapy_app/widgets/text_field_widget.dart';
 import 'package:home_therapy_app/widgets/main_color_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
@@ -214,8 +214,28 @@ class _TrackPlayerState extends State<TrackPlayer> {
             });
           }),
         ],
-      )
+      ),
+      test()
     ]);
+  }
+
+  Widget test() {
+    return ElevatedButton(
+        onPressed: () {
+          showUserInfoDialog(
+              context: context,
+              title: '개인정보 입력',
+              subtitle: '',
+              nameController: TextEditingController(),
+              installLocationController: TextEditingController(),
+              installIdController: TextEditingController(),
+              editContentOnPressed: () {},
+              editTitleOnPressed: () {},
+              saveOnPressed: () {},
+              cancelText: '취소',
+              saveText: '저장');
+        },
+        child: const Text('앱 실행되면 바로  나와야 하는 다이얼로그'));
   }
 
   Widget trackList(trackPlayList, trackPlayIndex) {
