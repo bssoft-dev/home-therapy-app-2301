@@ -215,27 +215,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
           }),
         ],
       ),
-      test()
     ]);
-  }
-
-  Widget test() {
-    return ElevatedButton(
-        onPressed: () {
-          showUserInfoDialog(
-              context: context,
-              title: '개인정보 입력',
-              subtitle: '',
-              nameController: TextEditingController(),
-              installLocationController: TextEditingController(),
-              installIdController: TextEditingController(),
-              editContentOnPressed: () {},
-              editTitleOnPressed: () {},
-              saveOnPressed: () {},
-              cancelText: '취소',
-              saveText: '저장');
-        },
-        child: const Text('앱 실행되면 바로  나와야 하는 다이얼로그'));
   }
 
   Widget trackList(trackPlayList, trackPlayIndex) {

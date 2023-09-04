@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // removeStoredValue('infoinit');
+    // removeStoredValue('Install_ID');
     super.initState();
     getIpAddress();
     checkDeviceConnected().then((value) => setState(() {
@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
             Get.toNamed(RouteName.therapyDevice);
           }
         }));
-    getStoredValue('infoinit').then((infoinitCheck) {
+    getStoredValue('Install_ID').then((infoinitCheck) {
       if (infoinitCheck == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           showUserInfoDialog(

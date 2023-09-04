@@ -135,6 +135,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
 
     int found = 0;
     await for (NetworkAddress addr in stream80) {
+      print(addr.ip);
       if (addr.exists) {
         found++;
         print('Found device: ${addr.ip}:${port[1]}');
