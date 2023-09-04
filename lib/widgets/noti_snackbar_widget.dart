@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color_widget.dart';
 
 successSnackBar(BuildContext context, String notiTitle, String notiContent) {
   final MainColor mainColor = MainColor();

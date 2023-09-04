@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/routes/route_name.dart';
+import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
-import 'package:home_therapy_app/widgets/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color_widget.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
 import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
 import 'package:home_therapy_app/widgets/text_field_widget.dart';
@@ -107,30 +108,34 @@ class _HomeState extends State<Home> {
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         key: _scaffoldKey,
         appBar: basicAppBar(context, _scaffoldKey),
-        body: const Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-              Column(
-                children: [
-                  Icon(
-                    Icons.phonelink_erase_outlined,
-                    size: 304,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(height: 24),
-                  Text(
-                    '등록된 기기가 없습니다.',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: "Pretendard",
-                      fontWeight: FontWeight.w500,
+        extendBodyBehindAppBar: true,
+        body: backgroundContainer(
+          context,
+          Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                Column(
+                  children: [
+                    Icon(
+                      Icons.phonelink_erase_outlined,
+                      size: 304,
+                      color: mainColor.mainColor(),
                     ),
-                  )
-                ],
-              ),
-            ])));
+                    const SizedBox(height: 24),
+                    const Text(
+                      '등록된 기기가 없습니다.',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: "Pretendard",
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+              ])),
+        ));
   }
 
 //여기서부턴 함수들을 정의합니다.

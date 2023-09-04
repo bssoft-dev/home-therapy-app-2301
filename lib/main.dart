@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/routes/route_page.dart';
-import 'package:home_therapy_app/widgets/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color_widget.dart';
 
 void main() {
   runApp(HomeTherapyApp());
@@ -17,6 +17,7 @@ class HomeTherapyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: mainColor.mainColor(),

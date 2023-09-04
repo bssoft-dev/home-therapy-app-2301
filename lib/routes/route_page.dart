@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/screens/home.dart';
-import 'package:home_therapy_app/screens/track_player.dart';
+import 'package:home_therapy_app/screens/track_players.dart';
 
 class RoutePage {
   static final page = [
@@ -13,7 +13,7 @@ class RoutePage {
     ),
     GetPage(
       name: RouteName.therapyDevice,
-      page: () => const TrackPlayer(),
+      page: () => const TrackPlayers(),
       transition: Transition.noTransition,
     ),
   ];

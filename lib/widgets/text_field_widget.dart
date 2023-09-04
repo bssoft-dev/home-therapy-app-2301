@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
-import 'package:home_therapy_app/widgets/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color_widget.dart';
 import 'package:lottie/lottie.dart';
 
 final MainColor mainColor = MainColor();
@@ -174,7 +174,6 @@ Widget textBox(String formTitle, TextEditingController textEditingController,
 
 Widget radioBox(String radioTitle, String groupValue, String firstValue,
     String secondValue, String thirdValue) {
-  debugPrint(groupValue);
   return StatefulBuilder(builder: (context, StateSetter setDialog) {
     return Container(
       padding: const EdgeInsets.only(left: 15),
@@ -197,7 +196,6 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
                       onChanged: (value) {
                         setDialog(() {
                           groupValue = value.toString();
-                          print(value);
                         });
                       }),
                 ],
@@ -214,7 +212,6 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
                       onChanged: (value) {
                         setDialog(() {
                           groupValue = value.toString();
-                          print(value);
                         });
                       }),
                 ],

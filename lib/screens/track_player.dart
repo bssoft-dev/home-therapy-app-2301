@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/widgets/track_widget.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
-import 'package:home_therapy_app/widgets/text_field_widget.dart';
-import 'package:home_therapy_app/widgets/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
@@ -110,24 +110,28 @@ class _TrackPlayerState extends State<TrackPlayer> {
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         key: _scaffoldKey,
         appBar: basicAppBar(context, _scaffoldKey),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-              FutureBuilder<bool>(
-                  future: asyncMethodFuture,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data == true) {
-                        return playerBody();
+        extendBodyBehindAppBar: true,
+        body: backgroundContainer(
+          context,
+          Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                FutureBuilder<bool>(
+                    future: asyncMethodFuture,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data == true) {
+                          return playerBody();
+                        } else {
+                          return const Text('기기를 찾을 수 없습니다.');
+                        }
                       } else {
-                        return const Text('기기를 찾을 수 없습니다.');
+                        return const CircularProgressIndicator();
                       }
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  }),
-            ])));
+                    }),
+              ])),
+        ));
   }
 
   Widget playerBody() {
@@ -161,7 +165,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            simpleIconButton(Icons.skip_previous, 40, () async {
+            simpleIconButton(Icons.skip_previous, 40, Colors.black, () async {
               fastRewindClick();
               await saveSelectedTrack(trackTitle!);
             }),
@@ -179,7 +183,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
               }
             }),
             const SizedBox(width: 28),
-            simpleIconButton(Icons.skip_next, 40, () async {
+            simpleIconButton(Icons.skip_next, 40, Colors.black, () async {
               setState(() {
                 fastForwardClick();
                 isPlaying = true;

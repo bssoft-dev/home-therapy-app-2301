@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color_widget.dart';
 
 final MainColor mainColor = MainColor();
 
@@ -41,11 +41,13 @@ Widget button(
   );
 }
 
-Widget simpleIconButton(IconData icon, double size, void Function() onPressed) {
+Widget simpleIconButton(
+    IconData icon, double size, Color iconColor, void Function() onPressed) {
   return IconButton(
     icon: Icon(
       icon,
       size: size,
+      color: iconColor,
     ),
     onPressed: onPressed,
   );
