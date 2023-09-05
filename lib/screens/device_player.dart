@@ -124,8 +124,33 @@ class _DevicePlayerState extends State<DevicePlayer>
                 borderRadius: BorderRadius.circular(100),
                 color: mainColor.mainColor(),
               ),
-              child:
-                  simpleIconButton(Icons.volume_mute, 25, Colors.white, () {})),
+              child: simpleIconButton(Icons.volume_mute, 25, Colors.white, () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AlertDialog(
+                              title: const Text('볼륨 조절'),
+                              content: Slider(
+                                value: 10,
+                                max: 100,
+                                onChanged: (double value) {},
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('확인'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ]);
+                    });
+              })),
           const SizedBox(width: 10),
           Container(
               decoration: BoxDecoration(

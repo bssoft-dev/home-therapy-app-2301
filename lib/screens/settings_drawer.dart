@@ -4,6 +4,7 @@ import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
 import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
+import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -66,7 +67,10 @@ class _SettingsState extends State<Settings> {
                 }),
                 settingTile('음원 미리듣기', Icons.audiotrack, () {
                   playTrack(
-                      context: context, trackTitle: '미리듣기', actionText: '확인');
+                      context: context,
+                      trackTitle: '미리듣기',
+                      actionText: '확인',
+                      volumeSlider: const VolumeController());
                 }),
               ],
             )));

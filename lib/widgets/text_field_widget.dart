@@ -71,8 +71,7 @@ Future<dynamic> showUserInfoDialog({
                         const SizedBox(
                           height: 5,
                         ),
-                        textBox(
-                            'Full Test', nameController, '이름', '이름을 입력해주세요.'),
+                        textBox('Age', nameController, '나이', '나이를 입력해주세요.'),
                         const SizedBox(
                           height: 5,
                         ),

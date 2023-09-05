@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/track_player_dialog_widget.dart';
+import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
 import 'package:lottie/lottie.dart';
 
 String emotionValueInit = '행복';
 Future<bool>? asyncMethodFuture;
+double currentVolume = 50;
+
 emotionServeyDialog({
   required BuildContext context,
   AnimationController? lottieController,
   bool? isPlaying,
 }) {
   asyncMethodFuture = asyncMethod();
-
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -26,11 +29,11 @@ emotionServeyDialog({
             TextButton(
               child: const Text('확인', style: TextStyle(fontSize: 15)),
               onPressed: () {
-                Navigator.of(context).pop();
                 playTrack(
                     context: context,
                     trackTitle: '음원목록',
                     actionText: '종료',
+                    volumeSlider: const VolumeController(),
                     emotionSurvey: showDialog(
                       barrierDismissible: false,
                       context: context,

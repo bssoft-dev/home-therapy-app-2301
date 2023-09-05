@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/track_widget.dart';
@@ -158,11 +160,13 @@ Future previewTrack(
   );
 }
 
-Future playTrack(
-    {required BuildContext context,
-    required String trackTitle,
-    required String actionText,
-    Future? emotionSurvey}) {
+Future playTrack({
+  required BuildContext context,
+  required String trackTitle,
+  required String actionText,
+  Future? emotionSurvey,
+  Widget? volumeSlider,
+}) {
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -171,7 +175,7 @@ Future playTrack(
         return AlertDialog(
           contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
           content: SizedBox(
-            height: 300,
+            height: 350,
             width: MediaQuery.of(context).size.width * 0.8,
             child: Column(
               children: [
@@ -248,6 +252,7 @@ Future playTrack(
                         );
                       }),
                 ),
+                volumeSlider ?? const SizedBox(height: 0),
               ],
             ),
           ),
@@ -264,4 +269,31 @@ Future playTrack(
       }));
     },
   );
+}
+
+Future<void> volumeUp(int currentVolume) async {
+  String? deviceIP = await getStoredValue('therapy_device');
+
+  int volumeUp = currentVolume + 10;
+  await httpGet(path: '/control/volume/$volumeUp', deviceIP: deviceIP!);
+}
+
+Future<void> volumeDown(int currentVolume) async {
+  String? deviceIP = await getStoredValue('therapy_device');
+
+  int volumeDown = currentVolume - 10;
+  await httpGet(path: '/control/volume/$volumeDown', deviceIP: deviceIP!);
+}
+
+Future<int> statusVolume() async {
+  String? deviceIP = await getStoredValue('therapy_device');
+  http.Response resp =
+      await httpGet(path: '/api/status/volume', deviceIP: deviceIP!);
+  Map<String, dynamic> jsonResp = jsonDecode(resp.body);
+  return jsonResp['res'];
+}
+
+Future<void> volumeChange(int currentVolume) async {
+  String? deviceIP = await getStoredValue('therapy_device');
+  await httpGet(path: '/control/volume/$currentVolume', deviceIP: deviceIP!);
 }
