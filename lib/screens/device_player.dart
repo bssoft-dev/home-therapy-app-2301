@@ -32,6 +32,13 @@ class _DevicePlayerState extends State<DevicePlayer>
     _lottieController = AnimationController(vsync: this);
   }
 
+  @override
+  void dispose() {
+    // AnimationController를 dispose
+    _lottieController.dispose();
+    super.dispose();
+  }
+
   Future<bool> _asyncMethod() async {
     bool isDeviceConnected = await checkDeviceConnected();
     if (isDeviceConnected == true) {
@@ -88,7 +95,10 @@ class _DevicePlayerState extends State<DevicePlayer>
             } else {
               _lottieController.repeat();
               isPlaying = true;
-              emotionServeyDialog(context);
+              emotionServeyDialog(
+                  context: context,
+                  lottieController: _lottieController,
+                  isPlaying: isPlaying);
             }
           },
           child: Lottie.asset(

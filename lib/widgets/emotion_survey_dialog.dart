@@ -4,7 +4,11 @@ import 'package:lottie/lottie.dart';
 
 String emotionValueInit = '행복';
 Future<bool>? asyncMethodFuture;
-emotionServeyDialog(BuildContext context) {
+emotionServeyDialog({
+  required BuildContext context,
+  AnimationController? lottieController,
+  bool? isPlaying,
+}) {
   asyncMethodFuture = asyncMethod();
 
   return showDialog(
@@ -47,6 +51,8 @@ emotionServeyDialog(BuildContext context) {
                                     style: TextStyle(fontSize: 15)),
                                 onPressed: () {
                                   Navigator.of(context).pop();
+                                  Navigator.popAndPushNamed(
+                                      context, '/therapyDevice');
                                 },
                               ),
                             ],
