@@ -4,7 +4,7 @@ import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
-import 'package:home_therapy_app/utils/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/text_field_widget.dart';
 
 class Home extends StatefulWidget {

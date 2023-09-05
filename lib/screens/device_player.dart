@@ -1,21 +1,22 @@
+import 'package:home_therapy_app/widgets/emotion_survey_dialog.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:home_therapy_app/widgets/track_widget.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
-import 'package:home_therapy_app/utils/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/screens/settings_drawer.dart';
 import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 
-class TrackDevice extends StatefulWidget {
-  const TrackDevice({super.key});
+class DevicePlayer extends StatefulWidget {
+  const DevicePlayer({super.key});
 
   @override
-  State<TrackDevice> createState() => _TrackDeviceState();
+  State<DevicePlayer> createState() => _DevicePlayerState();
 }
 
-class _TrackDeviceState extends State<TrackDevice>
+class _DevicePlayerState extends State<DevicePlayer>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
@@ -60,7 +61,7 @@ class _TrackDeviceState extends State<TrackDevice>
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data == true) {
-                          return playerBody();
+                          return playerBody(context);
                         } else {
                           return const Text('기기를 찾을 수 없습니다.');
                         }
@@ -72,7 +73,7 @@ class _TrackDeviceState extends State<TrackDevice>
         ));
   }
 
-  Widget playerBody() {
+  Widget playerBody(BuildContext context) {
     return Column(children: [
       Container(
         decoration: BoxDecoration(
@@ -87,6 +88,7 @@ class _TrackDeviceState extends State<TrackDevice>
             } else {
               _lottieController.repeat();
               isPlaying = true;
+              emotionServeyDialog(context);
             }
           },
           child: Lottie.asset(

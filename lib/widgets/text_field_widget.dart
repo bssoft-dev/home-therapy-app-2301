@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/utils/share_rreferences_request.dart';
-import 'package:home_therapy_app/utils/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:lottie/lottie.dart';
 
 final MainColor mainColor = MainColor();

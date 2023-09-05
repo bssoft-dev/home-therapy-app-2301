@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/widgets/track_widget.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
-import 'package:home_therapy_app/utils/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';

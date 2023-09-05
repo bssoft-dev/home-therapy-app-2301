@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/routes/route_page.dart';
-import 'package:home_therapy_app/utils/main_color_widget.dart';
+import 'package:home_therapy_app/utils/main_color.dart';
 
 void main() {
   runApp(HomeTherapyApp());
