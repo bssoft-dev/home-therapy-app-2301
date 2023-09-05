@@ -54,7 +54,8 @@ Future<void> getIpAddress() async {
   });
 }
 
-Future previewTrack(BuildContext context) {
+Future previewTrack(
+    BuildContext context, String trackTitle, String actionText) {
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -83,8 +84,8 @@ Future previewTrack(BuildContext context) {
                               fit: BoxFit.fill,
                               animate: true),
                         )),
-                    const Text('미리듣기',
-                        style: TextStyle(
+                    Text(trackTitle,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ))
@@ -145,9 +146,117 @@ Future previewTrack(BuildContext context) {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('확인', style: TextStyle(fontSize: 20)),
+              child: Text(actionText, style: const TextStyle(fontSize: 20)),
               onPressed: () {
                 Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      }));
+    },
+  );
+}
+
+Future playTrack(
+    {required BuildContext context,
+    required String trackTitle,
+    required String actionText,
+    Future? emotionSurvey}) {
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(builder: ((context, StateSetter setDialog) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+          content: SizedBox(
+            height: 300,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            right: 10, left: 10, bottom: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: mainColor.mainColor(),
+                          ),
+                          child: Lottie.asset('assets/lottie/track_list.json',
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.fill,
+                              animate: true),
+                        )),
+                    Text(trackTitle,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ))
+                  ],
+                ),
+                const SizedBox(height: 20),
+                SingleChildScrollView(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: trackPlayList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 10, left: 10),
+                              child: Lottie.asset(
+                                  'assets/lottie/sound_play.json',
+                                  width: 40,
+                                  height: 40,
+                                  fit: BoxFit.fill,
+                                  animate: trackPlayIndex[index]),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(trackPlayList[index]),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: playIconButton(
+                                        Icons.play_arrow,
+                                        Icons.pause_circle_outline,
+                                        40,
+                                        trackPlayIndex[index], () async {
+                                      setDialog(() {
+                                        trackPlayIndex[index] =
+                                            !trackPlayIndex[index];
+                                      });
+                                      if (trackPlayIndex[index]) {
+                                        await trackPlay(
+                                            'ready', trackPlayList[index]);
+                                      } else {
+                                        await playStop();
+                                      }
+                                    }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(actionText, style: const TextStyle(fontSize: 20)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                emotionSurvey;
               },
             ),
           ],

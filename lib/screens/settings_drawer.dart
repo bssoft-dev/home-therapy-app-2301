@@ -65,7 +65,8 @@ class _SettingsState extends State<Settings> {
                   );
                 }),
                 settingTile('음원 미리듣기', Icons.audiotrack, () {
-                  previewTrack(context);
+                  playTrack(
+                      context: context, trackTitle: '미리듣기', actionText: '확인');
                 }),
               ],
             )));

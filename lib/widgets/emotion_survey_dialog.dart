@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:home_therapy_app/widgets/track_player_dialog_widget.dart';
 import 'package:lottie/lottie.dart';
 
 String emotionValueInit = '행복';
+Future<bool>? asyncMethodFuture;
+emotionServeyDialog(BuildContext context) {
+  asyncMethodFuture = asyncMethod();
 
-Future emotionServeyDialog(BuildContext context) {
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -14,20 +17,43 @@ Future emotionServeyDialog(BuildContext context) {
           actionsPadding: const EdgeInsets.only(bottom: 10),
           contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           title: const Text('현재 감정 상태', style: TextStyle(fontSize: 20)),
-          content: Row(
-            children: [
-              emotionCheck('love_emotion', '행복', setDialog),
-              emotionCheck('smile_emotion', '웃음', setDialog),
-              emotionCheck('normal_emotion', '보통', setDialog),
-              emotionCheck('sad_emotion', '슬픔', setDialog),
-              emotionCheck('angry_emotion', '화남', setDialog),
-            ],
-          ),
+          content: emotionList(setDialog: setDialog),
           actions: [
             TextButton(
               child: const Text('확인', style: TextStyle(fontSize: 15)),
               onPressed: () {
                 Navigator.of(context).pop();
+                playTrack(
+                    context: context,
+                    trackTitle: '음원목록',
+                    actionText: '종료',
+                    emotionSurvey: showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(
+                            builder: ((context, StateSetter setDialog) {
+                          return AlertDialog(
+                            actionsAlignment: MainAxisAlignment.center,
+                            actionsPadding: const EdgeInsets.only(bottom: 10),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                            title: const Text('현재 감정 상태',
+                                style: TextStyle(fontSize: 20)),
+                            content: emotionList(setDialog: setDialog),
+                            actions: [
+                              TextButton(
+                                child: const Text('확인',
+                                    style: TextStyle(fontSize: 15)),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        }));
+                      },
+                    ));
               },
             ),
           ],
@@ -37,8 +63,29 @@ Future emotionServeyDialog(BuildContext context) {
   );
 }
 
+Widget emotionList({
+  required StateSetter setDialog,
+}) {
+  return Row(
+    children: [
+      emotionCheck(
+          emotion: 'love_emotion', emotionValue: '행복', setDialog: setDialog),
+      emotionCheck(
+          emotion: 'smile_emotion', emotionValue: '웃음', setDialog: setDialog),
+      emotionCheck(
+          emotion: 'normal_emotion', emotionValue: '보통', setDialog: setDialog),
+      emotionCheck(
+          emotion: 'sad_emotion', emotionValue: '슬픔', setDialog: setDialog),
+      emotionCheck(
+          emotion: 'angry_emotion', emotionValue: '화남', setDialog: setDialog),
+    ],
+  );
+}
+
 Widget emotionCheck(
-    String emotion, String emotionValue, StateSetter setDialog) {
+    {required String emotion,
+    required String emotionValue,
+    required StateSetter setDialog}) {
   return Expanded(
     child: Column(
       mainAxisSize: MainAxisSize.min,
