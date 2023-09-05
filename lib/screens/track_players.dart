@@ -1,40 +1,27 @@
-import 'dart:io';
-import 'dart:convert';
-import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/widgets/track_widget.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color_widget.dart';
+import 'package:home_therapy_app/screens/settings_drawer.dart';
+import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
-import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
-import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
 
-class TrackPlayers extends StatefulWidget {
-  const TrackPlayers({super.key});
+class TrackDevice extends StatefulWidget {
+  const TrackDevice({super.key});
 
   @override
-  State<TrackPlayers> createState() => _TrackPlayersState();
+  State<TrackDevice> createState() => _TrackDeviceState();
 }
 
-class _TrackPlayersState extends State<TrackPlayers>
+class _TrackDeviceState extends State<TrackDevice>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
   late final AnimationController _lottieController;
 
-  List<String> ipv4Addresses = [];
-  late List<String> trackPlayList;
-  late List<bool> trackPlayIndex;
-  String? trackTitle;
   bool isPlaying = false;
-  bool isListPlaying = false;
-  bool? deviceConnected;
-  int? currentVolume;
   Future<bool>? asyncMethodFuture;
 
   @override
@@ -45,7 +32,6 @@ class _TrackPlayersState extends State<TrackPlayers>
   }
 
   Future<bool> _asyncMethod() async {
-    await getIpAddress();
     bool isDeviceConnected = await checkDeviceConnected();
     if (isDeviceConnected == true) {
       var response = await playList();
@@ -59,55 +45,9 @@ class _TrackPlayersState extends State<TrackPlayers>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: SpeedDial(
-          icon: Icons.add_to_queue_outlined,
-          activeIcon: Icons.close,
-          visible: true,
-          childMargin: const EdgeInsets.all(15),
-          children: [
-            SpeedDialChild(
-              backgroundColor: mainColor.mainColor(),
-              labelBackgroundColor: mainColor.mainColor(),
-              shape: const CircleBorder(
-                  side: BorderSide(color: Colors.transparent)),
-              child: const Icon(Icons.zoom_in_outlined),
-              onTap: () {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return DeviceScannDialog(ipv4Addresses);
-                  },
-                );
-              },
-              label: '기기 검색',
-              labelStyle: const TextStyle(fontSize: 18, color: Colors.white),
-            ),
-            SpeedDialChild(
-              backgroundColor: mainColor.mainColor(),
-              labelBackgroundColor: mainColor.mainColor(),
-              shape: const CircleBorder(
-                  side: BorderSide(color: Colors.transparent)),
-              child: const Icon(Icons.app_settings_alt_outlined),
-              onTap: () {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const DeviceInfoDialog();
-                  },
-                );
-              },
-              label: '기기 정보',
-              labelStyle: const TextStyle(fontSize: 18, color: Colors.white),
-            )
-          ],
-        ),
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         key: _scaffoldKey,
         appBar: basicAppBar(context, _scaffoldKey),
-        // endDrawer: Drawer(),
+        endDrawer: const Settings(),
         extendBodyBehindAppBar: true,
         body: backgroundContainer(
           context,
@@ -185,25 +125,5 @@ class _TrackPlayersState extends State<TrackPlayers>
         ],
       ),
     ]);
-  }
-
-//여기서부턴 함수들을 정의합니다.
-  Future<void> getIpAddress() async {
-    await NetworkInterface.list().then((interfaces) {
-      for (var interface in interfaces) {
-        for (var address in interface.addresses) {
-          if (address.type == InternetAddressType.IPv4) {
-            String ipAddress = address.address;
-            int dotIndex = ipAddress.lastIndexOf('.');
-            if (dotIndex != -1) {
-              ipv4Addresses.add(ipAddress.substring(0, dotIndex));
-            } else {
-              ipv4Addresses.add(ipAddress);
-            }
-          }
-        }
-      }
-      // debugPrint('$ipv4Addresses');
-    });
   }
 }

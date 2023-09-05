@@ -244,9 +244,6 @@ class _TrackPlayerState extends State<TrackPlayer> {
                 ))
           ],
         ),
-        // SizedBox(
-        //   height: 20,
-        // ),
         SingleChildScrollView(
           child: ListView.builder(
               shrinkWrap: true,
