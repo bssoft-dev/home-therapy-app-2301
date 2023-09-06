@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/emotion_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:home_therapy_app/utils/track_play.dart';
@@ -29,7 +30,7 @@ class _DevicePlayerState extends State<DevicePlayer>
   @override
   void initState() {
     super.initState();
-    asyncMethodFuture = _asyncMethod();
+    asyncMethodFuture = asyncTrackPlayListMethod();
     _lottieController = AnimationController(vsync: this);
   }
 
@@ -40,16 +41,16 @@ class _DevicePlayerState extends State<DevicePlayer>
     super.dispose();
   }
 
-  Future<bool> _asyncMethod() async {
-    bool isDeviceConnected = await checkDeviceConnected();
-    if (isDeviceConnected == true) {
-      var response = await playList();
-      if (response == 503) {
-        return false;
-      }
-    }
-    return isDeviceConnected;
-  }
+  // Future<bool> _asyncMethod() async {
+  //   bool isDeviceConnected = await checkDeviceConnected();
+  //   if (isDeviceConnected == true) {
+  //     var response = await playList();
+  //     if (response == 503) {
+  //       return false;
+  //     }
+  //   }
+  //   return isDeviceConnected;
+  // }
 
   @override
   Widget build(BuildContext context) {

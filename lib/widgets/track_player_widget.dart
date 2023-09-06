@@ -168,8 +168,84 @@ Widget trackList({
   );
 }
 
-Widget mixTrackList() {
-  return SingleChildScrollView();
+Widget mixTrackList({required List containerColors}) {
+  return SingleChildScrollView(
+    child: StatefulBuilder(builder: (context, StateSetter setDialog) {
+      return ListView.builder(
+          shrinkWrap: true,
+          itemCount: trackPlayList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setDialog(() {
+                      containerColors[index] = !containerColors[index];
+                      debugPrint('${containerColors[index]}');
+                    });
+                  },
+                  child: Container(
+                    color: containerColors[index]
+                        ? mainColor.mainColor().withOpacity(0.1)
+                        : Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Text(
+                            trackPlayList[index],
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {},
+                                icon: containerColors[index]
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: mainColor.mainColor(),
+                                      )
+                                    : Icon(
+                                        Icons.check_circle_outline,
+                                        color: mainColor.mainColor(),
+                                      )),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 30),
+                              child: playIconButton(
+                                  Icons.play_arrow,
+                                  Icons.pause_circle_outline,
+                                  40,
+                                  trackPlayIndex[index], () async {
+                                setDialog(() {
+                                  trackPlayIndex[index] =
+                                      !trackPlayIndex[index];
+                                });
+                                if (trackPlayIndex[index]) {
+                                  await trackPlay(
+                                      'ready', trackPlayList[index]);
+                                } else {
+                                  await playStop();
+                                }
+                              }),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Divider(
+                  color: Colors.grey,
+                  thickness: 1,
+                  height: 0,
+                )
+              ],
+            );
+          });
+    }),
+  );
 }
 
 Future<void> volumeUp(int currentVolume) async {
