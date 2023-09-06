@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/track_player_dialog_widget.dart';
+import 'package:home_therapy_app/widgets/track_player_widget.dart';
 
 class VolumeController extends StatefulWidget {
   const VolumeController({super.key});

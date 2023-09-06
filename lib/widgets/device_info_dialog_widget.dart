@@ -69,12 +69,7 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
                   removeStoredValue('therapy_device');
                   successSnackBar(
                       context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
-                  Navigator.pop(context);
                   Get.offAllNamed('/home');
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const TrackPlayer()));
                 },
                 icon: const Icon(Icons.close),
                 label: const Text("삭제"),

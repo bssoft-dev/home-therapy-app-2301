@@ -4,6 +4,7 @@ import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/screens/home.dart';
 import 'package:home_therapy_app/screens/settings_drawer.dart';
 import 'package:home_therapy_app/screens/device_player.dart';
+import 'package:home_therapy_app/screens/track_mixing.dart';
 
 class RoutePage {
   static final page = [
@@ -22,6 +23,11 @@ class RoutePage {
       page: () => const Settings(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 150),
+    ),
+    GetPage(
+      name: RouteName.trackMixing,
+      page: () => const TrackMixing(),
+      transition: Transition.noTransition,
     ),
   ];
 }

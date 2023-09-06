@@ -1,7 +1,8 @@
+import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/emotion_survey_dialog.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/track_widget.dart';
+import 'package:home_therapy_app/utils/track_play.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/screens/settings_drawer.dart';
@@ -58,8 +59,8 @@ class _DevicePlayerState extends State<DevicePlayer>
         endDrawer: const Settings(),
         extendBodyBehindAppBar: true,
         body: backgroundContainer(
-          context,
-          Center(
+          context: context,
+          child: Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -157,8 +158,10 @@ class _DevicePlayerState extends State<DevicePlayer>
                 borderRadius: BorderRadius.circular(100),
                 color: mainColor.mainColor(),
               ),
-              child: simpleIconButton(
-                  Icons.tune_outlined, 25, Colors.white, () {}))
+              child:
+                  simpleIconButton(Icons.tune_outlined, 25, Colors.white, () {
+                Get.toNamed('trackMixing');
+              }))
         ],
       ),
     ]);

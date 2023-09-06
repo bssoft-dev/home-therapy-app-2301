@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/track_player_dialog_widget.dart';
+import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
@@ -16,16 +16,14 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   Future<bool>? asyncMethodFuture;
   String? trackTitle;
+
   @override
   void initState() {
     super.initState();
-    asyncMethodFuture = asyncMethod();
+    asyncMethodFuture = asyncTrackPlayListMethod();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String> ipv4Addresses = [];
-  late List<String> trackPlayList;
-  late List<bool> trackPlayIndex;
   final MainColor mainColor = MainColor();
   @override
   Widget build(BuildContext context) {
@@ -43,8 +41,8 @@ class _SettingsState extends State<Settings> {
               onPressed: () => Navigator.pop(context)),
         ),
         body: backgroundContainer(
-            context,
-            Column(
+            context: context,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 settingTile('기기 검색', Icons.search, () {
@@ -65,13 +63,25 @@ class _SettingsState extends State<Settings> {
                     },
                   );
                 }),
-                settingTile('음원 미리듣기', Icons.audiotrack, () {
-                  playTrack(
-                      context: context,
-                      trackTitle: '미리듣기',
-                      actionText: '확인',
-                      volumeSlider: const VolumeController());
-                }),
+                FutureBuilder<bool>(
+                    future: asyncMethodFuture,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data == true) {
+                          return settingTile('음원 미리듣기', Icons.audiotrack, () {
+                            playTrack(
+                                context: context,
+                                trackTitle: '미리듣기',
+                                actionText: '확인',
+                                volumeSlider: const VolumeController());
+                          });
+                        } else {
+                          return const Text('');
+                        }
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    }),
               ],
             )));
   }

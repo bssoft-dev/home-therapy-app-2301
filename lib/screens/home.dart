@@ -57,8 +57,8 @@ class _HomeState extends State<Home> {
         appBar: basicAppBar(context, _scaffoldKey),
         extendBodyBehindAppBar: true,
         body: backgroundContainer(
-          context,
-          Center(
+          context: context,
+          child: Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget backgroundContainer(BuildContext context, Widget child) {
+Widget backgroundContainer({
+  required BuildContext context,
+  required Widget child,
+}) {
   return Container(
     decoration: const BoxDecoration(
       image: DecorationImage(

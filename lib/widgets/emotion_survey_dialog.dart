@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/custom_button_widget.dart';
-import 'package:home_therapy_app/widgets/track_player_dialog_widget.dart';
+import 'package:get/get.dart';
+import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,7 +13,7 @@ emotionServeyDialog({
   AnimationController? lottieController,
   bool? isPlaying,
 }) {
-  asyncMethodFuture = asyncMethod();
+  asyncMethodFuture = asyncTrackPlayListMethod();
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -53,9 +53,7 @@ emotionServeyDialog({
                                 child: const Text('확인',
                                     style: TextStyle(fontSize: 15)),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.popAndPushNamed(
-                                      context, '/therapyDevice');
+                                  Get.offAllNamed('/therapyDevice');
                                 },
                               ),
                             ],
