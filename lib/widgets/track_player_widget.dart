@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:home_therapy_app/widgets/track_mixing_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,14 @@ import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/track_play.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 List<String> ipv4Addresses = [];
 late List<String> trackPlayList;
 late List<bool> trackPlayIndex;
 String? trackTitle;
-
+String firstMixingTrack = '';
+String secondMixingTrack = '';
 Future<bool> asyncTrackPlayListMethod() async {
   await getIpAddress();
   bool isDeviceConnected = await checkDeviceConnected();
@@ -170,80 +173,103 @@ Widget trackList({
 
 Widget mixTrackList({required List containerColors}) {
   return SingleChildScrollView(
-    child: StatefulBuilder(builder: (context, StateSetter setDialog) {
-      return ListView.builder(
-          shrinkWrap: true,
-          itemCount: trackPlayList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setDialog(() {
-                      containerColors[index] = !containerColors[index];
-                      debugPrint('${containerColors[index]}');
-                    });
-                  },
-                  child: Container(
-                    color: containerColors[index]
-                        ? mainColor.mainColor().withOpacity(0.1)
-                        : Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Text(
-                            trackPlayList[index],
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: containerColors[index]
-                                    ? Icon(
-                                        Icons.check_circle,
-                                        color: mainColor.mainColor(),
-                                      )
-                                    : Icon(
-                                        Icons.check_circle_outline,
-                                        color: mainColor.mainColor(),
-                                      )),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 30),
-                              child: playIconButton(
-                                  Icons.play_arrow,
-                                  Icons.pause_circle_outline,
-                                  40,
-                                  trackPlayIndex[index], () async {
-                                setDialog(() {
-                                  trackPlayIndex[index] =
-                                      !trackPlayIndex[index];
+    child: StatefulBuilder(builder: (context, StateSetter setState) {
+      return Stack(
+        children: [
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: trackPlayList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          containerColors[index] = !containerColors[index];
+                          debugPrint('${containerColors[index]}');
+                          int bottmSheetCount = containerColors
+                              .where((element) => element == true)
+                              .length;
+                          if (bottmSheetCount >= 2) {
+                            List<String> selectedTracks = [];
+                            for (int i = 0; i < trackPlayList.length; i++) {
+                              if (containerColors[i]) {
+                                selectedTracks.add(trackPlayList[i]);
+                              }
+                            }
+                            // if (selectedTracks.length >= 2) {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: TrackMixingSlider(
+                                        trackSelectOne: selectedTracks[0],
+                                        trackSelectTwo: selectedTracks[1]),
+                                  );
                                 });
-                                if (trackPlayIndex[index]) {
-                                  await trackPlay(
-                                      'ready', trackPlayList[index]);
-                                } else {
-                                  await playStop();
-                                }
-                              }),
-                            )
+                            // }
+                          }
+                        });
+                      },
+                      child: Container(
+                        color: containerColors[index]
+                            ? mainColor.mainColor().withOpacity(0.1)
+                            : Colors.transparent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 30),
+                              child: Text(
+                                trackPlayList[index],
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                    containerColors[index]
+                                        ? Icons.check_circle
+                                        : Icons.check_circle_outline,
+                                    color: mainColor.mainColor()),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 30),
+                                  child: playIconButton(
+                                      Icons.play_arrow,
+                                      Icons.pause_circle_outline,
+                                      40,
+                                      trackPlayIndex[index], () async {
+                                    setState(() {
+                                      trackPlayIndex[index] =
+                                          !trackPlayIndex[index];
+                                    });
+                                    if (trackPlayIndex[index]) {
+                                      await trackPlay(
+                                          'ready', trackPlayList[index]);
+                                    } else {
+                                      await playStop();
+                                    }
+                                  }),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                  height: 0,
-                )
-              ],
-            );
-          });
+                    const Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                      height: 0,
+                    ),
+                  ],
+                );
+              }),
+        ],
+      );
     }),
   );
 }

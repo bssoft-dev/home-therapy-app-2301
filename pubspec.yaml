@@ -43,6 +43,7 @@ dependencies:
   ping_discover_network_forked: ^0.0.1
   shared_preferences_foundation: ^2.2.2
   lottie: ^2.6.0
+  syncfusion_flutter_gauges: ^22.2.12
 
 dev_dependencies:
   flutter_test:

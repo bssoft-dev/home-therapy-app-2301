@@ -3,34 +3,21 @@ import 'package:home_therapy_app/utils/main_color.dart';
 
 final MainColor mainColor = MainColor();
 
-Widget simpleOutlineButton(
-    String text, IconData icon, double size, void Function() onPressed) {
+Widget simpleOutlineButton({
+  required String text,
+  required IconData icon,
+  required double size,
+  required void Function() onPressed,
+  required bool isPlaying,
+  IconData? alternateIcon,
+}) {
   return OutlinedButton.icon(
     label: Text(
       text,
       style: TextStyle(color: mainColor.mainColor()),
     ),
     icon: Icon(
-      icon,
-      size: size,
-      color: mainColor.mainColor(),
-    ),
-    onPressed: onPressed,
-    style: OutlinedButton.styleFrom(
-      side: BorderSide(color: mainColor.mainColor()),
-    ),
-  );
-}
-
-Widget button(
-    String text, IconData icon, double size, void Function() onPressed) {
-  return ElevatedButton.icon(
-    label: Text(
-      text,
-      style: TextStyle(color: mainColor.mainColor()),
-    ),
-    icon: Icon(
-      icon,
+      isPlaying ? alternateIcon : icon,
       size: size,
       color: mainColor.mainColor(),
     ),
@@ -64,6 +51,7 @@ Widget playIconButton(
     icon: Icon(
       isPlaying ? alternateIcon : icon,
       size: size,
+      color: mainColor.mainColor(),
     ),
     onPressed: onPressed,
   );
