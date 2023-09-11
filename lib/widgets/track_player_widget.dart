@@ -9,7 +9,6 @@ import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/track_play.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 List<String> ipv4Addresses = [];
 late List<String> trackPlayList;
@@ -76,35 +75,37 @@ Future playTrack({
           content: SizedBox(
             height: 350,
             width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            right: 10, left: 10, bottom: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: mainColor.mainColor(),
-                          ),
-                          child: Lottie.asset('assets/lottie/track_list.json',
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.fill,
-                              animate: true),
-                        )),
-                    Text(trackTitle,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ))
-                  ],
-                ),
-                const SizedBox(height: 20),
-                trackList(setDialog: setDialog),
-                volumeSlider ?? const SizedBox(height: 0),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              right: 10, left: 10, bottom: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: mainColor.mainColor(),
+                            ),
+                            child: Lottie.asset('assets/lottie/track_list.json',
+                                width: 40,
+                                height: 40,
+                                fit: BoxFit.fill,
+                                animate: true),
+                          )),
+                      Text(trackTitle,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ))
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  trackList(setDialog: setDialog),
+                  volumeSlider ?? const SizedBox(height: 0),
+                ],
+              ),
             ),
           ),
           actions: <Widget>[
@@ -125,7 +126,7 @@ Future playTrack({
 Widget trackList({
   StateSetter? setDialog,
 }) {
-  return SingleChildScrollView(
+  return Scrollbar(
     child: ListView.builder(
         shrinkWrap: true,
         itemCount: trackPlayList.length,

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/utils/track_play.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 // ignore: must_be_immutable
@@ -14,7 +19,11 @@ class TrackMixingSlider extends StatefulWidget {
 }
 
 class _TrackMixingSliderState extends State<TrackMixingSlider> {
+  TextEditingController mixingTitleController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   double _firstvoluemValue = 0;
+  bool isPlaying = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -124,18 +133,110 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             simpleOutlineButton(
-                isPlaying: false,
-                text: '믹싱 미리듣기',
-                icon: Icons.play_arrow,
-                alternateIcon: Icons.pause_circle_outline,
-                size: 30,
-                onPressed: () => print('믹싱 미리듣기 api 연결')),
+              isPlaying: isPlaying,
+              text: '믹싱 미리듣기',
+              icon: Icons.play_arrow,
+              alternateIcon: Icons.pause_circle_outline,
+              size: 30,
+              onPressed: () async {
+                String? deviceIP = await getStoredValue('therapy_device');
+                httpPost(
+                        path: '/api/mix/preview',
+                        data: {
+                          'files': [
+                            widget.trackSelectOne,
+                            widget.trackSelectTwo
+                          ],
+                          'ratio': [
+                            (_firstvoluemValue.toInt() / (100)),
+                            (((_firstvoluemValue.toInt() - 100).abs()) / 100)
+                          ],
+                        },
+                        deviceIP: '$deviceIP')
+                    .then((value) {
+                  setState(() {
+                    isPlaying = !isPlaying;
+                    if (isPlaying == false) {
+                      playStop();
+                    }
+                  });
+                });
+              },
+            ),
             simpleOutlineButton(
                 isPlaying: false,
                 text: '믹싱 저장하기',
                 icon: Icons.save,
                 size: 30,
-                onPressed: () => print('믹싱 저장 api 연결')),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: const Text('믹싱 저장하기'),
+                            content: Form(
+                              key: _formKey,
+                              child: TextFormField(
+                                // autovalidateMode: AutovalidateMode.always,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.isEmpty ||
+                                      value == '') {
+                                    return '믹싱 이름을 입력해주세요.';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  mixingTitleController.text = value!;
+                                },
+                                controller: mixingTitleController,
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: '믹싱 이름을 입력해주세요.'),
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('취소')),
+                              TextButton(
+                                  onPressed: () async {
+                                    String? deviceIP =
+                                        await getStoredValue('therapy_device');
+
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                      httpPost(
+                                          path:
+                                              '/api/mix/save/${mixingTitleController.text}',
+                                          data: {
+                                            'files': [
+                                              widget.trackSelectOne,
+                                              widget.trackSelectTwo
+                                            ],
+                                            'ratio': [
+                                              (_firstvoluemValue.toInt() /
+                                                  (100)),
+                                              (((_firstvoluemValue.toInt() -
+                                                          100)
+                                                      .abs()) /
+                                                  100)
+                                            ],
+                                          },
+                                          deviceIP: '$deviceIP');
+
+                                      Get.offNamedUntil(
+                                          '/therapyDevice', (route) => false);
+                                      // ignore: use_build_context_synchronously
+                                      successSnackBar(context, '저장이 완료되었습니다.',
+                                          '믹싱페이지에서 추가된 음원을 확인해주세요');
+                                    }
+                                  },
+                                  child: const Text('저장'))
+                            ],
+                          ));
+                }),
           ],
         )
       ],

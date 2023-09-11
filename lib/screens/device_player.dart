@@ -9,7 +9,6 @@ import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/screens/settings_drawer.dart';
 import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
-import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 
 class DevicePlayer extends StatefulWidget {
   const DevicePlayer({super.key});
