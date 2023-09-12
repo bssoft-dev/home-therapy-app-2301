@@ -56,3 +56,21 @@ Widget playIconButton(
     onPressed: onPressed,
   );
 }
+
+Widget changeIconButton({
+  required IconData icon,
+  required double size,
+  required bool isChange,
+  required Color iconColor,
+  required Color alternateIconColor,
+  required void Function() onPressed,
+}) {
+  return IconButton(
+    icon: Icon(
+      icon,
+      size: size,
+      color: isChange ? alternateIconColor : iconColor,
+    ),
+    onPressed: onPressed,
+  );
+}

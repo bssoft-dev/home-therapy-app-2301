@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/track_mixing_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -62,71 +63,65 @@ Future playTrack({
   required BuildContext context,
   required String trackTitle,
   required String actionText,
-  Future? emotionSurvey,
+  Future? afterSurvey,
   Widget? volumeSlider,
 }) {
-  return showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (BuildContext context) {
-      return StatefulBuilder(builder: ((context, StateSetter setDialog) {
-        return AlertDialog(
-          contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
-          content: SizedBox(
-            height: 350,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: SingleChildScrollView(
-              child: Column(
+  return Get.dialog(barrierDismissible: false, name: '음원재생',
+      StatefulBuilder(builder: ((context, StateSetter setDialog) {
+    return AlertDialog(
+      contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.7,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              right: 10, left: 10, bottom: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: mainColor.mainColor(),
-                            ),
-                            child: Lottie.asset('assets/lottie/track_list.json',
-                                width: 40,
-                                height: 40,
-                                fit: BoxFit.fill,
-                                animate: true),
-                          )),
-                      Text(trackTitle,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ))
-                    ],
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: mainColor.mainColor(),
+                    ),
+                    child: Lottie.asset('assets/lottie/track_list.json',
+                        width: 40, height: 40, fit: BoxFit.fill, animate: true),
                   ),
-                  const SizedBox(height: 20),
-                  trackList(setDialog: setDialog),
-                  volumeSlider ?? const SizedBox(height: 0),
+                  const SizedBox(width: 10),
+                  Text(trackTitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ))
                 ],
               ),
             ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(actionText, style: const TextStyle(fontSize: 20)),
-              onPressed: () {
-                Navigator.of(context).pop();
-                emotionSurvey;
-              },
-            ),
+            const SizedBox(height: 20),
+            SingleChildScrollView(
+                child: trackList(setDialog: setDialog, context: context)),
           ],
-        );
-      }));
-    },
-  );
+        ),
+      ),
+      actions: <Widget>[
+        volumeSlider ?? const SizedBox(height: 0),
+        TextButton(
+          child: Text(actionText, style: const TextStyle(fontSize: 20)),
+          onPressed: () {
+            Get.back();
+            afterSurvey;
+          },
+        ),
+      ],
+    );
+  })));
 }
 
 Widget trackList({
   StateSetter? setDialog,
+  required BuildContext context,
 }) {
-  return Scrollbar(
+  return SizedBox(
+    height: MediaQuery.of(context).size.height * 0.5,
     child: ListView.builder(
         shrinkWrap: true,
         itemCount: trackPlayList.length,

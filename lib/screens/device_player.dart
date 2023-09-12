@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/emotion_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/noise_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/utils/track_play.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/screens/settings_drawer.dart';
@@ -96,10 +95,7 @@ class _DevicePlayerState extends State<DevicePlayer>
             } else {
               _lottieController.repeat();
               isPlaying = true;
-              emotionServeyDialog(
-                  context: context,
-                  lottieController: _lottieController,
-                  isPlaying: isPlaying);
+              noiseServeyDialog(context: context);
             }
           },
           child: Lottie.asset(
