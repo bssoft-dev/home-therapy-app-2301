@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/noise_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';

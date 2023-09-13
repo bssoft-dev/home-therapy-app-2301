@@ -18,7 +18,8 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
   TextEditingController nameController = TextEditingController();
-  TextEditingController installLocationController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController jobController = TextEditingController();
   TextEditingController installIdController = TextEditingController();
 
   @override
@@ -39,7 +40,8 @@ class _HomeState extends State<Home> {
               title: '개인정보 입력',
               subtitle: '',
               nameController: nameController,
-              installLocationController: installLocationController,
+              ageController: ageController,
+              jobController: jobController,
               installIdController: installIdController,
               editContentOnPressed: () {},
               editTitleOnPressed: () {},

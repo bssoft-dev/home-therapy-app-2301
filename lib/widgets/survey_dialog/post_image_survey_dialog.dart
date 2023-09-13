@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/after_emtion_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
 
 Offset? marker;
-List<double>? imageOffset;
+List<double>? comportPloat;
 
-imageEmotionServeyDialog({
+comportPloatServeyDialog({
   required BuildContext context,
-  String? noiseCheckResult,
-  int? emotionCheckResult,
-  int? awakenerCheckResult,
-  List<String>? playTrackTitleReuslt,
+  bool? noiseCheckResult,
+  int? preEmotionCheckResult,
+  int? preAwakeCheckResult,
+  List<dynamic>? playTrackTitleReuslt,
 }) {
   return Get.dialog(barrierDismissible: false, name: '청취후감정설문',
       StatefulBuilder(builder: ((context, StateSetter setDialog) {
@@ -34,14 +35,12 @@ imageEmotionServeyDialog({
               onTapDown: (TapDownDetails details) {
                 setDialog(() {
                   marker = details.localPosition;
-                  imageOffset = [marker!.dx, marker!.dy];
-
-                  print(imageOffset);
+                  comportPloat = [marker!.dx, marker!.dy];
                 });
               },
               child: Stack(
                 children: [
-                  Image.asset('assets/survey/image_emotion.png'),
+                  Image.asset('assets/survey/comport_ploat.png'),
                   if (marker != null)
                     Positioned(
                       left: marker!.dx - 20,
@@ -57,14 +56,18 @@ imageEmotionServeyDialog({
         TextButton(
           child: const Text('확인', style: TextStyle(fontSize: 20)),
           onPressed: () {
-            Get.back();
-            afterEmotionServeyDialog(
-                context: context,
-                noiseCheckResult: noiseCheckResult,
-                emotionCheckResult: emotionCheckResult,
-                awakenerCheckResult: awakenerCheckResult,
-                playTrackTitleReuslt: playTrackTitleReuslt,
-                imageOffsetResult: imageOffset);
+            if (comportPloat == null) {
+              failSnackBar('오류', '감정 상태를 선택해주세요.');
+            } else {
+              Get.back();
+              postEmotionServeyDialog(
+                  context: context,
+                  noiseCheckResult: noiseCheckResult,
+                  preEmotionCheckResult: preEmotionCheckResult,
+                  preAwakeCheckResult: preAwakeCheckResult,
+                  playTrackTitleReuslt: playTrackTitleReuslt,
+                  comportPloatResult: comportPloat);
+            }
           },
         ),
       ],

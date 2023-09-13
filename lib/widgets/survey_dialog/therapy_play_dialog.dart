@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/after_image_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/post_image_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
 
 therapyPlay({
   required BuildContext context,
-  String? noiseCheckResult,
-  int? emotionCheckResult,
-  int? awakenerCheckResult,
+  bool? noiseCheckResult,
+  int? preEmotionCheckResult,
+  int? preAwakeCheckResult,
 }) {
   return playTrack(
     context: context,
@@ -15,11 +15,11 @@ therapyPlay({
     actionText: '종료',
     volumeSlider: const VolumeController(),
     afterSurvey: (playTrackTitle) {
-      return imageEmotionServeyDialog(
+      return comportPloatServeyDialog(
         context: context,
         noiseCheckResult: noiseCheckResult,
-        emotionCheckResult: emotionCheckResult,
-        awakenerCheckResult: awakenerCheckResult,
+        preEmotionCheckResult: preEmotionCheckResult,
+        preAwakeCheckResult: preAwakeCheckResult,
         playTrackTitleReuslt: playTrackTitle,
       );
     },

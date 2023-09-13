@@ -19,42 +19,50 @@ class Survey {
 }
 
 class SurveyResult {
-  String? noise;
-  int? emotion;
-  int? awakener;
-  List<String>? trackList;
-  List<double>? image;
-  int? afEmotion;
-  int? afAwakener;
+  String? username;
+  String? sn;
+  bool? noise;
+  int? preEmotion;
+  int? preAwake;
+  List<dynamic>? tracks;
+  List<double>? comportPloat;
+  int? postEmotion;
+  int? postAwake;
 
   SurveyResult(
-      {this.noise,
-      this.emotion,
-      this.awakener,
-      this.trackList,
-      this.image,
-      this.afEmotion,
-      this.afAwakener});
+      {this.username,
+      this.sn,
+      this.noise,
+      this.preEmotion,
+      this.preAwake,
+      this.tracks,
+      this.comportPloat,
+      this.postEmotion,
+      this.postAwake});
 
   SurveyResult.fromJson(Map<String, dynamic> json) {
+    username = json['username'];
+    sn = json['sn'];
     noise = json['noise'];
-    emotion = json['emotion'];
-    awakener = json['awakener'];
-    trackList = json['trackList'].cast<String>();
-    image = json['image'].cast<int>();
-    afEmotion = json['afEmotion'];
-    afAwakener = json['afAwakener'];
+    preEmotion = json['preEmotion'];
+    preAwake = json['preAwake'];
+    tracks = json['tracks'].cast<String>();
+    comportPloat = json['comportPloat'].cast<int>();
+    postEmotion = json['postEmotion'];
+    postAwake = json['postAwake'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    data['sn'] = this.sn;
     data['noise'] = this.noise;
-    data['emotion'] = this.emotion;
-    data['awakener'] = this.awakener;
-    data['trackList'] = this.trackList;
-    data['image'] = this.image;
-    data['afEmotion'] = this.afEmotion;
-    data['afAwakener'] = this.afAwakener;
+    data['preEmotion'] = this.preEmotion;
+    data['preAwake'] = this.preAwake;
+    data['tracks'] = this.tracks;
+    data['comportPloat'] = this.comportPloat;
+    data['postEmotion'] = this.postEmotion;
+    data['postAwake'] = this.postAwake;
     return data;
   }
 }

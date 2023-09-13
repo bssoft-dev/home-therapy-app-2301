@@ -15,7 +15,8 @@ Future<dynamic> showUserInfoDialog({
   required String title,
   required String subtitle,
   required TextEditingController nameController,
-  required TextEditingController installLocationController,
+  required TextEditingController ageController,
+  required TextEditingController jobController,
   required TextEditingController installIdController,
   required VoidCallback editTitleOnPressed,
   required VoidCallback editContentOnPressed,
@@ -61,16 +62,15 @@ Future<dynamic> showUserInfoDialog({
                             ],
                           ),
                         ),
-                      radioBox('Gender', genderGroupValue, '여성', '남성', ''),
+                      textBox('Name', nameController, '이름', '이름을 입력해주세요.'),
                       const SizedBox(
                         height: 5,
                       ),
-                      textBox('Age', nameController, '나이', '나이를 입력해주세요.'),
+                      textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
                       const SizedBox(
                         height: 5,
                       ),
-                      textBox('Install Location', installLocationController,
-                          '설치 위치', '설치 위치를 입력해주세요.'),
+                      textBox('Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
                       const SizedBox(
                         height: 5,
                       ),
@@ -107,11 +107,12 @@ Future<dynamic> showUserInfoDialog({
 
                                 //db에 저장하는 과정 필요
                                 debugPrint(nameController.text);
-                                debugPrint(installLocationController.text);
+                                debugPrint(ageController.text);
+                                debugPrint(jobController.text);
                                 debugPrint(installIdController.text);
-                                debugPrint(genderGroupValue);
-                                debugPrint(noiseSensitivityGroupValue);
-                                debugPrint(sincerityGroupValue);
+                                // debugPrint(genderGroupValue);
+                                // debugPrint(noiseSensitivityGroupValue);
+                                // debugPrint(sincerityGroupValue);
 
                                 //한번만 호출되도록 하는 캐시 저장코드
                                 // saveStoredValue(

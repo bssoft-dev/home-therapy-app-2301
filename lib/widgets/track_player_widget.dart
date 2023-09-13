@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/track_mixing_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -17,7 +18,10 @@ late List<bool> trackPlayIndex;
 String? trackTitle;
 String firstMixingTrack = '';
 String secondMixingTrack = '';
-List<String> playTrackTitle = [];
+List<Map<String, dynamic>> playTrackTitle = [];
+DateTime? startTime;
+DateTime? endTime;
+List<int>? playingTime;
 
 Future<bool> asyncTrackPlayListMethod() async {
   await getIpAddress();
@@ -65,7 +69,9 @@ Future playTrack({
   required BuildContext context,
   required String trackTitle,
   required String actionText,
-  Future? Function(List<String> playTrackTitle)? afterSurvey,
+  Future? Function(
+    List<dynamic> playTrackTitle,
+  )? afterSurvey,
   Widget? volumeSlider,
 }) {
   return Get.dialog(barrierDismissible: false, name: '음원재생',
@@ -155,9 +161,18 @@ Widget trackList({
                         });
                         if (trackPlayIndex[index]) {
                           await trackPlay('ready', trackPlayList[index]);
-                          playTrackTitle.add(trackPlayList[index]);
+                          startTime = DateTime.now();
                         } else {
                           await playStop();
+                          endTime = DateTime.now();
+                          await calculateElapsedTime().then((value) {
+                            debugPrint('value: $value');
+                            playingTime?.add(value);
+                          });
+                          playTrackTitle.add({
+                            "name": trackPlayList[index],
+                            "time": playingTime![index],
+                          });
                         }
                       }),
                     ),
@@ -168,6 +183,15 @@ Widget trackList({
           );
         }),
   );
+}
+
+Future<int> calculateElapsedTime() async {
+  if (startTime != null && endTime != null) {
+    Duration elapsedDuration = endTime!.difference(startTime!);
+    return elapsedDuration.inSeconds;
+  } else {
+    return failSnackBar('오류', '음원을 실행해주세요.');
+  }
 }
 
 Widget mixTrackList({required List containerColors}) {

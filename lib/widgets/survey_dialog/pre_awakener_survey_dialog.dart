@@ -4,18 +4,18 @@ import 'package:home_therapy_app/utils/assets_list.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/therapy_play_dialog.dart';
 
-List<String>? awakenerList;
-int awakenerValue = 0;
-List<int>? awakenerValueList;
-awakenerServeyDialog({
+List<String>? preAwakeList;
+int preAwakeValue = 0;
+List<int>? preAwakeValueList;
+preAwakeServeyDialog({
   required BuildContext context,
-  String? noiseCheckResult,
-  int? emotionCheckResult,
+  bool? noiseCheckResult,
+  int? preEmotionCheckResult,
 }) {
   loadAssetImages('awakener').then((value) {
-    awakenerList = value;
-    awakenerValueList =
-        List<int>.generate(awakenerList!.length, (index) => index);
+    preAwakeList = value;
+    preAwakeValueList =
+        List<int>.generate(preAwakeList!.length, (index) => index);
 
     return commonSurveyDialog(
       context: context,
@@ -23,16 +23,16 @@ awakenerServeyDialog({
       surveyTitle: '질문 3/3',
       surveyContentTitle: '[각성가]',
       surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
-      surveyImageList: awakenerList,
-      surveyContentValueList: awakenerValueList,
-      surveyContentValue: awakenerValue,
+      surveyImageList: preAwakeList,
+      surveyContentValueList: preAwakeValueList,
+      surveyContentValue: preAwakeValue,
       surveyOnPressed: () {
         Get.back();
         therapyPlay(
           context: context,
           noiseCheckResult: noiseCheckResult,
-          emotionCheckResult: emotionCheckResult,
-          awakenerCheckResult: awakenerValue,
+          preEmotionCheckResult: preEmotionCheckResult,
+          preAwakeCheckResult: preAwakeValue,
         );
       },
     );
