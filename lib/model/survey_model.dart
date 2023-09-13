@@ -23,7 +23,7 @@ class SurveyResult {
   int? emotion;
   int? awakener;
   List<String>? trackList;
-  List<int>? image;
+  List<double>? image;
   int? afEmotion;
   int? afAwakener;
 

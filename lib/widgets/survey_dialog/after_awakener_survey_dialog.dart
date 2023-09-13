@@ -15,6 +15,7 @@ afterAwakenerServeyDialog({
   int? awakenerCheckResult,
   List<String>? playTrackTitleReuslt,
   int? afterEmotionCheckResult,
+  List<double>? imageOffsetResult,
 }) {
   loadAssetImages('awakener').then((value) {
     // print(value);
@@ -38,6 +39,7 @@ afterAwakenerServeyDialog({
           emotion: emotionCheckResult,
           awakener: awakenerCheckResult,
           trackList: playTrackTitleReuslt,
+          image: imageOffsetResult,
           afEmotion: afterEmotionCheckResult,
           afAwakener: afterAwakenerValue,
         ).toJson();
@@ -46,6 +48,7 @@ afterAwakenerServeyDialog({
           emotion: emotionCheckResult,
           awakener: awakenerCheckResult,
           trackList: playTrackTitleReuslt,
+          image: imageOffsetResult,
           afEmotion: afterEmotionCheckResult,
           afAwakener: afterAwakenerValue,
         ).toJson());

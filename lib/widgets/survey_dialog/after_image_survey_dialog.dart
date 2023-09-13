@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/after_emtion_survey_dialog.dart';
 
-bool isYesCheck = false;
-bool isNoCheck = false;
-String? noiseCheckResult;
+Offset? marker;
+List<double>? imageOffset;
+
 imageEmotionServeyDialog({
   required BuildContext context,
   String? noiseCheckResult,
@@ -29,7 +30,27 @@ imageEmotionServeyDialog({
           const Text('현재 본인과 비슷한 감정 상태 유형을 고르시오',
               style: TextStyle(fontSize: 15)),
           const SizedBox(height: 15),
-          Image.asset('assets/survey/image_emotion.png'),
+          GestureDetector(
+              onTapDown: (TapDownDetails details) {
+                setDialog(() {
+                  marker = details.localPosition;
+                  imageOffset = [marker!.dx, marker!.dy];
+
+                  print(imageOffset);
+                });
+              },
+              child: Stack(
+                children: [
+                  Image.asset('assets/survey/image_emotion.png'),
+                  if (marker != null)
+                    Positioned(
+                      left: marker!.dx - 20,
+                      top: marker!.dy - 50,
+                      child: Icon(Icons.where_to_vote,
+                          size: 50, color: mainColor.mainColor()),
+                    ),
+                ],
+              )),
         ],
       ),
       actions: [
@@ -42,7 +63,8 @@ imageEmotionServeyDialog({
                 noiseCheckResult: noiseCheckResult,
                 emotionCheckResult: emotionCheckResult,
                 awakenerCheckResult: awakenerCheckResult,
-                playTrackTitleReuslt: playTrackTitleReuslt);
+                playTrackTitleReuslt: playTrackTitleReuslt,
+                imageOffsetResult: imageOffset);
           },
         ),
       ],

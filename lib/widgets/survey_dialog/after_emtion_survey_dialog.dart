@@ -13,6 +13,7 @@ afterEmotionServeyDialog({
   int? emotionCheckResult,
   int? awakenerCheckResult,
   List<String>? playTrackTitleReuslt,
+  List<double>? imageOffsetResult,
 }) {
   loadAssetImages('emotion').then((value) {
     afterEmotionList = value;
@@ -36,6 +37,7 @@ afterEmotionServeyDialog({
           emotionCheckResult: emotionCheckResult,
           awakenerCheckResult: awakenerCheckResult,
           playTrackTitleReuslt: playTrackTitleReuslt,
+          imageOffsetResult: imageOffsetResult,
           afterEmotionCheckResult: afterEmotionValue,
         );
       },
