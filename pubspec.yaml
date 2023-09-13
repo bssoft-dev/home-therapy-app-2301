@@ -70,6 +70,7 @@ flutter:
   assets:
     - assets/
     - assets/lottie/
+    - assets/survey/
     - assets/survey/emotion/
     - assets/survey/awakener/
 

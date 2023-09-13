@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/emotion_survey_dialog.dart';
 
 bool isYesCheck = false;
@@ -68,9 +69,13 @@ noiseServeyDialog({
         TextButton(
           child: const Text('확인', style: TextStyle(fontSize: 20)),
           onPressed: () {
-            print(noiseCheckResult);
-            Get.back();
-            emotionServeyDialog(context: context);
+            if (isNoCheck || isYesCheck) {
+              Get.back();
+              emotionServeyDialog(
+                  context: context, noiseCheckResult: noiseCheckResult);
+            } else {
+              failSnackBar('오류', '소음여부를 선택해주세요.');
+            }
           },
         ),
       ],

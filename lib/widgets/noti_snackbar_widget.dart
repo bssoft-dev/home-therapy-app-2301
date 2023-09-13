@@ -1,5 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
+import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+
+failSnackBar(String notiTitle, String notiContent) {
+  return Get.snackbar(
+    notiTitle,
+    notiContent,
+    snackPosition: SnackPosition.BOTTOM,
+    duration: const Duration(seconds: 3),
+    icon: const Icon(Icons.error, size: 30, color: Colors.white),
+    backgroundColor: mainColor.mainColor(),
+    titleText: Text(notiTitle,
+        style: const TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+    messageText: Text(notiContent,
+        style: const TextStyle(fontSize: 15, color: Colors.white)),
+  );
+}
 
 successSnackBar(BuildContext context, String notiTitle, String notiContent) {
   final MainColor mainColor = MainColor();

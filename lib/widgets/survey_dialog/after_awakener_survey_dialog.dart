@@ -1,78 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/model/survey_model.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 
-bool isYesCheck = false;
-bool isNoCheck = false;
-String? noiseCheckResult;
-
-List<String>? emotionList;
+List<String>? afterAwakenerList;
+int afterAwakenerValue = 0;
+List<int>? afterAwakenerValueList;
 
 afterAwakenerServeyDialog({
   required BuildContext context,
+  String? noiseCheckResult,
+  int? emotionCheckResult,
+  int? awakenerCheckResult,
+  List<String>? playTrackTitleReuslt,
+  int? afterEmotionCheckResult,
 }) {
   loadAssetImages('awakener').then((value) {
     // print(value);
-    emotionList = value;
-  });
+    afterAwakenerList = value;
+    afterAwakenerValueList =
+        List<int>.generate(afterAwakenerList!.length, (index) => index);
 
-  double emotionHeight = MediaQuery.of(context).size.height * 0.15;
-
-  return Get.dialog(barrierDismissible: false, name: '정서가설문',
-      StatefulBuilder(builder: ((context, StateSetter setDialog) {
-    print(emotionList);
-    return AlertDialog(
-      actionsAlignment: MainAxisAlignment.center,
-      actionsPadding: const EdgeInsets.only(bottom: 10),
-      contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-      title: const Text(
-        '질문 3/3',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('[각성가]', style: TextStyle(fontSize: 15)),
-          const Text('현재 본인과 비슷한 감정 상태 유형을 고르시오',
-              style: TextStyle(fontSize: 15)),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: GridView.builder(
-                itemCount: emotionList!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisExtent: emotionHeight,
-                ),
-                itemBuilder: ((BuildContext context, index) {
-                  return Column(
-                    children: [
-                      Image.asset(emotionList![index]),
-                      Radio(
-                        value: index,
-                        groupValue: 0,
-                        onChanged: (value) {
-                          setDialog(() {
-                            print(value);
-                          });
-                        },
-                      ),
-                    ],
-                  );
-                })),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          child: const Text('확인', style: TextStyle(fontSize: 20)),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ],
+    return commonSurveyDialog(
+      context: context,
+      dialogName: '청취후 각성가설문',
+      surveyTitle: '질문 3/3',
+      surveyContentTitle: '[각성가]',
+      surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
+      surveyImageList: afterAwakenerList,
+      surveyContentValueList: afterAwakenerValueList,
+      surveyContentValue: afterAwakenerValue,
+      surveyOnPressed: () {
+        Get.back();
+        SurveyResult(
+          noise: noiseCheckResult,
+          emotion: emotionCheckResult,
+          awakener: awakenerCheckResult,
+          trackList: playTrackTitleReuslt,
+          afEmotion: afterEmotionCheckResult,
+          afAwakener: afterAwakenerValue,
+        ).toJson();
+        print(SurveyResult(
+          noise: noiseCheckResult,
+          emotion: emotionCheckResult,
+          awakener: awakenerCheckResult,
+          trackList: playTrackTitleReuslt,
+          afEmotion: afterEmotionCheckResult,
+          afAwakener: afterAwakenerValue,
+        ).toJson());
+      },
     );
-  })));
+  });
 }

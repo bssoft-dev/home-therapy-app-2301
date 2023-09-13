@@ -17,6 +17,8 @@ late List<bool> trackPlayIndex;
 String? trackTitle;
 String firstMixingTrack = '';
 String secondMixingTrack = '';
+List<String> playTrackTitle = [];
+
 Future<bool> asyncTrackPlayListMethod() async {
   await getIpAddress();
   bool isDeviceConnected = await checkDeviceConnected();
@@ -63,7 +65,7 @@ Future playTrack({
   required BuildContext context,
   required String trackTitle,
   required String actionText,
-  Future? afterSurvey,
+  Future? Function(List<String> playTrackTitle)? afterSurvey,
   Widget? volumeSlider,
 }) {
   return Get.dialog(barrierDismissible: false, name: '음원재생',
@@ -106,9 +108,9 @@ Future playTrack({
         volumeSlider ?? const SizedBox(height: 0),
         TextButton(
           child: Text(actionText, style: const TextStyle(fontSize: 20)),
-          onPressed: () {
+          onPressed: () async {
             Get.back();
-            afterSurvey;
+            await afterSurvey!(playTrackTitle);
           },
         ),
       ],
@@ -153,6 +155,7 @@ Widget trackList({
                         });
                         if (trackPlayIndex[index]) {
                           await trackPlay('ready', trackPlayList[index]);
+                          playTrackTitle.add(trackPlayList[index]);
                         } else {
                           await playStop();
                         }

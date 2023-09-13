@@ -2,77 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/awakener_survey_dialog.dart';
-
-bool isYesCheck = false;
-bool isNoCheck = false;
-String? noiseCheckResult;
+import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 
 List<String>? emotionList;
+int emotionValue = 0;
+List<int>? emotionValueList;
 
 emotionServeyDialog({
   required BuildContext context,
+  String? noiseCheckResult,
 }) {
-  loadAssetImages('emotion').then((value) {
-    // print(value);
+  loadAssetImages('emotion').then((value) async {
     emotionList = value;
-  });
-  double emotionHeight = MediaQuery.of(context).size.height * 0.15;
+    emotionValueList =
+        List<int>.generate(emotionList!.length, (index) => index);
 
-  return Get.dialog(barrierDismissible: false, name: '정서가설문',
-      StatefulBuilder(builder: ((context, StateSetter setDialog) {
-    return AlertDialog(
-      actionsAlignment: MainAxisAlignment.center,
-      actionsPadding: const EdgeInsets.only(bottom: 10),
-      contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-      title: const Text(
-        '질문 2/3',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('[정서가]', style: TextStyle(fontSize: 15)),
-          const Text('현재 본인과 비슷한 감정 상태 유형을 고르시오',
-              style: TextStyle(fontSize: 15)),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: GridView.builder(
-                itemCount: emotionList!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisExtent: emotionHeight,
-                ),
-                itemBuilder: ((BuildContext context, index) {
-                  return Column(
-                    children: [
-                      Image.asset(emotionList![index]),
-                      Radio(
-                        value: index,
-                        groupValue: 0,
-                        onChanged: (value) {
-                          setDialog(() {
-                            print(value);
-                          });
-                        },
-                      ),
-                    ],
-                  );
-                })),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          child: const Text('확인', style: TextStyle(fontSize: 20)),
-          onPressed: () {
-            Get.back();
-            awakenerServeyDialog(context: context);
-          },
-        ),
-      ],
+    return commonSurveyDialog(
+      context: context,
+      dialogName: '정서가설문',
+      surveyTitle: '질문 2/3',
+      surveyContentTitle: '[정서가]',
+      surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
+      surveyImageList: emotionList,
+      surveyContentValueList: emotionValueList,
+      surveyContentValue: emotionValue,
+      surveyOnPressed: () {
+        Get.back();
+        awakenerServeyDialog(
+          context: context,
+          noiseCheckResult: noiseCheckResult,
+          emotionCheckResult: emotionValue,
+        );
+      },
     );
-  })));
+  });
 }
