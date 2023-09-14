@@ -18,10 +18,10 @@ late List<bool> trackPlayIndex;
 String? trackTitle;
 String firstMixingTrack = '';
 String secondMixingTrack = '';
-List<Map<String, dynamic>> playTrackTitle = [];
+List<Map<String, dynamic>> playTrackTitleTime = [];
 DateTime? startTime;
 DateTime? endTime;
-List<int>? playingTime;
+List<int> playingTime = [];
 
 Future<bool> asyncTrackPlayListMethod() async {
   await getIpAddress();
@@ -69,9 +69,9 @@ Future playTrack({
   required BuildContext context,
   required String trackTitle,
   required String actionText,
-  Future? Function(
+  Future Function(
     List<dynamic> playTrackTitle,
-  )? afterSurvey,
+  )? postSurvey,
   Widget? volumeSlider,
 }) {
   return Get.dialog(barrierDismissible: false, name: '음원재생',
@@ -115,8 +115,14 @@ Future playTrack({
         TextButton(
           child: Text(actionText, style: const TextStyle(fontSize: 20)),
           onPressed: () async {
-            Get.back();
-            await afterSurvey!(playTrackTitle);
+            if (playTrackTitleTime.isNotEmpty) {
+              Get.back();
+              await postSurvey!(playTrackTitleTime);
+              // print(playTrackTitleTime);
+              // playTrackTitleTime.clear();
+            } else {
+              failSnackBar('오류', '음원을 선택해 재생시켜주세요.');
+            }
           },
         ),
       ],
@@ -125,7 +131,7 @@ Future playTrack({
 }
 
 Widget trackList({
-  StateSetter? setDialog,
+  required StateSetter setDialog,
   required BuildContext context,
 }) {
   return SizedBox(
@@ -156,7 +162,7 @@ Widget trackList({
                           Icons.pause_circle_outline,
                           40,
                           trackPlayIndex[index], () async {
-                        setDialog!(() {
+                        setDialog(() {
                           trackPlayIndex[index] = !trackPlayIndex[index];
                         });
                         if (trackPlayIndex[index]) {
@@ -165,13 +171,12 @@ Widget trackList({
                         } else {
                           await playStop();
                           endTime = DateTime.now();
-                          await calculateElapsedTime().then((value) {
-                            debugPrint('value: $value');
-                            playingTime?.add(value);
-                          });
-                          playTrackTitle.add({
-                            "name": trackPlayList[index],
-                            "time": playingTime![index],
+                          await calculateElapsedTime(startTime!, endTime!)
+                              .then((playingTime) {
+                            playTrackTitleTime.add({
+                              "name": trackPlayList[index],
+                              "time": playingTime,
+                            });
                           });
                         }
                       }),
@@ -185,13 +190,9 @@ Widget trackList({
   );
 }
 
-Future<int> calculateElapsedTime() async {
-  if (startTime != null && endTime != null) {
-    Duration elapsedDuration = endTime!.difference(startTime!);
-    return elapsedDuration.inSeconds;
-  } else {
-    return failSnackBar('오류', '음원을 실행해주세요.');
-  }
+Future<int> calculateElapsedTime(DateTime startTime, DateTime endTime) async {
+  Duration elapsedDuration = endTime.difference(startTime);
+  return elapsedDuration.inSeconds;
 }
 
 Widget mixTrackList({required List containerColors}) {

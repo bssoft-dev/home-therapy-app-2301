@@ -19,48 +19,48 @@ class Survey {
 }
 
 class SurveyResult {
-  String? username;
   String? sn;
+  String? username;
   bool? noise;
   int? preEmotion;
   int? preAwake;
   List<dynamic>? tracks;
-  List<double>? comportPloat;
+  List<dynamic>? comportPlot;
   int? postEmotion;
   int? postAwake;
 
   SurveyResult(
-      {this.username,
-      this.sn,
+      {this.sn,
+      this.username,
       this.noise,
       this.preEmotion,
       this.preAwake,
       this.tracks,
-      this.comportPloat,
+      this.comportPlot,
       this.postEmotion,
       this.postAwake});
 
   SurveyResult.fromJson(Map<String, dynamic> json) {
-    username = json['username'];
     sn = json['sn'];
+    username = json['username'];
     noise = json['noise'];
     preEmotion = json['preEmotion'];
     preAwake = json['preAwake'];
-    tracks = json['tracks'].cast<String>();
-    comportPloat = json['comportPloat'].cast<int>();
+    tracks = json['tracks'];
+    comportPlot = json['comportPlot'];
     postEmotion = json['postEmotion'];
     postAwake = json['postAwake'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
     data['sn'] = this.sn;
+    data['username'] = this.username;
     data['noise'] = this.noise;
     data['preEmotion'] = this.preEmotion;
     data['preAwake'] = this.preAwake;
     data['tracks'] = this.tracks;
-    data['comportPloat'] = this.comportPloat;
+    data['comportPlot'] = this.comportPlot;
     data['postEmotion'] = this.postEmotion;
     data['postAwake'] = this.postAwake;
     return data;

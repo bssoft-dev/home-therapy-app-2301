@@ -13,7 +13,8 @@ postEmotionServeyDialog({
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
-  List<double>? comportPloatResult,
+  List<dynamic>? comportPlotResult,
+  int? postEmotionCheckResult,
 }) {
   loadAssetImages('emotion').then((value) {
     postEmotionList = value;
@@ -29,15 +30,23 @@ postEmotionServeyDialog({
       surveyImageList: postEmotionList,
       surveyContentValueList: postEmotionValueList,
       surveyContentValue: postEmotionValue,
-      surveyOnPressed: () {
+      onSurveyContentValueChange: (value) => postEmotionValue = value,
+      surveyOnPressed: () async {
         Get.back();
-        postAwakeServeyDialog(
+        print('noiseDialog:$noiseCheckResult');
+        print('trackplay:$playTrackTitleReuslt');
+        print('emotionDialog:$preEmotionCheckResult');
+        print('awakeDialog:$preAwakeCheckResult');
+        print('comportPlot:$comportPlotResult');
+        print('PostemotionDialog:$postEmotionValue');
+
+        await postAwakeServeyDialog(
           context: context,
           noiseCheckResult: noiseCheckResult,
           preEmotionCheckResult: preEmotionCheckResult,
           preAwakeCheckResult: preAwakeCheckResult,
           playTrackTitleReuslt: playTrackTitleReuslt,
-          comportPloatResult: comportPloatResult,
+          comportPlotResult: comportPlotResult,
           postEmotionCheckResult: postEmotionValue,
         );
       },

@@ -14,8 +14,13 @@ therapyPlay({
     trackTitle: '음원목록',
     actionText: '종료',
     volumeSlider: const VolumeController(),
-    afterSurvey: (playTrackTitle) {
-      return comportPloatServeyDialog(
+    postSurvey: (playTrackTitle) {
+      debugPrint(('noiseDialog:$noiseCheckResult'));
+      debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
+      debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
+      debugPrint(('tracks:$playTrackTitle'));
+
+      return comportPlotServeyDialog(
         context: context,
         noiseCheckResult: noiseCheckResult,
         preEmotionCheckResult: preEmotionCheckResult,

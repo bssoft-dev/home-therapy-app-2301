@@ -68,11 +68,12 @@ noiseServeyDialog({
       actions: [
         TextButton(
           child: const Text('확인', style: TextStyle(fontSize: 20)),
-          onPressed: () {
+          onPressed: () async {
             if (isNoCheck || isYesCheck) {
               Get.back();
-              preEmotionServeyDialog(
+              await preEmotionServeyDialog(
                   context: context, noiseCheckResult: noiseCheckResult);
+              debugPrint(('noiseDialog:$noiseCheckResult'));
             } else {
               failSnackBar('오류', '소음여부를 선택해주세요.');
             }

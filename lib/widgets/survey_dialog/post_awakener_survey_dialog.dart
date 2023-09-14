@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/model/survey_model.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 
 List<String>? postAwakeList;
@@ -15,7 +16,7 @@ postAwakeServeyDialog({
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
-  List<double>? comportPloatResult,
+  List<dynamic>? comportPlotResult,
 }) {
   loadAssetImages('awakener').then((value) {
     // print(value);
@@ -32,30 +33,38 @@ postAwakeServeyDialog({
       surveyImageList: postAwakeList,
       surveyContentValueList: postAwakeValueList,
       surveyContentValue: postAwakeValue,
-      surveyOnPressed: () {
-        Get.back();
-        SurveyResult(
-          username: 'test',
-          sn: 'test',
-          noise: noiseCheckResult,
-          preEmotion: preEmotionCheckResult,
-          preAwake: preAwakeCheckResult,
-          tracks: playTrackTitleReuslt,
-          comportPloat: comportPloatResult,
-          postEmotion: postEmotionCheckResult,
-          postAwake: postAwakeValue,
-        ).toJson();
-        print(SurveyResult(
-          username: 'test',
-          sn: 'test',
-          noise: noiseCheckResult,
-          preEmotion: preEmotionCheckResult,
-          preAwake: preAwakeCheckResult,
-          tracks: playTrackTitleReuslt,
-          comportPloat: comportPloatResult,
-          postEmotion: postEmotionCheckResult,
-          postAwake: postAwakeValue,
-        ).toJson());
+      onSurveyContentValueChange: (value) => postAwakeValue = value,
+      surveyOnPressed: () async {
+        httpPostRun(
+                path: 'api/runs',
+                data: SurveyResult(
+                  sn: 'test',
+                  username: 'test',
+                  noise: noiseCheckResult,
+                  preEmotion: preEmotionCheckResult,
+                  preAwake: preAwakeCheckResult,
+                  tracks: playTrackTitleReuslt,
+                  comportPlot: comportPlotResult,
+                  postEmotion: postEmotionCheckResult,
+                  postAwake: postAwakeValue,
+                ).toJson())
+            .then((value) {
+          if (value == 200) {
+            Get.offAllNamed('/therapyDevice');
+          }
+          debugPrint('httpPostRun: $value');
+        });
+        // debugPrint('${SurveyResult(
+        //   username: 'test',
+        //   sn: 'test',
+        //   noise: noiseCheckResult,
+        //   preEmotion: preEmotionCheckResult,
+        //   preAwake: preAwakeCheckResult,
+        //   tracks: playTrackTitleReuslt,
+        //   comportPlot: comportPlotResult,
+        //   postEmotion: postEmotionCheckResult,
+        //   postAwake: postAwakeValue,
+        // ).toJson()}');
       },
     );
   });

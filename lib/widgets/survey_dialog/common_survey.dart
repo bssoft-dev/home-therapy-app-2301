@@ -5,12 +5,14 @@ commonSurveyDialog({
   required BuildContext context,
   required String dialogName,
   required String surveyTitle,
-  String? surveyContentTitle,
   required String surveyContent,
+  required VoidCallback surveyOnPressed,
+  required ValueChanged<int> onSurveyContentValueChange, // 이 부분을 추가
+
+  String? surveyContentTitle,
+  int? surveyContentValue,
   List<String>? surveyImageList,
   List<int>? surveyContentValueList,
-  int? surveyContentValue,
-  required VoidCallback surveyOnPressed,
 }) {
   return Get.dialog(barrierDismissible: false, name: dialogName,
       StatefulBuilder(builder: (context, StateSetter setDialog) {
@@ -47,7 +49,8 @@ commonSurveyDialog({
                         groupValue: surveyContentValue,
                         onChanged: (value) {
                           setDialog(() {
-                            surveyContentValue = value as int;
+                            onSurveyContentValueChange(value as int);
+                            surveyContentValue = value;
                             surveyContentValueList[index] = surveyContentValue!;
                           });
                         },

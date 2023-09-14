@@ -44,3 +44,25 @@ httpPost(
     return 503;
   }
 }
+
+httpPostRun({
+  required String path,
+  required Map data,
+}) async {
+  String baseUrl = 'https://home-therapy.bs-soft.co.kr/$path';
+  var body = jsonEncode(data);
+  debugPrint(baseUrl);
+  debugPrint(body);
+  try {
+    http.Response response =
+        await http.post(Uri.parse(baseUrl), body: body, headers: {
+      "accept": "application/json",
+      "Content-Type": "application/json",
+    });
+    return response.statusCode;
+  } catch (e) {
+    // 서버가 응답하지 않는 경우
+    httpFailureNotice();
+    return 503;
+  }
+}

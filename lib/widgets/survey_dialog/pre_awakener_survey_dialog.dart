@@ -26,6 +26,7 @@ preAwakeServeyDialog({
       surveyImageList: preAwakeList,
       surveyContentValueList: preAwakeValueList,
       surveyContentValue: preAwakeValue,
+      onSurveyContentValueChange: (value) => preAwakeValue = value,
       surveyOnPressed: () {
         Get.back();
         therapyPlay(
@@ -34,6 +35,9 @@ preAwakeServeyDialog({
           preEmotionCheckResult: preEmotionCheckResult,
           preAwakeCheckResult: preAwakeValue,
         );
+        debugPrint(('noiseDialog:$noiseCheckResult'));
+        debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
+        debugPrint(('PreawakeDialog:$preAwakeValue'));
       },
     );
   });

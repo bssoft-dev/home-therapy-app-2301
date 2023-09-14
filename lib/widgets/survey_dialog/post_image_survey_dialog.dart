@@ -5,9 +5,9 @@ import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
 
 Offset? marker;
-List<double>? comportPloat;
+List<dynamic>? comportPlot;
 
-comportPloatServeyDialog({
+comportPlotServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
@@ -35,7 +35,7 @@ comportPloatServeyDialog({
               onTapDown: (TapDownDetails details) {
                 setDialog(() {
                   marker = details.localPosition;
-                  comportPloat = [marker!.dx, marker!.dy];
+                  comportPlot = [(marker!.dx), (marker!.dy)];
                 });
               },
               child: Stack(
@@ -55,18 +55,24 @@ comportPloatServeyDialog({
       actions: [
         TextButton(
           child: const Text('확인', style: TextStyle(fontSize: 20)),
-          onPressed: () {
-            if (comportPloat == null) {
+          onPressed: () async {
+            if (comportPlot!.isEmpty) {
               failSnackBar('오류', '감정 상태를 선택해주세요.');
             } else {
               Get.back();
-              postEmotionServeyDialog(
+              await postEmotionServeyDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   preEmotionCheckResult: preEmotionCheckResult,
                   preAwakeCheckResult: preAwakeCheckResult,
                   playTrackTitleReuslt: playTrackTitleReuslt,
-                  comportPloatResult: comportPloat);
+                  comportPlotResult: comportPlot);
+
+              debugPrint(('noiseDialog:$noiseCheckResult'));
+              debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
+              debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
+              debugPrint(('tracks:$playTrackTitleReuslt'));
+              debugPrint(('comportPlot:$comportPlot'));
             }
           },
         ),

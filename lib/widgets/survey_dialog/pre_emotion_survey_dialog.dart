@@ -26,6 +26,7 @@ preEmotionServeyDialog({
       surveyImageList: preEmotionList,
       surveyContentValueList: preEmotionValueList,
       surveyContentValue: preEmotionValue,
+      onSurveyContentValueChange: (value) => preEmotionValue = value,
       surveyOnPressed: () {
         Get.back();
         preAwakeServeyDialog(
@@ -33,6 +34,8 @@ preEmotionServeyDialog({
           noiseCheckResult: noiseCheckResult,
           preEmotionCheckResult: preEmotionValue,
         );
+        debugPrint(('noiseDialog:$noiseCheckResult'));
+        debugPrint(('PreemotionDialog:$preEmotionValue'));
       },
     );
   });
