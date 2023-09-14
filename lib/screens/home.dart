@@ -5,7 +5,7 @@ import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
-import 'package:home_therapy_app/widgets/text_field_widget.dart';
+import 'package:home_therapy_app/widgets/pre_survey_dialog/apartment_noise_survey_dialog.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -35,18 +35,19 @@ class _HomeState extends State<Home> {
     getStoredValue('Install_ID').then((infoinitCheck) {
       if (infoinitCheck == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          showUserInfoDialog(
-              context: context,
-              title: '개인정보 입력',
-              subtitle: '',
-              nameController: nameController,
-              ageController: ageController,
-              jobController: jobController,
-              installIdController: installIdController,
-              editContentOnPressed: () {},
-              editTitleOnPressed: () {},
-              cancelText: '취소',
-              saveText: '저장');
+          apartmentNoiseServeyDialogQ1(context: context);
+          // showUserInfoDialog(
+          //     context: context,
+          //     title: '개인정보 입력',
+          //     subtitle: '',
+          //     nameController: nameController,
+          //     ageController: ageController,
+          //     jobController: jobController,
+          //     installIdController: installIdController,
+          //     editContentOnPressed: () {},
+          //     editTitleOnPressed: () {},
+          //     cancelText: '취소',
+          //     saveText: '저장');
         });
       }
     });

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:lottie/lottie.dart';
 
@@ -24,114 +25,112 @@ Future<dynamic> showUserInfoDialog({
   required String saveText,
   VoidCallback? saveOnPressed,
 }) {
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.transparent,
-      builder: (context) {
-        return Form(
-          key: _formKey,
-          child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-              child: StatefulBuilder(builder: (context, StateSetter setDialog) {
-                return AlertDialog(
-                  actionsPadding: const EdgeInsets.only(bottom: 10),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (title != '')
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Lottie.asset(
-                                    'assets/lottie/user_info.json',
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.fill,
-                                    repeat: false,
-                                    animate: true),
-                              ),
-                              Text(
-                                title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                            ],
-                          ),
+  return Get.dialog(barrierDismissible: false, name: '개인정보', StatefulBuilder(
+    builder: (context, StateSetter setState) {
+      return Form(
+        key: _formKey,
+        child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+            child: StatefulBuilder(builder: (context, StateSetter setDialog) {
+              return AlertDialog(
+                actionsPadding: const EdgeInsets.only(bottom: 10),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (title != '')
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Lottie.asset(
+                                  'assets/lottie/user_info.json',
+                                  width: 40,
+                                  height: 40,
+                                  fit: BoxFit.fill,
+                                  repeat: false,
+                                  animate: true),
+                            ),
+                            Text(
+                              title,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                          ],
                         ),
-                      textBox('Name', nameController, '이름', '이름을 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
                       ),
-                      textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      textBox('Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      textBox('Install ID', installIdController, '설치 아이디',
-                          '설치 아이디를 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    Divider(
-                      color: mainColor.mainColor(),
-                      thickness: 0.8, //thickness of divier line
+                    textBox('Name', nameController, '이름', '이름을 입력해주세요.'),
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextButton(
-                            onPressed: () {
+                    textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    textBox('Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    textBox('Install ID', installIdController, '설치 아이디',
+                        '설치 아이디를 입력해주세요.'),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
+                actions: [
+                  Divider(
+                    color: mainColor.mainColor(),
+                    thickness: 0.8, //thickness of divier line
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            cancelText,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+
+                              //db에 저장하는 과정 필요
+                              debugPrint(nameController.text);
+                              debugPrint(ageController.text);
+                              debugPrint(jobController.text);
+                              debugPrint(installIdController.text);
+                              // debugPrint(genderGroupValue);
+                              // debugPrint(noiseSensitivityGroupValue);
+                              // debugPrint(sincerityGroupValue);
+
+                              //한번만 호출되도록 하는 캐시 저장코드
+                              // saveStoredValue(
+                              //     'Install_ID', '$installIdController.text');
                               Navigator.pop(context);
-                            },
-                            child: Text(
-                              cancelText,
+                            }
+                          },
+                          child: Text(saveText,
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w400),
-                            )),
-                        TextButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-
-                                //db에 저장하는 과정 필요
-                                debugPrint(nameController.text);
-                                debugPrint(ageController.text);
-                                debugPrint(jobController.text);
-                                debugPrint(installIdController.text);
-                                // debugPrint(genderGroupValue);
-                                // debugPrint(noiseSensitivityGroupValue);
-                                // debugPrint(sincerityGroupValue);
-
-                                //한번만 호출되도록 하는 캐시 저장코드
-                                // saveStoredValue(
-                                //     'Install_ID', '$installIdController.text');
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(saveText,
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400)))
-                      ],
-                    )
-                  ],
-                );
-              })),
-        );
-      });
+                                  fontWeight: FontWeight.w400)))
+                    ],
+                  )
+                ],
+              );
+            })),
+      );
+    },
+  ));
 }
 
 Widget textBox(String formTitle, TextEditingController textEditingController,
