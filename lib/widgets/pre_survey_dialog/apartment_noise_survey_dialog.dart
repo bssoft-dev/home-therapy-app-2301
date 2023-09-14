@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/pre_common_dialog.dart';
+import 'package:home_therapy_app/widgets/pre_survey_dialog/pss_tipi_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 
-int valueQ1 = 0;
-int valueQ2 = 0;
-int valueQ3 = 0;
-int valueQ4 = 0;
-int valueQ5 = 0;
+int valueA1 = 0;
+int valueA2 = 0;
+int valueA3 = 0;
+int valueA4 = 0;
+int valueA5 = 0;
 
-int listQ1_2Count = 10;
-int listQ3_4Count = 8;
-int listQ5Count = 6;
-
-List<int> selectedQ1Values = List.generate(listQ1_2Count, (index) => 0);
-List<int> selectedQ2Values = List.generate(listQ1_2Count, (index) => 0);
-List<int> selectedQ3Values = List.generate(listQ3_4Count, (index) => 0);
-List<int> selectedQ4Values = List.generate(listQ3_4Count, (index) => 0);
-List<int> selectedQ5Values = List.generate(listQ5Count, (index) => 0);
+List<int> selectedA1Values =
+    List.generate(apartmentNoiseQ1_2.length, (index) => 0);
+List<int> selectedA2Values =
+    List.generate(apartmentNoiseQ1_2.length, (index) => 0);
+List<int> selectedA3Values =
+    List.generate(apartmentNoiseQ3_4.length, (index) => 0);
+List<int> selectedA4Values =
+    List.generate(apartmentNoiseQ3_4.length, (index) => 0);
+List<int> selectedA5Values =
+    List.generate(apartmentNoiseQ5.length, (index) => 0);
 
 apartmentNoiseServeyDialogQ1({
   required BuildContext context,
@@ -29,16 +31,17 @@ apartmentNoiseServeyDialogQ1({
       questionTitle: apartmentNoiseQ1_2,
       note: note,
       noteNumber: 0,
-      questionNumber: listQ1_2Count,
-      questionResultList: selectedQ1Values,
-      questionValue: valueQ1,
+      radioNumber: 5,
+      questionNumber: apartmentNoiseQ1_2.length,
+      questionResultList: selectedA1Values,
+      questionValue: valueA1,
       surveyOnPressed: () {
         Get.back();
         apartmentNoiseServeyDialogQ2(
-            context: context, selectedQ1Values: selectedQ1Values);
+            context: context, selectedQ1Values: selectedA1Values);
       },
       onSurveyContentValueChange: (value) {
-        valueQ1 = value;
+        valueA1 = value;
       });
 }
 
@@ -53,25 +56,26 @@ apartmentNoiseServeyDialogQ2({
       questionTitle: apartmentNoiseQ1_2,
       note: note,
       noteNumber: 1,
-      questionNumber: listQ1_2Count,
-      questionResultList: selectedQ2Values,
-      questionValue: valueQ2,
+      radioNumber: 5,
+      questionNumber: apartmentNoiseQ1_2.length,
+      questionResultList: selectedA2Values,
+      questionValue: valueA2,
       surveyOnPressed: () {
         Get.back();
         apartmentNoiseServeyDialogQ3(
             context: context,
-            selectedQ1Values: selectedQ1Values,
-            selectedQ2Values: selectedQ2Values);
+            selectedA1Values: selectedA1Values,
+            selectedA2Values: selectedA2Values);
       },
       onSurveyContentValueChange: (value) {
-        valueQ2 = value;
+        valueA2 = value;
       });
 }
 
 apartmentNoiseServeyDialogQ3({
   required BuildContext context,
-  required List<int> selectedQ1Values,
-  required List<int> selectedQ2Values,
+  required List<int> selectedA1Values,
+  required List<int> selectedA2Values,
 }) {
   return preCommonSurveyDialog(
       context: context,
@@ -80,27 +84,28 @@ apartmentNoiseServeyDialogQ3({
       questionTitle: apartmentNoiseQ3_4,
       note: note,
       noteNumber: 0,
-      questionNumber: listQ3_4Count,
-      questionResultList: selectedQ3Values,
-      questionValue: valueQ3,
+      radioNumber: 5,
+      questionNumber: apartmentNoiseQ3_4.length,
+      questionResultList: selectedA3Values,
+      questionValue: valueA3,
       surveyOnPressed: () {
         Get.back();
         apartmentNoiseServeyDialogQ4(
             context: context,
-            selectedQ1Values: selectedQ1Values,
-            selectedQ2Values: selectedQ2Values,
-            selectedQ3Values: selectedQ3Values);
+            selectedA1Values: selectedA1Values,
+            selectedA2Values: selectedA2Values,
+            selectedA3Values: selectedA3Values);
       },
       onSurveyContentValueChange: (value) {
-        valueQ3 = value;
+        valueA3 = value;
       });
 }
 
 apartmentNoiseServeyDialogQ4({
   required BuildContext context,
-  required List<int> selectedQ1Values,
-  required List<int> selectedQ2Values,
-  required List<int> selectedQ3Values,
+  required List<int> selectedA1Values,
+  required List<int> selectedA2Values,
+  required List<int> selectedA3Values,
 }) {
   return preCommonSurveyDialog(
       context: context,
@@ -109,29 +114,30 @@ apartmentNoiseServeyDialogQ4({
       questionTitle: apartmentNoiseQ3_4,
       note: note,
       noteNumber: 1,
-      questionNumber: listQ3_4Count,
-      questionResultList: selectedQ4Values,
-      questionValue: valueQ4,
+      radioNumber: 5,
+      questionNumber: apartmentNoiseQ3_4.length,
+      questionResultList: selectedA4Values,
+      questionValue: valueA4,
       surveyOnPressed: () {
         Get.back();
         apartmentNoiseServeyDialogQ5(
             context: context,
-            selectedQ1Values: selectedQ1Values,
-            selectedQ2Values: selectedQ2Values,
-            selectedQ3Values: selectedQ3Values,
-            selectedQ4Values: selectedQ4Values);
+            selectedA1Values: selectedA1Values,
+            selectedA2Values: selectedA2Values,
+            selectedA3Values: selectedA3Values,
+            selectedA4Values: selectedA4Values);
       },
       onSurveyContentValueChange: (value) {
-        valueQ4 = value;
+        valueA4 = value;
       });
 }
 
 apartmentNoiseServeyDialogQ5({
   required BuildContext context,
-  required List<int> selectedQ1Values,
-  required List<int> selectedQ2Values,
-  required List<int> selectedQ3Values,
-  required List<int> selectedQ4Values,
+  required List<int> selectedA1Values,
+  required List<int> selectedA2Values,
+  required List<int> selectedA3Values,
+  required List<int> selectedA4Values,
 }) {
   return preCommonSurveyDialog(
       context: context,
@@ -140,17 +146,21 @@ apartmentNoiseServeyDialogQ5({
       questionTitle: apartmentNoiseQ5,
       note: note,
       noteNumber: 2,
-      questionNumber: listQ5Count,
-      questionResultList: selectedQ5Values,
-      questionValue: valueQ5,
+      radioNumber: 5,
+      questionNumber: apartmentNoiseQ5.length,
+      questionResultList: selectedA5Values,
+      questionValue: valueA5,
       surveyOnPressed: () {
-        debugPrint('$selectedQ1Values');
-        debugPrint('$selectedQ2Values');
-        debugPrint('$selectedQ3Values');
-        debugPrint('$selectedQ4Values');
-        debugPrint('$selectedQ5Values');
+        Get.back();
+        pssServeyDialogQ(
+            context: context,
+            selectedA1Values: selectedA1Values,
+            selectedA2Values: selectedA2Values,
+            selectedA3Values: selectedA3Values,
+            selectedA4Values: selectedA4Values,
+            selectedA5Values: selectedA5Values);
       },
       onSurveyContentValueChange: (value) {
-        valueQ5 = value;
+        valueA5 = value;
       });
 }

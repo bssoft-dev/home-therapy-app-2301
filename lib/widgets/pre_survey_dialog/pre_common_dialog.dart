@@ -6,8 +6,9 @@ preCommonSurveyDialog({
   required String dialogName,
   required String surveyTitle,
   required List<String> questionTitle,
-  required int noteNumber,
   required List<String> note,
+  required int radioNumber,
+  required int noteNumber,
   required int questionNumber,
   required int questionValue,
   required List<int> questionResultList,
@@ -54,26 +55,29 @@ preCommonSurveyDialog({
                           textAlign: TextAlign.start,
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: List.generate(5, (choiceIndex) {
-                            return Column(
-                              children: [
-                                Text('${choiceIndex + 1}',
-                                    style: const TextStyle(fontSize: 10)),
-                                Radio(
-                                  value: choiceIndex,
-                                  groupValue: questionResultList[questionIndex],
-                                  onChanged: (value) {
-                                    setDialog(() {
-                                      questionResultList[questionIndex] =
-                                          value as int;
-                                      onSurveyContentValueChange(value);
-                                    });
-                                  },
-                                ),
-                              ],
-                            );
-                          }),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.10,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal, // 가로 스크롤 사용
+                              itemCount: radioNumber,
+                              itemBuilder: (context, choiceIndex) {
+                                return Column(children: [
+                                  Text('${choiceIndex + 1}',
+                                      style: const TextStyle(fontSize: 10)),
+                                  Radio(
+                                    value: choiceIndex,
+                                    groupValue:
+                                        questionResultList[questionIndex],
+                                    onChanged: (value) {
+                                      setDialog(() {
+                                        questionResultList[questionIndex] =
+                                            value as int;
+                                        onSurveyContentValueChange(value);
+                                      });
+                                    },
+                                  )
+                                ]);
+                              }),
                         )
                       ],
                     );
