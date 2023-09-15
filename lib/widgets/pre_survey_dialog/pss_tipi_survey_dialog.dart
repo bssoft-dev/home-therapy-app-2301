@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/model/pre_survey_model.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/pre_common_dialog.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 
@@ -10,16 +14,11 @@ List<int> selectedTValues = List.generate(tipiQ.length, (index) => 0);
 
 pssServeyDialogQ({
   required BuildContext context,
-  required List<int> selectedA1Values,
-  required List<int> selectedA2Values,
-  required List<int> selectedA3Values,
-  required List<int> selectedA4Values,
-  required List<int> selectedA5Values,
 }) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '스트레스 평가-PSS(perceived stress scale)',
-      surveyTitle: '최근 1개월간의 스트레스를 평가해주십시오.',
+      surveyTitle: '스트레스 평가',
       questionTitle: pssQ,
       note: note,
       noteNumber: 3,
@@ -27,35 +26,32 @@ pssServeyDialogQ({
       questionNumber: pssQ.length,
       questionResultList: selectedPValues,
       questionValue: valueP,
-      surveyOnPressed: () {
-        Get.back();
-        tipiServeyDialogQ(
-            context: context,
-            selectedA1Values: selectedA1Values,
-            selectedA2Values: selectedA2Values,
-            selectedA3Values: selectedA3Values,
-            selectedA4Values: selectedA4Values,
-            selectedA5Values: selectedA5Values,
-            selectedPValues: selectedPValues);
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyP': selectedPValues}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyP', 'yes');
+            Get.back();
+            tipiServeyDialogQ(context: context);
+          } else {
+            failSnackBar('오류', '설문 저장에 실패했습니다. 다시 시도해주세요');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueP = value;
       });
 }
 
-tipiServeyDialogQ({
-  required BuildContext context,
-  required List<int> selectedA1Values,
-  required List<int> selectedA2Values,
-  required List<int> selectedA3Values,
-  required List<int> selectedA4Values,
-  required List<int> selectedA5Values,
-  required List<int> selectedPValues,
-}) {
+tipiServeyDialogQ({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
-      dialogName: '스트레스 평가-PSS(perceived stress scale)',
-      surveyTitle: '최근 1개월간의 스트레스를 평가해주십시오.',
+      dialogName: '개인 성격 특성 검사-TIPI(Ten-Item Personality Inventory)',
+      surveyTitle: '개인 성격 특성 검사',
       questionTitle: tipiQ,
       note: note,
       noteNumber: 4,
@@ -63,15 +59,28 @@ tipiServeyDialogQ({
       questionNumber: tipiQ.length,
       questionResultList: selectedTValues,
       questionValue: valueT,
-      surveyOnPressed: () {
-        Get.back();
-        debugPrint('$selectedA1Values');
-        debugPrint('$selectedA2Values');
-        debugPrint('$selectedA3Values');
-        debugPrint('$selectedA4Values');
-        debugPrint('$selectedA5Values');
-        debugPrint('$selectedPValues');
-        debugPrint('$selectedTValues');
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyT': selectedTValues}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyT', 'yes');
+            Get.back();
+
+            removeStoredValue('sn');
+            removeStoredValue('username');
+            removeStoredValue('surveyA1');
+            removeStoredValue('surveyA2');
+            removeStoredValue('surveyA3');
+            removeStoredValue('surveyA4');
+            removeStoredValue('surveyA5');
+            removeStoredValue('surveyP');
+            removeStoredValue('surveyT');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueT = value;

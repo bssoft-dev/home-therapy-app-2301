@@ -71,7 +71,7 @@ Future playTrack({
   required String actionText,
   Future Function(
     List<dynamic> playTrackTitle,
-  )? postSurvey,
+  )? possurveyT,
   Widget? volumeSlider,
 }) {
   return Get.dialog(barrierDismissible: false, name: '음원재생',
@@ -117,7 +117,7 @@ Future playTrack({
           onPressed: () async {
             if (playTrackTitleTime.isNotEmpty) {
               Get.back();
-              await postSurvey!(playTrackTitleTime);
+              await possurveyT!(playTrackTitleTime);
               // print(playTrackTitleTime);
               // playTrackTitleTime.clear();
             } else {

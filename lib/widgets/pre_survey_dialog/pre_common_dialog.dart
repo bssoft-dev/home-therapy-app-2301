@@ -27,12 +27,12 @@ preCommonSurveyDialog({
         children: [
           Text(
             surveyTitle,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Text(
             '※ ${note[noteNumber]}',
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
           )
         ],
       ),
@@ -53,6 +53,7 @@ preCommonSurveyDialog({
                         Text(
                           '${questionIndex + 1}.${questionTitle[questionIndex]}',
                           textAlign: TextAlign.start,
+                          style: const TextStyle(fontSize: 17),
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
@@ -63,8 +64,10 @@ preCommonSurveyDialog({
                               itemBuilder: (context, choiceIndex) {
                                 return Column(children: [
                                   Text('${choiceIndex + 1}',
-                                      style: const TextStyle(fontSize: 10)),
+                                      style: const TextStyle(fontSize: 15)),
                                   Radio(
+                                    visualDensity:
+                                        const VisualDensity(vertical: -4),
                                     value: choiceIndex,
                                     groupValue:
                                         questionResultList[questionIndex],

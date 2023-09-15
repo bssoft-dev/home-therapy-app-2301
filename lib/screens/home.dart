@@ -6,6 +6,8 @@ import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/apartment_noise_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/pre_survey_dialog/pss_tipi_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/text_field_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,11 +22,10 @@ class _HomeState extends State<Home> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController jobController = TextEditingController();
-  TextEditingController installIdController = TextEditingController();
+  TextEditingController snController = TextEditingController();
 
   @override
   void initState() {
-    // removeStoredValue('Install_ID');
     super.initState();
     checkDeviceConnected().then((value) => setState(() {
           if (value == true) {
@@ -32,25 +33,7 @@ class _HomeState extends State<Home> {
             Get.toNamed(RouteName.therapyDevice);
           }
         }));
-    getStoredValue('Install_ID').then((infoinitCheck) {
-      if (infoinitCheck == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          apartmentNoiseServeyDialogQ1(context: context);
-          // showUserInfoDialog(
-          //     context: context,
-          //     title: '개인정보 입력',
-          //     subtitle: '',
-          //     nameController: nameController,
-          //     ageController: ageController,
-          //     jobController: jobController,
-          //     installIdController: installIdController,
-          //     editContentOnPressed: () {},
-          //     editTitleOnPressed: () {},
-          //     cancelText: '취소',
-          //     saveText: '저장');
-        });
-      }
-    });
+    checkAndSurveyDialog(context);
   }
 
   @override
@@ -86,5 +69,47 @@ class _HomeState extends State<Home> {
                 ),
               ])),
         ));
+  }
+
+  void checkAndSurveyDialog(BuildContext context) async {
+    final snCheck = await getStoredValue('sn');
+    final surveyA1 = await getStoredValue('surveyA1');
+    final surveyA2 = await getStoredValue('surveyA2');
+    final surveyA3 = await getStoredValue('surveyA3');
+    final surveyA4 = await getStoredValue('surveyA4');
+    final surveyA5 = await getStoredValue('surveyA5');
+    final surveyP = await getStoredValue('surveyP');
+    final surveyT = await getStoredValue('surveyT');
+
+    if (snCheck == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showUserInfoDialog(
+            context: context,
+            title: '개인정보 입력',
+            subtitle: '',
+            usernameController: nameController,
+            ageController: ageController,
+            jobController: jobController,
+            snController: snController,
+            editContentOnPressed: () {},
+            editTitleOnPressed: () {},
+            cancelText: '취소',
+            saveText: '저장');
+      });
+    } else if (surveyA1 == null) {
+      apartmentNoiseServeyDialogQ1(context: context);
+    } else if (surveyA2 == null) {
+      apartmentNoiseServeyDialogQ2(context: context);
+    } else if (surveyA3 == null) {
+      apartmentNoiseServeyDialogQ3(context: context);
+    } else if (surveyA4 == null) {
+      apartmentNoiseServeyDialogQ4(context: context);
+    } else if (surveyA5 == null) {
+      apartmentNoiseServeyDialogQ5(context: context);
+    } else if (surveyP == null) {
+      pssServeyDialogQ(context: context);
+    } else if (surveyT == null) {
+      tipiServeyDialogQ(context: context);
+    }
   }
 }

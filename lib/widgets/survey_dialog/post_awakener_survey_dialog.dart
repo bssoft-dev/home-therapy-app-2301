@@ -35,7 +35,7 @@ postAwakeServeyDialog({
       surveyContentValue: postAwakeValue,
       onSurveyContentValueChange: (value) => postAwakeValue = value,
       surveyOnPressed: () async {
-        httpPostRun(
+        httpPostServer(
                 path: 'api/runs',
                 data: SurveyResult(
                   sn: 'test',

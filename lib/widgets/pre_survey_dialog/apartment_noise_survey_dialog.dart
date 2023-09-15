@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/pre_common_dialog.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/pss_tipi_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
@@ -35,10 +38,23 @@ apartmentNoiseServeyDialogQ1({
       questionNumber: apartmentNoiseQ1_2.length,
       questionResultList: selectedA1Values,
       questionValue: valueA1,
-      surveyOnPressed: () {
-        Get.back();
-        apartmentNoiseServeyDialogQ2(
-            context: context, selectedQ1Values: selectedA1Values);
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        print(sn);
+        print(username);
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyA1': selectedA1Values}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyA1', 'yes');
+            Get.back();
+            apartmentNoiseServeyDialogQ2(context: context);
+          } else {
+            failSnackBar('오류', '설문 저장에 실패했습니다. 다시 시도해주세요');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueA1 = value;
@@ -47,7 +63,6 @@ apartmentNoiseServeyDialogQ1({
 
 apartmentNoiseServeyDialogQ2({
   required BuildContext context,
-  required List<int> selectedQ1Values,
 }) {
   return preCommonSurveyDialog(
       context: context,
@@ -60,23 +75,28 @@ apartmentNoiseServeyDialogQ2({
       questionNumber: apartmentNoiseQ1_2.length,
       questionResultList: selectedA2Values,
       questionValue: valueA2,
-      surveyOnPressed: () {
-        Get.back();
-        apartmentNoiseServeyDialogQ3(
-            context: context,
-            selectedA1Values: selectedA1Values,
-            selectedA2Values: selectedA2Values);
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyA2': selectedA2Values}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyA2', 'yes');
+            Get.back();
+            apartmentNoiseServeyDialogQ3(context: context);
+          } else {
+            failSnackBar('오류', '설문 저장에 실패했습니다. 다시 시도해주세요');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueA2 = value;
       });
 }
 
-apartmentNoiseServeyDialogQ3({
-  required BuildContext context,
-  required List<int> selectedA1Values,
-  required List<int> selectedA2Values,
-}) {
+apartmentNoiseServeyDialogQ3({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도3',
@@ -88,25 +108,28 @@ apartmentNoiseServeyDialogQ3({
       questionNumber: apartmentNoiseQ3_4.length,
       questionResultList: selectedA3Values,
       questionValue: valueA3,
-      surveyOnPressed: () {
-        Get.back();
-        apartmentNoiseServeyDialogQ4(
-            context: context,
-            selectedA1Values: selectedA1Values,
-            selectedA2Values: selectedA2Values,
-            selectedA3Values: selectedA3Values);
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyA3': selectedA3Values}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyA3', 'yes');
+            Get.back();
+            apartmentNoiseServeyDialogQ4(context: context);
+          } else {
+            failSnackBar('오류', '설문 저장에 실패했습니다. 다시 시도해주세요');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueA3 = value;
       });
 }
 
-apartmentNoiseServeyDialogQ4({
-  required BuildContext context,
-  required List<int> selectedA1Values,
-  required List<int> selectedA2Values,
-  required List<int> selectedA3Values,
-}) {
+apartmentNoiseServeyDialogQ4({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도4',
@@ -118,27 +141,28 @@ apartmentNoiseServeyDialogQ4({
       questionNumber: apartmentNoiseQ3_4.length,
       questionResultList: selectedA4Values,
       questionValue: valueA4,
-      surveyOnPressed: () {
-        Get.back();
-        apartmentNoiseServeyDialogQ5(
-            context: context,
-            selectedA1Values: selectedA1Values,
-            selectedA2Values: selectedA2Values,
-            selectedA3Values: selectedA3Values,
-            selectedA4Values: selectedA4Values);
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyA4': selectedA4Values}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyA4', 'yes');
+            Get.back();
+            apartmentNoiseServeyDialogQ5(context: context);
+          } else {
+            failSnackBar('오류', '설문 저장에 실패했습니다. 다시 시도해주세요');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueA4 = value;
       });
 }
 
-apartmentNoiseServeyDialogQ5({
-  required BuildContext context,
-  required List<int> selectedA1Values,
-  required List<int> selectedA2Values,
-  required List<int> selectedA3Values,
-  required List<int> selectedA4Values,
-}) {
+apartmentNoiseServeyDialogQ5({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도5',
@@ -150,15 +174,21 @@ apartmentNoiseServeyDialogQ5({
       questionNumber: apartmentNoiseQ5.length,
       questionResultList: selectedA5Values,
       questionValue: valueA5,
-      surveyOnPressed: () {
-        Get.back();
-        pssServeyDialogQ(
-            context: context,
-            selectedA1Values: selectedA1Values,
-            selectedA2Values: selectedA2Values,
-            selectedA3Values: selectedA3Values,
-            selectedA4Values: selectedA4Values,
-            selectedA5Values: selectedA5Values);
+      surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
+        httpPostServer(
+            path: 'api/users/$sn/$username',
+            data: {'surveyA5': selectedA4Values}).then((value) {
+          if (value == 200) {
+            //한번만 호출되도록 하는 캐시 저장코드
+            saveStoredValue('surveyA5', 'yes');
+            Get.back();
+            pssServeyDialogQ(context: context);
+          } else {
+            failSnackBar('오류', '설문 저장에 실패했습니다. 다시 시도해주세요');
+          }
+        });
       },
       onSurveyContentValueChange: (value) {
         valueA5 = value;

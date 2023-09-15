@@ -14,7 +14,7 @@ therapyPlay({
     trackTitle: '음원목록',
     actionText: '종료',
     volumeSlider: const VolumeController(),
-    postSurvey: (playTrackTitle) {
+    possurveyT: (playTrackTitle) {
       debugPrint(('noiseDialog:$noiseCheckResult'));
       debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
       debugPrint(('PreawakeDialog:$preAwakeCheckResult'));

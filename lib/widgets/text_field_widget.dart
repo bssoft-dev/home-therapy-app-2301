@@ -2,7 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/model/info_model.dart';
+import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_app/widgets/pre_survey_dialog/apartment_noise_survey_dialog.dart';
 import 'package:lottie/lottie.dart';
 
 final MainColor mainColor = MainColor();
@@ -15,10 +20,10 @@ Future<dynamic> showUserInfoDialog({
   required BuildContext context,
   required String title,
   required String subtitle,
-  required TextEditingController nameController,
+  required TextEditingController usernameController,
   required TextEditingController ageController,
   required TextEditingController jobController,
-  required TextEditingController installIdController,
+  required TextEditingController snController,
   required VoidCallback editTitleOnPressed,
   required VoidCallback editContentOnPressed,
   required String cancelText,
@@ -60,7 +65,7 @@ Future<dynamic> showUserInfoDialog({
                           ],
                         ),
                       ),
-                    textBox('Name', nameController, '이름', '이름을 입력해주세요.'),
+                    textBox('Name', usernameController, '이름', '이름을 입력해주세요.'),
                     const SizedBox(
                       height: 5,
                     ),
@@ -72,8 +77,7 @@ Future<dynamic> showUserInfoDialog({
                     const SizedBox(
                       height: 5,
                     ),
-                    textBox('Install ID', installIdController, '설치 아이디',
-                        '설치 아이디를 입력해주세요.'),
+                    textBox('Sn', snController, '설치 아이디', '설치 아이디를 입력해주세요.'),
                     const SizedBox(
                       height: 5,
                     ),
@@ -99,23 +103,32 @@ Future<dynamic> showUserInfoDialog({
                                 fontWeight: FontWeight.w400),
                           )),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-
-                              //db에 저장하는 과정 필요
-                              debugPrint(nameController.text);
-                              debugPrint(ageController.text);
-                              debugPrint(jobController.text);
-                              debugPrint(installIdController.text);
-                              // debugPrint(genderGroupValue);
-                              // debugPrint(noiseSensitivityGroupValue);
-                              // debugPrint(sincerityGroupValue);
-
-                              //한번만 호출되도록 하는 캐시 저장코드
-                              // saveStoredValue(
-                              //     'Install_ID', '$installIdController.text');
-                              Navigator.pop(context);
+                              await httpPostServer(
+                                      path:
+                                          'api/users/${snController.text}/${usernameController.text}',
+                                      data: userInfo(
+                                        username: usernameController.text,
+                                        age: ageController.text,
+                                        job: jobController.text,
+                                        sn: snController.text,
+                                      ).toJson())
+                                  .then((value) {
+                                if (value == 200) {
+                                  //한번만 호출되도록 하는 캐시 저장코드
+                                  saveStoredValue('sn', snController.text);
+                                  saveStoredValue(
+                                      'username', usernameController.text);
+                                  Get.back();
+                                  apartmentNoiseServeyDialogQ1(
+                                      context: context);
+                                } else {
+                                  failSnackBar(
+                                      '오류', '개인정보 저장에 실패했습니다. 다시 시도해주세요');
+                                }
+                              });
                             }
                           },
                           child: Text(saveText,
