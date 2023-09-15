@@ -49,6 +49,7 @@ postEmotionServeyDialog({
           comportPlotResult: comportPlotResult,
           postEmotionCheckResult: postEmotionValue,
         );
+        postEmotionValue = 0;
       },
     );
   });

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:home_therapy_app/model/survey_model.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 
 List<String>? postAwakeList;
@@ -35,11 +36,13 @@ postAwakeServeyDialog({
       surveyContentValue: postAwakeValue,
       onSurveyContentValueChange: (value) => postAwakeValue = value,
       surveyOnPressed: () async {
+        final sn = await getStoredValue('sn');
+        final username = await getStoredValue('username');
         httpPostServer(
                 path: 'api/runs',
                 data: SurveyResult(
-                  sn: 'test',
-                  username: 'test',
+                  sn: sn,
+                  username: username,
                   noise: noiseCheckResult,
                   preEmotion: preEmotionCheckResult,
                   preAwake: preAwakeCheckResult,
@@ -48,23 +51,13 @@ postAwakeServeyDialog({
                   postEmotion: postEmotionCheckResult,
                   postAwake: postAwakeValue,
                 ).toJson())
-            .then((value) {
+            .then((value) async {
           if (value == 200) {
-            Get.offAllNamed('/therapyDevice');
+            postAwakeValue = 0;
+            await Get.offAllNamed('/therapyDevice');
           }
-          debugPrint('httpPostRun: $value');
+          debugPrint('httpPostServer: $value');
         });
-        // debugPrint('${SurveyResult(
-        //   username: 'test',
-        //   sn: 'test',
-        //   noise: noiseCheckResult,
-        //   preEmotion: preEmotionCheckResult,
-        //   preAwake: preAwakeCheckResult,
-        //   tracks: playTrackTitleReuslt,
-        //   comportPlot: comportPlotResult,
-        //   postEmotion: postEmotionCheckResult,
-        //   postAwake: postAwakeValue,
-        // ).toJson()}');
       },
     );
   });

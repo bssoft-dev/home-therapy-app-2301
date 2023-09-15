@@ -69,9 +69,7 @@ Future playTrack({
   required BuildContext context,
   required String trackTitle,
   required String actionText,
-  Future Function(
-    List<dynamic> playTrackTitle,
-  )? possurveyT,
+  required Future Function(List<dynamic> playTrackTitle) tracks,
   Widget? volumeSlider,
 }) {
   return Get.dialog(barrierDismissible: false, name: '음원재생',
@@ -116,10 +114,12 @@ Future playTrack({
           child: Text(actionText, style: const TextStyle(fontSize: 20)),
           onPressed: () async {
             if (playTrackTitleTime.isNotEmpty) {
-              Get.back();
-              await possurveyT!(playTrackTitleTime);
+              await tracks(playTrackTitleTime);
               // print(playTrackTitleTime);
-              // playTrackTitleTime.clear();
+              setDialog(() {
+                playTrackTitleTime = [];
+                Get.back();
+              });
             } else {
               failSnackBar('오류', '음원을 선택해 재생시켜주세요.');
             }
@@ -196,106 +196,105 @@ Future<int> calculateElapsedTime(DateTime startTime, DateTime endTime) async {
 }
 
 Widget mixTrackList({required List containerColors}) {
-  return SingleChildScrollView(
-    child: StatefulBuilder(builder: (context, StateSetter setState) {
-      return Stack(
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: trackPlayList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          containerColors[index] = !containerColors[index];
-                          debugPrint('${containerColors[index]}');
-                          int bottmSheetCount = containerColors
-                              .where((element) => element == true)
-                              .length;
-                          if (bottmSheetCount >= 2) {
-                            List<String> selectedTracks = [];
-                            for (int i = 0; i < trackPlayList.length; i++) {
-                              if (containerColors[i]) {
-                                selectedTracks.add(trackPlayList[i]);
-                              }
+  return StatefulBuilder(builder: (context, StateSetter setState) {
+    return Stack(
+      children: [
+        ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: trackPlayList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        containerColors[index] = !containerColors[index];
+                        debugPrint('${containerColors[index]}');
+                        int bottmSheetCount = containerColors
+                            .where((element) => element == true)
+                            .length;
+                        if (bottmSheetCount >= 2) {
+                          List<String> selectedTracks = [];
+                          for (int i = 0; i < trackPlayList.length; i++) {
+                            if (containerColors[i]) {
+                              selectedTracks.add(trackPlayList[i]);
                             }
-                            // if (selectedTracks.length >= 2) {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.8,
-                                    child: TrackMixingSlider(
-                                        trackSelectOne: selectedTracks[0],
-                                        trackSelectTwo: selectedTracks[1]),
-                                  );
-                                });
-                            // }
                           }
-                        });
-                      },
-                      child: Container(
-                        color: containerColors[index]
-                            ? mainColor.mainColor().withOpacity(0.1)
-                            : Colors.transparent,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 30),
-                              child: Text(
-                                trackPlayList[index],
-                                style: const TextStyle(fontSize: 20),
-                              ),
+                          // if (selectedTracks.length >= 2) {
+                          showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  child: TrackMixingSlider(
+                                      trackSelectOne: selectedTracks[0],
+                                      trackSelectTwo: selectedTracks[1]),
+                                );
+                              });
+                          // }
+                        }
+                      });
+                    },
+                    child: Container(
+                      color: containerColors[index]
+                          ? mainColor.mainColor().withOpacity(0.1)
+                          : Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Text(
+                              trackPlayList[index],
+                              style: const TextStyle(fontSize: 20),
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                    containerColors[index]
-                                        ? Icons.check_circle
-                                        : Icons.check_circle_outline,
-                                    color: mainColor.mainColor()),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 30),
-                                  child: playIconButton(
-                                      Icons.play_arrow,
-                                      Icons.pause_circle_outline,
-                                      40,
-                                      trackPlayIndex[index], () async {
-                                    setState(() {
-                                      trackPlayIndex[index] =
-                                          !trackPlayIndex[index];
-                                    });
-                                    if (trackPlayIndex[index]) {
-                                      await trackPlay(
-                                          'ready', trackPlayList[index]);
-                                    } else {
-                                      await playStop();
-                                    }
-                                  }),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                  containerColors[index]
+                                      ? Icons.check_circle
+                                      : Icons.check_circle_outline,
+                                  color: mainColor.mainColor()),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 30),
+                                child: playIconButton(
+                                    Icons.play_arrow,
+                                    Icons.pause_circle_outline,
+                                    40,
+                                    trackPlayIndex[index], () async {
+                                  setState(() {
+                                    trackPlayIndex[index] =
+                                        !trackPlayIndex[index];
+                                  });
+                                  if (trackPlayIndex[index]) {
+                                    await trackPlay(
+                                        'ready', trackPlayList[index]);
+                                  } else {
+                                    await playStop();
+                                  }
+                                }),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    const Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                      height: 0,
-                    ),
-                  ],
-                );
-              }),
-        ],
-      );
-    }),
-  );
+                  ),
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 1,
+                    height: 0,
+                  ),
+                ],
+              );
+            }),
+      ],
+    );
+  });
 }
 
 Future<void> volumeUp(int currentVolume) async {

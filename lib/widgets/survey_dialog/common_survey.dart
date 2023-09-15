@@ -63,7 +63,11 @@ commonSurveyDialog({
       ),
       actions: [
         TextButton(
-          onPressed: surveyOnPressed,
+          onPressed: () {
+            setDialog(() {
+              surveyOnPressed();
+            });
+          },
           child: const Text('확인', style: TextStyle(fontSize: 20)),
         ),
       ],

@@ -70,15 +70,15 @@ tipiServeyDialogQ({required BuildContext context}) {
             saveStoredValue('surveyT', 'yes');
             Get.back();
 
-            removeStoredValue('sn');
-            removeStoredValue('username');
-            removeStoredValue('surveyA1');
-            removeStoredValue('surveyA2');
-            removeStoredValue('surveyA3');
-            removeStoredValue('surveyA4');
-            removeStoredValue('surveyA5');
-            removeStoredValue('surveyP');
-            removeStoredValue('surveyT');
+            // removeStoredValue('sn');
+            // removeStoredValue('username');
+            // removeStoredValue('surveyA1');
+            // removeStoredValue('surveyA2');
+            // removeStoredValue('surveyA3');
+            // removeStoredValue('surveyA4');
+            // removeStoredValue('surveyA5');
+            // removeStoredValue('surveyP');
+            // removeStoredValue('surveyT');
           }
         });
       },

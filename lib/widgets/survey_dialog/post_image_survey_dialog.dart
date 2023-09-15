@@ -73,6 +73,8 @@ comportPlotServeyDialog({
               debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
               debugPrint(('tracks:$playTrackTitleReuslt'));
               debugPrint(('comportPlot:$comportPlot'));
+              comportPlot = [];
+              marker = null;
             }
           },
         ),

@@ -38,6 +38,7 @@ preAwakeServeyDialog({
         debugPrint(('noiseDialog:$noiseCheckResult'));
         debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
         debugPrint(('PreawakeDialog:$preAwakeValue'));
+        preAwakeValue = 0;
       },
     );
   });

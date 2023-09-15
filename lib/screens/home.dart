@@ -80,7 +80,6 @@ class _HomeState extends State<Home> {
     final surveyA5 = await getStoredValue('surveyA5');
     final surveyP = await getStoredValue('surveyP');
     final surveyT = await getStoredValue('surveyT');
-
     if (snCheck == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showUserInfoDialog(

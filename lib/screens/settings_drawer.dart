@@ -69,11 +69,11 @@ class _SettingsState extends State<Settings> {
                       if (snapshot.hasData) {
                         if (snapshot.data == true) {
                           return settingTile('음원 미리듣기', Icons.audiotrack, () {
-                            playTrack(
-                                context: context,
-                                trackTitle: '미리듣기',
-                                actionText: '확인',
-                                volumeSlider: const VolumeController());
+                            // playTrack(
+                            //     context: context,
+                            //     trackTitle: '미리듣기',
+                            //     actionText: '확인',
+                            //     volumeSlider: const VolumeController());
                           });
                         } else {
                           return const Text('');

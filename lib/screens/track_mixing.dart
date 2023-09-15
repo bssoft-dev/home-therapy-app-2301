@@ -33,14 +33,16 @@ class _TrackMixingState extends State<TrackMixing> {
         context: context,
         child: Padding(
           padding: const EdgeInsets.only(top: 100),
-          child: Column(
-            children: [
-              const Text(
-                '음원믹스',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              mixTrackList(containerColors: containerSelected),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Text(
+                  '음원믹스',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                mixTrackList(containerColors: containerSelected),
+              ],
+            ),
           ),
         ),
       ),

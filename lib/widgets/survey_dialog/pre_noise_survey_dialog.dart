@@ -73,7 +73,12 @@ noiseServeyDialog({
               Get.back();
               await preEmotionServeyDialog(
                   context: context, noiseCheckResult: noiseCheckResult);
+
               debugPrint(('noiseDialog:$noiseCheckResult'));
+              setDialog(() {
+                isYesCheck = false;
+                isNoCheck = false;
+              });
             } else {
               failSnackBar('오류', '소음여부를 선택해주세요.');
             }

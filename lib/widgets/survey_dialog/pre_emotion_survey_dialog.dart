@@ -36,6 +36,7 @@ preEmotionServeyDialog({
         );
         debugPrint(('noiseDialog:$noiseCheckResult'));
         debugPrint(('PreemotionDialog:$preEmotionValue'));
+        preEmotionValue = 0;
       },
     );
   });
