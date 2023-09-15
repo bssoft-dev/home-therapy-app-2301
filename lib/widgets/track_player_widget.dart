@@ -130,6 +130,61 @@ Future playTrack({
   })));
 }
 
+Future prePlayTrack({
+  required BuildContext context,
+  required String trackTitle,
+  required String actionText,
+  Widget? volumeSlider,
+}) {
+  return Get.dialog(barrierDismissible: false, name: '음원재생',
+      StatefulBuilder(builder: ((context, StateSetter setDialog) {
+    return AlertDialog(
+      contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.7,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: mainColor.mainColor(),
+                    ),
+                    child: Lottie.asset('assets/lottie/track_list.json',
+                        width: 40, height: 40, fit: BoxFit.fill, animate: true),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(trackTitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ))
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            SingleChildScrollView(
+                child: trackList(setDialog: setDialog, context: context)),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        volumeSlider ?? const SizedBox(height: 0),
+        TextButton(
+          child: Text(actionText, style: const TextStyle(fontSize: 20)),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ],
+    );
+  })));
+}
+
 Widget trackList({
   required StateSetter setDialog,
   required BuildContext context,
