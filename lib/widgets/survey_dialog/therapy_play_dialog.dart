@@ -11,7 +11,7 @@ therapyPlay({
 }) {
   return playTrack(
     context: context,
-    trackTitle: '음원목록',
+    trackTitle: '원하는 곡 재생',
     actionText: '종료',
     volumeSlider: const VolumeController(),
     tracks: (playTrackTitle) {

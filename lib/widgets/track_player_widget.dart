@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/track_mixing_slider.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -350,31 +350,4 @@ Widget mixTrackList({required List containerColors}) {
       ],
     );
   });
-}
-
-Future<void> volumeUp(int currentVolume) async {
-  String? deviceIP = await getStoredValue('therapy_device');
-
-  int volumeUp = currentVolume + 10;
-  await httpGet(path: '/control/volume/$volumeUp', deviceIP: deviceIP!);
-}
-
-Future<void> volumeDown(int currentVolume) async {
-  String? deviceIP = await getStoredValue('therapy_device');
-
-  int volumeDown = currentVolume - 10;
-  await httpGet(path: '/control/volume/$volumeDown', deviceIP: deviceIP!);
-}
-
-Future<int> statusVolume() async {
-  String? deviceIP = await getStoredValue('therapy_device');
-  http.Response resp =
-      await httpGet(path: '/api/status/volume', deviceIP: deviceIP!);
-  Map<String, dynamic> jsonResp = jsonDecode(resp.body);
-  return jsonResp['res'];
-}
-
-Future<void> volumeChange(int currentVolume) async {
-  String? deviceIP = await getStoredValue('therapy_device');
-  await httpGet(path: '/control/volume/$currentVolume', deviceIP: deviceIP!);
 }
