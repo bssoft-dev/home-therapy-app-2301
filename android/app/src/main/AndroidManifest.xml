@@ -2,6 +2,7 @@
     package="com.bssoft.home_therapy_app">
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
    <application
         android:label="home_therapy_app"

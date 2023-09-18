@@ -79,7 +79,7 @@ class _SettingsState extends State<Settings> {
                           return const Text('');
                         }
                       } else {
-                        return const CircularProgressIndicator();
+                        return const SizedBox();
                       }
                     }),
               ],
