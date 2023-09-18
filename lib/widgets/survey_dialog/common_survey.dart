@@ -38,7 +38,8 @@ commonSurveyDialog({
                 itemCount: surveyImageList!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  mainAxisExtent: MediaQuery.of(context).size.height * 0.15,
+                  mainAxisSpacing: MediaQuery.of(context).size.height * 0.01,
+                  mainAxisExtent: MediaQuery.of(context).size.height * 0.18,
                 ),
                 itemBuilder: ((BuildContext context, index) {
                   return Column(

@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
@@ -16,39 +17,22 @@ class DevicePlayer extends StatefulWidget {
   State<DevicePlayer> createState() => _DevicePlayerState();
 }
 
-class _DevicePlayerState extends State<DevicePlayer>
-    with TickerProviderStateMixin {
+class _DevicePlayerState extends State<DevicePlayer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final MainColor mainColor = MainColor();
-  late final AnimationController _lottieController;
-
-  bool isPlaying = false;
   Future<bool>? asyncMethodFuture;
 
   @override
   void initState() {
     super.initState();
     asyncMethodFuture = asyncTrackPlayListMethod();
-    _lottieController = AnimationController(vsync: this);
   }
 
   @override
   void dispose() {
     // AnimationController를 dispose
-    _lottieController.dispose();
     super.dispose();
   }
-
-  // Future<bool> _asyncMethod() async {
-  //   bool isDeviceConnected = await checkDeviceConnected();
-  //   if (isDeviceConnected == true) {
-  //     var response = await playList();
-  //     if (response == 503) {
-  //       return false;
-  //     }
-  //   }
-  //   return isDeviceConnected;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,28 +69,22 @@ class _DevicePlayerState extends State<DevicePlayer>
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(150),
-          color: mainColor.mainColor(),
+          color: mainColor.mainColor().withOpacity(0.1),
         ),
         child: GestureDetector(
-          onTap: () {
-            if (isPlaying == true) {
-              _lottieController.stop();
-              isPlaying = false;
-            } else {
-              _lottieController.repeat();
-              isPlaying = true;
+          onTap: () async {
+            final userCheck = await getStoredValue('username');
+            if (userCheck != null) {
               noiseServeyDialog(context: context);
+            } else {
+              failSnackBar('오류', '개인정보를 먼저 입력해주세요.');
             }
           },
-          child: Lottie.asset(
-            'assets/lottie/main_play.json',
+          child: Image.asset(
+            'assets/app_main_image.png',
             width: 300,
             height: 300,
             fit: BoxFit.fill,
-            controller: _lottieController,
-            onLoaded: (composition) {
-              _lottieController.duration = composition.duration;
-            },
           ),
         ),
       ),

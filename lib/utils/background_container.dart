@@ -7,7 +7,7 @@ Widget backgroundContainer({
   return Container(
     decoration: const BoxDecoration(
       image: DecorationImage(
-        image: AssetImage("assets/appBackground.png"),
+        image: AssetImage("assets/app_background.png"),
         fit: BoxFit.fill,
       ),
     ),
