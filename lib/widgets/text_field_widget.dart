@@ -39,49 +39,51 @@ Future<dynamic> showUserInfoDialog({
             child: StatefulBuilder(builder: (context, StateSetter setDialog) {
               return AlertDialog(
                 actionsPadding: const EdgeInsets.only(bottom: 10),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (title != '')
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Lottie.asset(
-                                  'assets/lottie/user_info.json',
-                                  width: 40,
-                                  height: 40,
-                                  fit: BoxFit.fill,
-                                  repeat: false,
-                                  animate: true),
-                            ),
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          ],
+                content: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (title != '')
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Lottie.asset(
+                                    'assets/lottie/user_info.json',
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.fill,
+                                    repeat: false,
+                                    animate: true),
+                              ),
+                              Text(
+                                title,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                            ],
+                          ),
                         ),
+                      textBox('Name', usernameController, '이름', '이름을 입력해주세요.'),
+                      const SizedBox(
+                        height: 5,
                       ),
-                    textBox('Name', usernameController, '이름', '이름을 입력해주세요.'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    textBox('Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    textBox('Sn', snController, '설치 아이디', '설치 아이디를 입력해주세요.'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                  ],
+                      textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      textBox('Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      textBox('Sn', snController, '설치 아이디', '설치 아이디를 입력해주세요.'),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                  ),
                 ),
                 actions: [
                   Divider(
