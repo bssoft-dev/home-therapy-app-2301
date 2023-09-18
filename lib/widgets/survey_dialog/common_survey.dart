@@ -19,7 +19,7 @@ commonSurveyDialog({
     return AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.only(bottom: 10),
-      contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       title: Text(
         surveyTitle,
         style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -30,7 +30,7 @@ commonSurveyDialog({
         children: [
           Text(surveyContentTitle!, style: const TextStyle(fontSize: 15)),
           Text(surveyContent, style: const TextStyle(fontSize: 15)),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width * 0.8,
@@ -39,7 +39,7 @@ commonSurveyDialog({
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: MediaQuery.of(context).size.height * 0.01,
-                  mainAxisExtent: MediaQuery.of(context).size.height * 0.18,
+                  mainAxisExtent: MediaQuery.of(context).size.height * 0.177,
                 ),
                 itemBuilder: ((BuildContext context, index) {
                   return Column(

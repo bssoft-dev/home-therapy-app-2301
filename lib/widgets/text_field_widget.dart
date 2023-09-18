@@ -32,117 +32,130 @@ Future<dynamic> showUserInfoDialog({
 }) {
   return Get.dialog(barrierDismissible: false, name: '개인정보', StatefulBuilder(
     builder: (context, StateSetter setState) {
-      return Form(
-        key: _formKey,
-        child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-            child: StatefulBuilder(builder: (context, StateSetter setDialog) {
-              return AlertDialog(
-                actionsPadding: const EdgeInsets.only(bottom: 10),
-                content: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (title != '')
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Lottie.asset(
-                                    'assets/lottie/user_info.json',
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.fill,
-                                    repeat: false,
-                                    animate: true),
+      return Scaffold(
+        resizeToAvoidBottomInset: false, // 이 부분을 추가
+
+        body: Align(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                  child: StatefulBuilder(
+                      builder: (context, StateSetter setDialog) {
+                    return AlertDialog(
+                      actionsPadding: const EdgeInsets.only(bottom: 10),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (title != '')
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Lottie.asset(
+                                        'assets/lottie/user_info.json',
+                                        width: 40,
+                                        height: 40,
+                                        fit: BoxFit.fill,
+                                        repeat: false,
+                                        animate: true),
+                                  ),
+                                  Text(
+                                    title,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                            ],
+                            ),
+                          textBox(
+                              'Name', usernameController, '이름', '이름을 입력해주세요.'),
+                          const SizedBox(
+                            height: 5,
                           ),
+                          textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          textBox(
+                              'Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          textBox(
+                              'Sn', snController, '설치 아이디', '설치 아이디를 입력해주세요.'),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        Divider(
+                          color: mainColor.mainColor(),
+                          thickness: 0.8, //thickness of divier line
                         ),
-                      textBox('Name', usernameController, '이름', '이름을 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      textBox('Age', ageController, '나이', '나이를 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      textBox('Job', jobController, '직업', '사용자의 직업을 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      textBox('Sn', snController, '설치 아이디', '설치 아이디를 입력해주세요.'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                    ],
-                  ),
-                ),
-                actions: [
-                  Divider(
-                    color: mainColor.mainColor(),
-                    thickness: 0.8, //thickness of divier line
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            cancelText,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400),
-                          )),
-                      TextButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              await httpPostServer(
-                                      path:
-                                          'api/users/${snController.text}/${usernameController.text}',
-                                      data: userInfo(
-                                        username: usernameController.text,
-                                        age: ageController.text,
-                                        job: jobController.text,
-                                        sn: snController.text,
-                                      ).toJson())
-                                  .then((value) {
-                                if (value == 200) {
-                                  //한번만 호출되도록 하는 캐시 저장코드
-                                  saveStoredValue('sn', snController.text);
-                                  saveStoredValue(
-                                      'username', usernameController.text);
-                                  Get.back();
-                                  apartmentNoiseServeyDialogQ1(
-                                      context: context);
-                                } else {
-                                  failSnackBar(
-                                      '오류', '개인정보 저장에 실패했습니다. 다시 시도해주세요');
-                                }
-                              });
-                            }
-                          },
-                          child: Text(saveText,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400)))
-                    ],
-                  )
-                ],
-              );
-            })),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  cancelText,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                )),
+                            TextButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+                                    await httpPostServer(
+                                            path:
+                                                'api/users/${snController.text}/${usernameController.text}',
+                                            data: userInfo(
+                                              username: usernameController.text,
+                                              age: ageController.text,
+                                              job: jobController.text,
+                                              sn: snController.text,
+                                            ).toJson())
+                                        .then((value) {
+                                      if (value == 200) {
+                                        //한번만 호출되도록 하는 캐시 저장코드
+                                        saveStoredValue(
+                                            'sn', snController.text);
+                                        saveStoredValue('username',
+                                            usernameController.text);
+                                        Get.back();
+                                        apartmentNoiseServeyDialogQ1(
+                                            context: context);
+                                      } else {
+                                        failSnackBar(
+                                            '오류', '개인정보 저장에 실패했습니다. 다시 시도해주세요');
+                                      }
+                                    });
+                                  }
+                                },
+                                child: Text(saveText,
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400)))
+                          ],
+                        )
+                      ],
+                    );
+                  })),
+            ),
+          ),
+        ),
       );
     },
   ));
