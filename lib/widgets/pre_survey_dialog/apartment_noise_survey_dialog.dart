@@ -41,8 +41,7 @@ apartmentNoiseServeyDialogQ1({
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
-        print(sn);
-        print(username);
+
         httpPostServer(
             path: 'api/users/$sn/$username',
             data: {'surveyA1': selectedA1Values}).then((value) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/model/pre_survey_model.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';

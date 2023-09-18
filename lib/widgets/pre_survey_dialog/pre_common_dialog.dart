@@ -56,13 +56,12 @@ preCommonSurveyDialog({
                           style: const TextStyle(fontSize: 17),
                         ),
                         const SizedBox(height: 10),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.10,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal, // 가로 스크롤 사용
-                              itemCount: radioNumber,
-                              itemBuilder: (context, choiceIndex) {
-                                return Column(children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal, // 가로 스크롤 사용
+                          child: Row(
+                            children: List.generate(radioNumber, (choiceIndex) {
+                              return Column(
+                                children: [
                                   Text('${choiceIndex + 1}',
                                       style: const TextStyle(fontSize: 15)),
                                   Radio(
@@ -78,10 +77,13 @@ preCommonSurveyDialog({
                                         onSurveyContentValueChange(value);
                                       });
                                     },
-                                  )
-                                ]);
-                              }),
-                        )
+                                  ),
+                                  const SizedBox(height: 10)
+                                ],
+                              );
+                            }),
+                          ),
+                        ),
                       ],
                     );
                   }),
