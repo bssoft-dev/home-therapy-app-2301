@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 commonSurveyDialog({
@@ -42,9 +43,14 @@ commonSurveyDialog({
                   mainAxisExtent: MediaQuery.of(context).size.height * 0.177,
                 ),
                 itemBuilder: ((BuildContext context, index) {
+                  print(surveyImageList[index]);
                   return Column(
                     children: [
-                      Image.asset(surveyImageList[index]),
+                      SvgPicture.asset(
+                        surveyImageList[index],
+                        width: 75,
+                        height: 75,
+                      ),
                       Radio(
                         value: surveyContentValueList![index],
                         groupValue: surveyContentValue,

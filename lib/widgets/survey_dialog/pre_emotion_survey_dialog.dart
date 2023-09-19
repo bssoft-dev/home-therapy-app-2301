@@ -12,7 +12,7 @@ preEmotionServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
 }) {
-  loadAssetImages('emotion').then((value) async {
+  loadAssetSVGs('emotion').then((value) async {
     preEmotionList = value;
     preEmotionValueList =
         List<int>.generate(preEmotionList!.length, (index) => index);
