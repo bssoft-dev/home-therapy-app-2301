@@ -9,6 +9,7 @@ import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/screens/settings_drawer.dart';
 import 'package:home_therapy_app/utils/background_container.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class DevicePlayer extends StatefulWidget {
   const DevicePlayer({super.key});
@@ -88,12 +89,20 @@ class _DevicePlayerState extends State<DevicePlayer> {
           ),
         ),
       ),
-      const SizedBox(
-        height: 20,
-      ),
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Lottie.asset('assets/lottie/click.json',
+                  width: 60, height: 60, repeat: true, animate: true),
+              const Text('큰원을 클릭해주세요',
+                  style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold, height: 3))
+            ],
+          ),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
@@ -101,7 +110,7 @@ class _DevicePlayerState extends State<DevicePlayer> {
             ),
             child: const SizedBox(width: 10),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 30),
           Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),

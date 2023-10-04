@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/utils/background_container.dart';
@@ -8,7 +7,6 @@ import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/apartment_noise_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/pss_tipi_survey_dialog.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/text_field_widget.dart';
 
 class Home extends StatefulWidget {
