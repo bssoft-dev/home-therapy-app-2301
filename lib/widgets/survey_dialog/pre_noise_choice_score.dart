@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/post_awakener_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/pre_awakener_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_emotion_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_survey_question_list.dart';
 
@@ -64,9 +67,9 @@ preNoiseChoiceScoreDialog({
       ),
       actions: [
         TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.back();
-              preEmotionServeyDialog(
+              await preEmotionServeyDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   noiseTypeValue: noiseTypeValue,
@@ -74,6 +77,7 @@ preNoiseChoiceScoreDialog({
               debugPrint(('noiseDialog:$noiseCheckResult'));
               debugPrint(('noiseType:$noiseTypeValue'));
               debugPrint(('noiseTypeScore:${(noiseScoreValue + 1)}'));
+              noiseScoreValue = 0;
             },
             child: const Text(
               '다음',

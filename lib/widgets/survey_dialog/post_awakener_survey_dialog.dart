@@ -21,7 +21,7 @@ postAwakeServeyDialog({
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
-  loadAssetImages('awakener').then((value) {
+  loadAssetSVGs('awakener').then((value) {
     // print(value);
     postAwakeList = value;
     postAwakeValueList =

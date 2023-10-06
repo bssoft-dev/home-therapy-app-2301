@@ -14,7 +14,7 @@ preAwakeServeyDialog({
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
-  loadAssetImages('awakener').then((value) {
+  loadAssetSVGs('awakener').then((value) {
     preAwakeList = value;
     preAwakeValueList =
         List<int>.generate(preAwakeList!.length, (index) => index);
@@ -22,7 +22,7 @@ preAwakeServeyDialog({
     return commonSurveyDialog(
       context: context,
       dialogName: '각성가설문',
-      surveyTitle: '질문 3/3',
+      surveyTitle: '질문 5/5',
       surveyContentTitle: '[각성가]',
       surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
       surveyImageList: preAwakeList,

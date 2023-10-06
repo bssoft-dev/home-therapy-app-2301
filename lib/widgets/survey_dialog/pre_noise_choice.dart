@@ -61,14 +61,15 @@ preNoiseChoiceDialog({
       ),
       actions: [
         TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.back();
-              preNoiseChoiceScoreDialog(
+              await preNoiseChoiceScoreDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   noiseTypeValue: noiseType[noiseTypeValue]);
               debugPrint(('noiseDialog:$noiseCheckResult'));
               debugPrint(('noiseType:${noiseType[noiseTypeValue]}'));
+              noiseTypeValue = 0;
             },
             child: const Text(
               '다음',

@@ -18,7 +18,7 @@ postEmotionServeyDialog({
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
-  loadAssetImages('emotion').then((value) {
+  loadAssetSVGs('emotion').then((value) {
     postEmotionList = value;
     postEmotionValueList =
         List<int>.generate(postEmotionList!.length, (index) => index);

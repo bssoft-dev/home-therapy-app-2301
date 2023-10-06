@@ -43,7 +43,6 @@ commonSurveyDialog({
                   mainAxisExtent: MediaQuery.of(context).size.height * 0.177,
                 ),
                 itemBuilder: ((BuildContext context, index) {
-                  print(surveyImageList[index]);
                   return Column(
                     children: [
                       SvgPicture.asset(
