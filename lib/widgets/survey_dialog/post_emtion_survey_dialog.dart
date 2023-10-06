@@ -15,6 +15,8 @@ postEmotionServeyDialog({
   List<dynamic>? playTrackTitleReuslt,
   List<dynamic>? comportPlotResult,
   int? postEmotionCheckResult,
+  String? noiseTypeValue,
+  int? noiseTypeScoreValue,
 }) {
   loadAssetImages('emotion').then((value) {
     postEmotionList = value;
@@ -33,16 +35,20 @@ postEmotionServeyDialog({
       onSurveyContentValueChange: (value) => postEmotionValue = value,
       surveyOnPressed: () async {
         Get.back();
-        print('noiseDialog:$noiseCheckResult');
-        print('trackplay:$playTrackTitleReuslt');
-        print('emotionDialog:$preEmotionCheckResult');
-        print('awakeDialog:$preAwakeCheckResult');
-        print('comportPlot:$comportPlotResult');
-        print('PostemotionDialog:$postEmotionValue');
+        debugPrint(('noiseDialog:$noiseCheckResult'));
+        debugPrint(('noiseType:$noiseTypeValue'));
+        debugPrint(('noiseTypeScore:$noiseTypeScoreValue'));
+        debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
+        debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
+        debugPrint(('tracks:$playTrackTitleReuslt'));
+        debugPrint(('comportPlot:$comportPlotResult'));
+        debugPrint(('PostemotionDialog:$postEmotionValue'));
 
         await postAwakeServeyDialog(
           context: context,
           noiseCheckResult: noiseCheckResult,
+          noiseTypeValue: noiseTypeValue,
+          noiseTypeScoreValue: noiseTypeScoreValue,
           preEmotionCheckResult: preEmotionCheckResult,
           preAwakeCheckResult: preAwakeCheckResult,
           playTrackTitleReuslt: playTrackTitleReuslt,

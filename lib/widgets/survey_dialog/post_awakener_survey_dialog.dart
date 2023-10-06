@@ -18,6 +18,8 @@ postAwakeServeyDialog({
   List<dynamic>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
   List<dynamic>? comportPlotResult,
+  String? noiseTypeValue,
+  int? noiseTypeScoreValue,
 }) {
   loadAssetImages('awakener').then((value) {
     // print(value);
@@ -44,6 +46,8 @@ postAwakeServeyDialog({
                   sn: sn,
                   username: username,
                   noise: noiseCheckResult,
+                  noiseType: noiseTypeValue,
+                  noiseScore: noiseTypeScoreValue,
                   preEmotion: preEmotionCheckResult,
                   preAwake: preAwakeCheckResult,
                   tracks: playTrackTitleReuslt,

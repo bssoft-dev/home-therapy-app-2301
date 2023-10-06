@@ -11,6 +11,8 @@ preAwakeServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
+  String? noiseTypeValue,
+  int? noiseTypeScoreValue,
 }) {
   loadAssetImages('awakener').then((value) {
     preAwakeList = value;
@@ -32,10 +34,14 @@ preAwakeServeyDialog({
         therapyPlay(
           context: context,
           noiseCheckResult: noiseCheckResult,
+          noiseTypeValue: noiseTypeValue,
+          noiseTypeScoreValue: noiseTypeScoreValue,
           preEmotionCheckResult: preEmotionCheckResult,
           preAwakeCheckResult: preAwakeValue,
         );
         debugPrint(('noiseDialog:$noiseCheckResult'));
+        debugPrint(('noiseType:$noiseTypeValue'));
+        debugPrint(('noiseTypeScore:$noiseTypeScoreValue'));
         debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
         debugPrint(('PreawakeDialog:$preAwakeValue'));
         preAwakeValue = 0;

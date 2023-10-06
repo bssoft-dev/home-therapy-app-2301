@@ -8,6 +8,8 @@ therapyPlay({
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
+  String? noiseTypeValue,
+  int? noiseTypeScoreValue,
 }) {
   return playTrack(
     context: context,
@@ -16,6 +18,8 @@ therapyPlay({
     volumeSlider: const VolumeController(),
     tracks: (playTrackTitle) {
       debugPrint(('noiseDialog:$noiseCheckResult'));
+      debugPrint(('noiseType:$noiseTypeValue'));
+      debugPrint(('noiseTypeScore:$noiseTypeScoreValue'));
       debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
       debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
       debugPrint(('tracks:$playTrackTitle'));
@@ -23,6 +27,8 @@ therapyPlay({
       return comportPlotServeyDialog(
         context: context,
         noiseCheckResult: noiseCheckResult,
+        noiseTypeValue: noiseTypeValue,
+        noiseTypeScoreValue: noiseTypeScoreValue,
         preEmotionCheckResult: preEmotionCheckResult,
         preAwakeCheckResult: preAwakeCheckResult,
         playTrackTitleReuslt: playTrackTitle,

@@ -11,6 +11,8 @@ List<int>? preEmotionValueList;
 preEmotionServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
+  String? noiseTypeValue,
+  int? noiseTypeScoreValue,
 }) {
   loadAssetSVGs('emotion').then((value) async {
     preEmotionList = value;
@@ -20,7 +22,7 @@ preEmotionServeyDialog({
     return commonSurveyDialog(
       context: context,
       dialogName: '정서가설문',
-      surveyTitle: '질문 2/3',
+      surveyTitle: '질문 4/5',
       surveyContentTitle: '[정서가]',
       surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
       surveyImageList: preEmotionList,
@@ -32,9 +34,13 @@ preEmotionServeyDialog({
         preAwakeServeyDialog(
           context: context,
           noiseCheckResult: noiseCheckResult,
+          noiseTypeValue: noiseTypeValue,
+          noiseTypeScoreValue: noiseTypeScoreValue,
           preEmotionCheckResult: preEmotionValue,
         );
         debugPrint(('noiseDialog:$noiseCheckResult'));
+        debugPrint(('noiseType:$noiseTypeValue'));
+        debugPrint(('noiseTypeScore:$noiseTypeScoreValue'));
         debugPrint(('PreemotionDialog:$preEmotionValue'));
         preEmotionValue = 0;
       },

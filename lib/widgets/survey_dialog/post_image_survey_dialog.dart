@@ -13,6 +13,8 @@ comportPlotServeyDialog({
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
+  String? noiseTypeValue,
+  int? noiseTypeScoreValue,
 }) {
   return Get.dialog(barrierDismissible: false, name: '청취후감정설문',
       StatefulBuilder(builder: ((context, StateSetter setDialog) {
@@ -63,12 +65,16 @@ comportPlotServeyDialog({
               await postEmotionServeyDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
+                  noiseTypeValue: noiseTypeValue,
+                  noiseTypeScoreValue: noiseTypeScoreValue,
                   preEmotionCheckResult: preEmotionCheckResult,
                   preAwakeCheckResult: preAwakeCheckResult,
                   playTrackTitleReuslt: playTrackTitleReuslt,
                   comportPlotResult: comportPlot);
 
               debugPrint(('noiseDialog:$noiseCheckResult'));
+              debugPrint(('noiseType:$noiseTypeValue'));
+              debugPrint(('noiseTypeScore:$noiseTypeScoreValue'));
               debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
               debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
               debugPrint(('tracks:$playTrackTitleReuslt'));
