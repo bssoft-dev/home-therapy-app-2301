@@ -118,10 +118,11 @@ Future playTrack({
             if (playTrackTitleTime.isNotEmpty) {
               await tracks(playTrackTitleTime);
               // print(playTrackTitleTime);
-              setDialog(() {
-                playTrackTitleTime = [];
-                Get.back();
-              });
+
+              // setDialog(() {
+              //   playTrackTitleTime = [];
+              //   Get.back();
+              // });
             } else {
               failSnackBar('오류', '음원을 선택해 재생시켜주세요.');
             }

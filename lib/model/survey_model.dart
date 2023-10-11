@@ -26,7 +26,9 @@ class SurveyResult {
   int? preEmotion;
   int? preAwake;
   List<dynamic>? tracks;
-  List<dynamic>? comportPlot;
+  Map? comportPlot;
+  // List<dynamic>? comportPlot;
+  // int? comportPlotRating;
   int? postEmotion;
   int? postAwake;
 

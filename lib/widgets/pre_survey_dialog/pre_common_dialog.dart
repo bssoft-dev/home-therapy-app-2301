@@ -62,11 +62,15 @@ preCommonSurveyDialog({
                             children: List.generate(radioNumber, (choiceIndex) {
                               return Column(
                                 children: [
-                                  if (!surveyTitle.contains('성격 특성'))
+                                  if (!surveyTitle.contains('성격 특성') &&
+                                      !surveyTitle.contains('공간'))
                                     Text(ratingText[choiceIndex],
                                         style: const TextStyle(fontSize: 15)),
                                   if (surveyTitle.contains('성격 특성'))
                                     Text(tipiRatingText[choiceIndex],
+                                        style: const TextStyle(fontSize: 15)),
+                                  if (surveyTitle.contains('공간'))
+                                    Text(comportPlotRatingText[choiceIndex],
                                         style: const TextStyle(fontSize: 15)),
                                   Radio(
                                     visualDensity:

@@ -20,6 +20,7 @@ postAwakeServeyDialog({
   List<dynamic>? comportPlotResult,
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
+  int? comportPlotRatingResult,
 }) {
   loadAssetSVGs('awakener').then((value) {
     // print(value);
@@ -50,7 +51,10 @@ postAwakeServeyDialog({
                   preEmotion: preEmotionCheckResult,
                   preAwake: preAwakeCheckResult,
                   tracks: playTrackTitleReuslt,
-                  comportPlot: comportPlotResult,
+                  comportPlot: {
+                    'comportPlot': comportPlotResult,
+                    'comportPlotRating': comportPlotRatingResult
+                  },
                   postEmotion: postEmotionCheckResult,
                   postAwake: postAwakeValue,
                 ).toJson())

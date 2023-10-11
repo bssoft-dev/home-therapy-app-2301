@@ -8,6 +8,25 @@ List<String> note = [
 
 List<String> ratingText = ['전혀', '조금', '비교적', '아주', '엄청나게'];
 List<String> tipiRatingText = ['전혀', '별로', '조금', '비교적', '꽤', '아주', '엄청나게'];
+List<String> comportPlotText = [
+  '풍부한',
+  '흥미로운',
+  '편안한',
+  '개인적인,\n통제된',
+  '공허한',
+  '고립된',
+  '짜증스러운',
+  '방해되는,\n통제되지 않은'
+];
+List<String> comportPlotRatingText = [
+  '전혀',
+  '별로',
+  '조금',
+  '비교적',
+  '꽤',
+  '매우',
+  '엄청나게'
+];
 
 List<String> apartmentNoiseQ1_2 = [
   '옆집에서 전달되는 음악소리 또는 대화소리',

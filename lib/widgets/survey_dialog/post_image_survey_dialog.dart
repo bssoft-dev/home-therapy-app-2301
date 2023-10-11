@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/post_image_rating_survey_dialog.dart';
 
 Offset? marker;
 List<dynamic>? comportPlot;
@@ -30,7 +31,7 @@ comportPlotServeyDialog({
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('현재 본인과 가장 알맞는 감정 상태를 고르시오',
+          const Text('현재 들리는 소리와 공간의 상황에\n어울리는 단어의 위치를 선택해주십시오.',
               style: TextStyle(fontSize: 15)),
           const SizedBox(height: 15),
           GestureDetector(
@@ -42,7 +43,8 @@ comportPlotServeyDialog({
               },
               child: Stack(
                 children: [
-                  Image.asset('assets/survey/comport_ploat.png'),
+                  SvgPicture.asset('assets/svg/image_survey.svg'),
+                  // Image.asset('assets/survey/comport_ploat.png'),
                   if (marker != null)
                     Positioned(
                       left: marker!.dx - 20,
@@ -62,7 +64,7 @@ comportPlotServeyDialog({
               failSnackBar('오류', '감정 상태를 선택해주세요.');
             } else {
               Get.back();
-              await postEmotionServeyDialog(
+              await postComportPlotRatingServeyDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   noiseTypeValue: noiseTypeValue,
