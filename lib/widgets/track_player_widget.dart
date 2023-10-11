@@ -22,6 +22,9 @@ DateTime? startTime;
 DateTime? endTime;
 List<int> playingTime = [];
 
+// 현재 true인 index 추적
+int? currentlyPlayingIndex;
+
 Future<bool> asyncTrackPlayListMethod() async {
   await getIpAddress();
   bool isDeviceConnected = await checkDeviceConnected();
@@ -194,6 +197,8 @@ Widget trackList({
         shrinkWrap: true,
         itemCount: trackPlayList.length,
         itemBuilder: (BuildContext context, int index) {
+          print(trackPlayIndex[index]);
+
           return Row(
             children: [
               Padding(
@@ -210,31 +215,75 @@ Widget trackList({
                   children: [
                     Text(trackPlayList[index]),
                     Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: playIconButton(
-                          Icons.play_arrow,
-                          Icons.pause_circle_outline,
-                          40,
-                          trackPlayIndex[index], () async {
-                        setDialog(() {
-                          trackPlayIndex[index] = !trackPlayIndex[index];
-                        });
-                        if (trackPlayIndex[index]) {
-                          await trackPlay('ready', trackPlayList[index]);
-                          startTime = DateTime.now();
-                        } else {
-                          await playStop();
-                          endTime = DateTime.now();
-                          await calculateElapsedTime(startTime!, endTime!)
-                              .then((playingTime) {
-                            playTrackTitleTime.add({
-                              "name": trackPlayList[index],
-                              "time": playingTime,
+                        padding: const EdgeInsets.only(right: 10),
+                        child: playIconButton(
+                            Icons.play_arrow,
+                            Icons.pause_circle_outline,
+                            40,
+                            trackPlayIndex[index], () async {
+                          bool hasTrueValue = trackPlayIndex.contains(true);
+                          if (hasTrueValue) {
+                            // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
+                            int playingTrackIndex =
+                                trackPlayIndex.indexOf(true);
+
+                            if (playingTrackIndex == index) {
+                              // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
+                              setDialog(() {
+                                trackPlayIndex[playingTrackIndex] =
+                                    false; // 현재 재생 중인 트랙을 중지합니다.
+                              });
+                              await playStop();
+                              endTime = DateTime.now();
+                              await calculateElapsedTime(startTime!, endTime!)
+                                  .then((playingTime) {
+                                playTrackTitleTime.add({
+                                  "name": trackPlayList[playingTrackIndex],
+                                  "time": playingTime,
+                                });
+                              });
+                            } else {
+                              // 선택한 트랙이 다른 트랙이면 현재 재생 중인 트랙 중지하고 선택한 트랙 재생
+                              setDialog(() {
+                                trackPlayIndex[playingTrackIndex] =
+                                    false; // 현재 재생 중인 트랙을 중지합니다.
+                                trackPlayIndex[index] =
+                                    true; // 선택한 트랙을 재생 상태로 설정합니다.
+                              });
+                              await playStop();
+                              endTime = DateTime.now();
+                              await calculateElapsedTime(startTime!, endTime!)
+                                  .then((playingTime) {
+                                playTrackTitleTime.add({
+                                  "name": trackPlayList[playingTrackIndex],
+                                  "time": playingTime,
+                                });
+                              });
+                              await trackPlay('ready', trackPlayList[index]);
+                              startTime = DateTime.now();
+                            }
+                          } else {
+                            // true인 항목이 없다면, 선택한 트랙을 재생
+                            setDialog(() {
+                              trackPlayIndex[index] =
+                                  true; // 선택한 트랙을 재생 상태로 설정합니다.
                             });
-                          });
-                        }
-                      }),
-                    ),
+                            await trackPlay('ready', trackPlayList[index]);
+                            startTime = DateTime.now();
+                          }
+
+                          // else {
+                          //   await playStop();
+                          //   endTime = DateTime.now();
+                          //   await calculateElapsedTime(startTime!, endTime!)
+                          //       .then((playingTime) {
+                          //     playTrackTitleTime.add({
+                          //       "name": trackPlayList[index],
+                          //       "time": playingTime,
+                          //     });
+                          //   });
+                          // }
+                        })),
                   ],
                 ),
               ),
@@ -242,6 +291,14 @@ Widget trackList({
           );
         }),
   );
+}
+
+updateTrackPlayIndex(int index) async {
+  // // 새로운 index를 true로 설정
+  // trackPlayIndex[index] = true;
+  // await trackPlay('ready', trackPlayList[index]);
+  // startTime = DateTime.now();
+  // // 현재 true인 index 업데이트
 }
 
 Future<int> calculateElapsedTime(DateTime startTime, DateTime endTime) async {
