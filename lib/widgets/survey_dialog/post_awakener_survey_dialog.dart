@@ -32,7 +32,7 @@ postAwakeServeyDialog({
       dialogName: '청취후 각성가설문',
       surveyTitle: '질문 3/3',
       surveyContentTitle: '[각성가]',
-      surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
+      surveyContent: '현재 본인과 가장 알맞는 감정 상태를 고르시오',
       surveyImageList: postAwakeList,
       surveyContentValueList: postAwakeValueList,
       surveyContentValue: postAwakeValue,

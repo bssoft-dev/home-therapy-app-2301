@@ -24,7 +24,7 @@ preEmotionServeyDialog({
       dialogName: '정서가설문',
       surveyTitle: '질문 4/5',
       surveyContentTitle: '[정서가]',
-      surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
+      surveyContent: '현재 본인과 가장 알맞는 감정 상태를 고르시오',
       surveyImageList: preEmotionList,
       surveyContentValueList: preEmotionValueList,
       surveyContentValue: preEmotionValue,

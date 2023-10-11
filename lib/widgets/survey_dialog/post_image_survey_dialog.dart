@@ -30,7 +30,7 @@ comportPlotServeyDialog({
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('현재 본인과 비슷한 감정 상태 유형을 고르시오',
+          const Text('현재 본인과 가장 알맞는 감정 상태를 고르시오',
               style: TextStyle(fontSize: 15)),
           const SizedBox(height: 15),
           GestureDetector(

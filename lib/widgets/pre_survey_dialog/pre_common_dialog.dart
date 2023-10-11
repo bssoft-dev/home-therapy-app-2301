@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 
 preCommonSurveyDialog({
   required BuildContext context,
   required String dialogName,
   required String surveyTitle,
   required List<String> questionTitle,
-  required List<String> note,
   required int radioNumber,
   required int noteNumber,
   required int questionNumber,
@@ -29,11 +29,11 @@ preCommonSurveyDialog({
             surveyTitle,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
-          Text(
-            '※ ${note[noteNumber]}',
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-          )
+          // const SizedBox(height: 10),
+          // Text(
+          //   '※ ${note[noteNumber]}',
+          //   style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          // )
         ],
       ),
       content: SingleChildScrollView(
@@ -62,8 +62,12 @@ preCommonSurveyDialog({
                             children: List.generate(radioNumber, (choiceIndex) {
                               return Column(
                                 children: [
-                                  Text('${choiceIndex + 1}',
-                                      style: const TextStyle(fontSize: 15)),
+                                  if (!surveyTitle.contains('성격 특성'))
+                                    Text(ratingText[choiceIndex],
+                                        style: const TextStyle(fontSize: 15)),
+                                  if (surveyTitle.contains('성격 특성'))
+                                    Text(tipiRatingText[choiceIndex],
+                                        style: const TextStyle(fontSize: 15)),
                                   Radio(
                                     visualDensity:
                                         const VisualDensity(vertical: -4),

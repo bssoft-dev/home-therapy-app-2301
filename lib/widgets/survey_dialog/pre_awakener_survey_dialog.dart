@@ -24,7 +24,7 @@ preAwakeServeyDialog({
       dialogName: '각성가설문',
       surveyTitle: '질문 5/5',
       surveyContentTitle: '[각성가]',
-      surveyContent: '현재 본인과 비슷한 감정 상태 유형을 고르시오',
+      surveyContent: '현재 본인과 가장 알맞는 감정 상태를 고르시오',
       surveyImageList: preAwakeList,
       surveyContentValueList: preAwakeValueList,
       surveyContentValue: preAwakeValue,

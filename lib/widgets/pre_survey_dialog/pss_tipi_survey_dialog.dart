@@ -17,9 +17,9 @@ pssServeyDialogQ({
   return preCommonSurveyDialog(
       context: context,
       dialogName: '스트레스 평가-PSS(perceived stress scale)',
-      surveyTitle: '스트레스 평가',
+      surveyTitle:
+          '6. 다음은 본인의 스트레스를 측정하기 위한 것입니다.\n지난 한달 동안, 아래와 같은 일이 얼마나 자주 있었는지 또는\n동의하는 정도를 평가해 주십시오.',
       questionTitle: pssQ,
-      note: note,
       noteNumber: 3,
       radioNumber: 5,
       questionNumber: pssQ.length,
@@ -50,9 +50,9 @@ tipiServeyDialogQ({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '개인 성격 특성 검사-TIPI(Ten-Item Personality Inventory)',
-      surveyTitle: '개인 성격 특성 검사',
+      surveyTitle:
+          '7. 다음은 본인의 성격 특성을 측정하기 위한 것입니다.\n아래의 각 항목에 대해 동의하는 정도를 평가해 주십시오.',
       questionTitle: tipiQ,
-      note: note,
       noteNumber: 4,
       radioNumber: 7,
       questionNumber: tipiQ.length,

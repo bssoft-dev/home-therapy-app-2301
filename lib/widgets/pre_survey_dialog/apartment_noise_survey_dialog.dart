@@ -30,9 +30,8 @@ apartmentNoiseServeyDialogQ1({
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도1',
-      surveyTitle: '1. 현재 거주 중인 곳에서 다음의 각 소음이 얼마나 자주 들리는지 평가해주십시오.',
+      surveyTitle: '1. 현재 거주 중인 곳에서 각 소음이 들리는 정도를 평가해 주십시오.',
       questionTitle: apartmentNoiseQ1_2,
-      note: note,
       noteNumber: 0,
       radioNumber: 5,
       questionNumber: apartmentNoiseQ1_2.length,
@@ -66,9 +65,8 @@ apartmentNoiseServeyDialogQ2({
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도2',
-      surveyTitle: '2. 현재 거주 중인 곳에서 다음의 각 소음이 얼마나 신경쓰이는지 평가해주십시오.',
+      surveyTitle: '2. 현재 거주 중인 곳에서 각 소음의 신경쓰이는 정도를 평가해 주십시오.',
       questionTitle: apartmentNoiseQ1_2,
-      note: note,
       noteNumber: 1,
       radioNumber: 5,
       questionNumber: apartmentNoiseQ1_2.length,
@@ -99,9 +97,8 @@ apartmentNoiseServeyDialogQ3({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도3',
-      surveyTitle: '3. 현재 거주 중인 곳에서 다음의 각 소리가 얼마나 자주 들리는지 평가해주십시오.',
+      surveyTitle: '3. 현재 거주 중인 곳에서 각 소리가 들리는 정도를 평가해 주십시오.',
       questionTitle: apartmentNoiseQ3_4,
-      note: note,
       noteNumber: 0,
       radioNumber: 5,
       questionNumber: apartmentNoiseQ3_4.length,
@@ -132,9 +129,8 @@ apartmentNoiseServeyDialogQ4({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도4',
-      surveyTitle: '4. 현재 거주 중인 곳에서 다음의 각 소리가 얼마나 신경쓰이는지 평가해주십시오.',
+      surveyTitle: '4. 현재 거주 중인 곳에서각 소리의 신경쓰이는 정도를 평가해 주십시오.',
       questionTitle: apartmentNoiseQ3_4,
-      note: note,
       noteNumber: 1,
       radioNumber: 5,
       questionNumber: apartmentNoiseQ3_4.length,
@@ -165,9 +161,9 @@ apartmentNoiseServeyDialogQ5({required BuildContext context}) {
   return preCommonSurveyDialog(
       context: context,
       dialogName: '거주지 소음 및 소음 민감도5',
-      surveyTitle: '5. 소음민감도.',
+      surveyTitle:
+          '5. 다음은 소음민감도를 측정하기 위한 것입니다.\n아래의 각 항목에 대해 동의하는 정도를 평가해 주십시오.',
       questionTitle: apartmentNoiseQ5,
-      note: note,
       noteNumber: 2,
       radioNumber: 5,
       questionNumber: apartmentNoiseQ5.length,
