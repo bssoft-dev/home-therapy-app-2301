@@ -15,7 +15,7 @@ therapyPlay({
   return playTrack(
     context: context,
     trackTitle: '원하는 곡 재생',
-    actionText: '종료',
+    actionText: '다음',
     volumeSlider: const VolumeController(),
     tracks: (playTrackTitle) {
       debugPrint(('noiseDialog:$noiseCheckResult'));

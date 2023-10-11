@@ -12,11 +12,11 @@ List<String> comportPlotText = [
   '풍부한',
   '흥미로운',
   '편안한',
-  '개인적인,\n통제된',
+  '개인적인,통제된',
   '공허한',
   '고립된',
   '짜증스러운',
-  '방해되는,\n통제되지 않은'
+  '방해되는,통제되지 않은'
 ];
 List<String> comportPlotRatingText = [
   '전혀',

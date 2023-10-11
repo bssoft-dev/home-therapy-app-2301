@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/post_awakener_survey_dialog.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/pre_awakener_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_emotion_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_survey_question_list.dart';
 
@@ -45,7 +42,7 @@ preNoiseChoiceScoreDialog({
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(noiseType[questionIndexntext]),
+                            Text(noiseTypeScore[questionIndexntext]),
                             Radio(
                                 value: noiseScoreValueList![questionIndexntext],
                                 groupValue: noiseScoreValue,
@@ -73,10 +70,10 @@ preNoiseChoiceScoreDialog({
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   noiseTypeValue: noiseTypeValue,
-                  noiseTypeScoreValue: noiseScoreValue + 1);
+                  noiseTypeScoreValue: noiseScoreValue);
               debugPrint(('noiseDialog:$noiseCheckResult'));
               debugPrint(('noiseType:$noiseTypeValue'));
-              debugPrint(('noiseTypeScore:${(noiseScoreValue + 1)}'));
+              debugPrint(('noiseTypeScore:${(noiseScoreValue)}'));
               noiseScoreValue = 0;
             },
             child: const Text(
