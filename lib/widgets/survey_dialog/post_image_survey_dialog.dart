@@ -14,7 +14,7 @@ comportPlotServeyDialog({
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
-  String? noiseTypeValue,
+  int? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
   return Get.dialog(barrierDismissible: false, name: '청취후감정설문',

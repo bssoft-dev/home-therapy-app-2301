@@ -17,10 +17,9 @@ postAwakeServeyDialog({
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
-  String? noiseTypeValue,
+  int? noiseTypeValue,
   int? noiseTypeScoreValue,
-  List<Map<String, dynamic>>? comportPlotResult,
-
+  List? comportPlotResult,
   int? comportPlotRatingResult, 
   String? comportPlotTitleResult,
 }) {
@@ -72,15 +71,14 @@ postAwakeServeyDialog({
                                         sn: sn,
                                         username: username,
                                         noise: noiseCheckResult,
-                                        noiseType: {
-                                          '$noiseTypeValue': noiseTypeScoreValue
-                                        },
+                                        noiseType: [noiseTypeValue,noiseTypeScoreValue],
                                         preEmotion: preEmotionCheckResult,
                                         preAwake: preAwakeCheckResult,
                                         tracks: playTrackTitleReuslt,
                                         comportPlotRating: comportPlotResult,
                                         postEmotion: postEmotionCheckResult,
                                         postAwake: postAwakeValue,
+                                        version:2
                                       ).toJson())
                                   .then((value) async {
                                 if (value == 200) {

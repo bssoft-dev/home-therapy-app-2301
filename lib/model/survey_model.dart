@@ -22,13 +22,14 @@ class SurveyResult {
   String? sn;
   String? username;
   bool? noise;
-  Map? noiseType;
+  List? noiseType;
   int? preEmotion;
   int? preAwake;
   List<dynamic>? tracks;
-  List<Map<String, dynamic>>? comportPlotRating;
+  List? comportPlotRating;
   int? postEmotion;
   int? postAwake;
+  int? version;
 
   SurveyResult({
     this.sn,
@@ -41,6 +42,7 @@ class SurveyResult {
     this.comportPlotRating,
     this.postEmotion,
     this.postAwake,
+    this.version
   });
 
   SurveyResult.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class SurveyResult {
     comportPlotRating = json['comportPlot'];
     postEmotion = json['postEmotion'];
     postAwake = json['postAwake'];
+    version = json['version'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +71,7 @@ class SurveyResult {
     data['comportPlotRating'] = this.comportPlotRating;
     data['postEmotion'] = this.postEmotion;
     data['postAwake'] = this.postAwake;
+    data['version'] = this.version;
     return data;
   }
 }

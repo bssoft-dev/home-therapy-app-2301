@@ -11,7 +11,7 @@ List<int>? preEmotionValueList;
 preEmotionServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
-  String? noiseTypeValue,
+  int? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
   loadAssetSVGs('emotion').then((value) async {

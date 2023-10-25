@@ -4,10 +4,10 @@ import 'package:home_therapy_app/widgets/pre_survey_dialog/pre_common_dialog.dar
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
 
-List<Map<String, dynamic>> comportValueResult = [];
-String comportPlotTitleValue ='';
-int comportPlotRatingValue = 0;
 
+int comportPlotTitleValue =0;
+int comportPlotRatingValue = 0;
+List comportValueResult = List.generate(comportPlotText.length, (index) => 0);
 List<int> selectedValues = List.generate(comportPlotText.length, (index) => 0);
 
 postComportPlotRatingServeyDialog({
@@ -17,7 +17,7 @@ postComportPlotRatingServeyDialog({
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
-  String? noiseTypeValue,
+  int? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
   return preCommonSurveyDialog(
@@ -51,36 +51,15 @@ postComportPlotRatingServeyDialog({
         debugPrint(('tracks:$playTrackTitleReuslt'));
         debugPrint(('comportPlotDialog:$comportValueResult'));
         selectedValues =List.generate(comportPlotText.length, (index) => 0);
-        comportValueResult = [];
+        comportValueResult = List.generate(comportPlotText.length, (index) => 0);
       },
       onSurveyContentValueChange:(value) => debugPrint('사용하지않음'),
       onSurveyMapValueChange: (value) {
-        comportPlotTitleValue =  comportPlotText[value.titleValue];
+        comportPlotTitleValue =  value.titleValue;
         comportPlotRatingValue = value.ratingValue;
-        saveTocomportValueResult(comportPlotTitleValue, comportPlotRatingValue);
+        comportValueResult[value.titleValue] = value.ratingValue;
       },
       );
 }
 
-void saveTocomportValueResult(String title, dynamic rating) {
-  // Check if the title already exists in comportValueResult
-  int existingIndex = -1;
-  for (int i = 0; i < comportValueResult.length; i++) {
-    Map<String, dynamic> entry = comportValueResult[i];
-    if (entry.containsKey(title)) {
-      // The title already exists; update the rating and store the index
-      existingIndex = i;
-      break;
-    }
-  }
-
-  if (existingIndex != -1) {
-    // If the title exists, update the rating
-    comportValueResult[existingIndex][title] = rating;
-  } else {
-    // If the title doesn't exist, add a new entry
-    Map<String, dynamic> data = {title: rating};
-    comportValueResult.add(data);
-  }
-}
 

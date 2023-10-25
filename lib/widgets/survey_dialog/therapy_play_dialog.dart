@@ -9,7 +9,7 @@ therapyPlay({
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
-  String? noiseTypeValue,
+  int? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
   return playTrack(
