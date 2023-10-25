@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/model/survey_model.dart';
+import 'package:home_therapy_app/model/version.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
@@ -9,7 +10,7 @@ import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 List<String>? postAwakeList;
 int postAwakeValue = 0;
 List<int>? postAwakeValueList;
-
+VersionCurrent currentVersion = VersionCurrent();
 postAwakeServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
@@ -78,7 +79,7 @@ postAwakeServeyDialog({
                                         comportPlotRating: comportPlotResult,
                                         postEmotion: postEmotionCheckResult,
                                         postAwake: postAwakeValue,
-                                        version:2
+                                        version:currentVersion.versionValue
                                       ).toJson())
                                   .then((value) async {
                                 if (value == 200) {
