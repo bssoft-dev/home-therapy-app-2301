@@ -4,7 +4,9 @@ import 'package:home_therapy_app/widgets/pre_survey_dialog/pre_common_dialog.dar
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/post_emtion_survey_dialog.dart';
 
-int valueComportPlot = 0;
+List<Map<String, dynamic>> comportValueResult = [];
+String comportPlotTitleValue ='';
+int comportPlotRatingValue = 0;
 
 List<int> selectedValues = List.generate(comportPlotText.length, (index) => 0);
 
@@ -14,7 +16,6 @@ postComportPlotRatingServeyDialog({
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
-  List<dynamic>? comportPlotResult,
   int? postEmotionCheckResult,
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
@@ -28,7 +29,7 @@ postComportPlotRatingServeyDialog({
       radioNumber: 7,
       questionNumber: comportPlotText.length,
       questionResultList: selectedValues,
-      questionValue: valueComportPlot,
+      questionValue: comportPlotRatingValue,
       surveyOnPressed: () async {
         Get.back();
         await postEmotionServeyDialog(
@@ -39,8 +40,8 @@ postComportPlotRatingServeyDialog({
             preEmotionCheckResult: preEmotionCheckResult,
             preAwakeCheckResult: preAwakeCheckResult,
             playTrackTitleReuslt: playTrackTitleReuslt,
-            comportPlotResult: comportPlotResult,
-            comportPlotRatingResult: valueComportPlot);
+            comportPlotResult: comportValueResult
+            );
 
         debugPrint(('noiseDialog:$noiseCheckResult'));
         debugPrint(('noiseType:$noiseTypeValue'));
@@ -48,11 +49,38 @@ postComportPlotRatingServeyDialog({
         debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
         debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
         debugPrint(('tracks:$playTrackTitleReuslt'));
-        debugPrint(('comportPlot:$comportPlotResult'));
-        debugPrint(('comportPlotRating:$valueComportPlot'));
-        valueComportPlot = 0;
+        debugPrint(('comportPlotDialog:$comportValueResult'));
+        selectedValues =List.generate(comportPlotText.length, (index) => 0);
+        comportValueResult = [];
       },
-      onSurveyContentValueChange: (value) {
-        valueComportPlot = value;
-      });
+      onSurveyContentValueChange:(value) => debugPrint('사용하지않음'),
+      onSurveyMapValueChange: (value) {
+        comportPlotTitleValue =  comportPlotText[value.titleValue];
+        comportPlotRatingValue = value.ratingValue;
+        saveTocomportValueResult(comportPlotTitleValue, comportPlotRatingValue);
+      },
+      );
 }
+
+void saveTocomportValueResult(String title, dynamic rating) {
+  // Check if the title already exists in comportValueResult
+  int existingIndex = -1;
+  for (int i = 0; i < comportValueResult.length; i++) {
+    Map<String, dynamic> entry = comportValueResult[i];
+    if (entry.containsKey(title)) {
+      // The title already exists; update the rating and store the index
+      existingIndex = i;
+      break;
+    }
+  }
+
+  if (existingIndex != -1) {
+    // If the title exists, update the rating
+    comportValueResult[existingIndex][title] = rating;
+  } else {
+    // If the title doesn't exist, add a new entry
+    Map<String, dynamic> data = {title: rating};
+    comportValueResult.add(data);
+  }
+}
+

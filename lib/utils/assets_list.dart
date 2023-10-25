@@ -28,7 +28,7 @@ Future<List<String>> loadAssetSVGs(String svgPath) async {
       svgPaths.add(key);
     }
   });
-  print(svgPaths);
+  // print(svgPaths);
 
   return svgPaths;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/model/comport_survey.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 
 preCommonSurveyDialog({
@@ -13,6 +14,7 @@ preCommonSurveyDialog({
   required int questionValue,
   required List<int> questionResultList,
   required VoidCallback surveyOnPressed,
+  ValueChanged<SurveyComport>? onSurveyMapValueChange,
   required ValueChanged<int> onSurveyContentValueChange,
 }) {
   return Get.dialog(
@@ -82,6 +84,7 @@ preCommonSurveyDialog({
                                       setDialog(() {
                                         questionResultList[questionIndex] =
                                             value as int;
+                                            onSurveyMapValueChange!(SurveyComport(questionIndex, value));
                                         onSurveyContentValueChange(value);
                                       });
                                     },

@@ -26,9 +26,7 @@ class SurveyResult {
   int? preEmotion;
   int? preAwake;
   List<dynamic>? tracks;
-  Map? comportPlot;
-  // List<dynamic>? comportPlot;
-  // int? comportPlotRating;
+  List<Map<String, dynamic>>? comportPlotRating;
   int? postEmotion;
   int? postAwake;
 
@@ -40,7 +38,7 @@ class SurveyResult {
     this.preEmotion,
     this.preAwake,
     this.tracks,
-    this.comportPlot,
+    this.comportPlotRating,
     this.postEmotion,
     this.postAwake,
   });
@@ -53,7 +51,7 @@ class SurveyResult {
     preEmotion = json['preEmotion'];
     preAwake = json['preAwake'];
     tracks = json['tracks'];
-    comportPlot = json['comportPlot'];
+    comportPlotRating = json['comportPlot'];
     postEmotion = json['postEmotion'];
     postAwake = json['postAwake'];
   }
@@ -67,7 +65,7 @@ class SurveyResult {
     data['preEmotion'] = this.preEmotion;
     data['preAwake'] = this.preAwake;
     data['tracks'] = this.tracks;
-    data['comportPlot'] = this.comportPlot;
+    data['comportPlotRating'] = this.comportPlotRating;
     data['postEmotion'] = this.postEmotion;
     data['postAwake'] = this.postAwake;
     return data;

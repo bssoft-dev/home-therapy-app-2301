@@ -13,11 +13,10 @@ postEmotionServeyDialog({
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
-  List<dynamic>? comportPlotResult,
   int? postEmotionCheckResult,
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
-  int? comportPlotRatingResult,
+ List<Map<String, dynamic>>? comportPlotResult,
 }) {
   loadAssetSVGs('emotion').then((value) {
     postEmotionList = value;
@@ -42,8 +41,7 @@ postEmotionServeyDialog({
         debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
         debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
         debugPrint(('tracks:$playTrackTitleReuslt'));
-        debugPrint(('comportPlot:$comportPlotResult'));
-        debugPrint(('comportPlotRating:$comportPlotRatingResult'));
+        debugPrint(('comportPlotDialog:$comportPlotResult'));
         debugPrint(('PostemotionDialog:$postEmotionValue'));
 
         await postAwakeServeyDialog(
@@ -55,7 +53,6 @@ postEmotionServeyDialog({
           preAwakeCheckResult: preAwakeCheckResult,
           playTrackTitleReuslt: playTrackTitleReuslt,
           comportPlotResult: comportPlotResult,
-          comportPlotRatingResult: comportPlotRatingResult,
           postEmotionCheckResult: postEmotionValue,
         );
         postEmotionValue = 0;

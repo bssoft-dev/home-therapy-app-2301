@@ -72,7 +72,8 @@ comportPlotServeyDialog({
                   preEmotionCheckResult: preEmotionCheckResult,
                   preAwakeCheckResult: preAwakeCheckResult,
                   playTrackTitleReuslt: playTrackTitleReuslt,
-                  comportPlotResult: comportPlot);
+                  // comportPlotResult: comportPlot
+                  );
 
               debugPrint(('noiseDialog:$noiseCheckResult'));
               debugPrint(('noiseType:$noiseTypeValue'));

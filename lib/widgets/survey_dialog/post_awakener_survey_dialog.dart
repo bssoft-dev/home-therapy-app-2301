@@ -4,7 +4,6 @@ import 'package:home_therapy_app/model/survey_model.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
-import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 
 List<String>? postAwakeList;
@@ -18,10 +17,12 @@ postAwakeServeyDialog({
   int? preAwakeCheckResult,
   List<dynamic>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
-  List<dynamic>? comportPlotResult,
   String? noiseTypeValue,
   int? noiseTypeScoreValue,
-  int? comportPlotRatingResult,
+  List<Map<String, dynamic>>? comportPlotResult,
+
+  int? comportPlotRatingResult, 
+  String? comportPlotTitleResult,
 }) {
   loadAssetSVGs('awakener').then((value) {
     // print(value);
@@ -77,11 +78,7 @@ postAwakeServeyDialog({
                                         preEmotion: preEmotionCheckResult,
                                         preAwake: preAwakeCheckResult,
                                         tracks: playTrackTitleReuslt,
-                                        comportPlot: {
-                                          'comportPlot': comportPlotResult,
-                                          'comportPlotRating':
-                                              comportPlotRatingResult
-                                        },
+                                        comportPlotRating: comportPlotResult,
                                         postEmotion: postEmotionCheckResult,
                                         postAwake: postAwakeValue,
                                       ).toJson())
