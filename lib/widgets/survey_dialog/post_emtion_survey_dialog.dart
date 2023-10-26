@@ -12,11 +12,11 @@ postEmotionServeyDialog({
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
-  List<dynamic>? playTrackTitleReuslt,
+  List<Map<String, dynamic>>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
   int? noiseTypeValue,
   int? noiseTypeScoreValue,
- List? comportPlotResult,
+  List? comportPlotResult,
 }) {
   loadAssetSVGs('emotion').then((value) {
     postEmotionList = value;

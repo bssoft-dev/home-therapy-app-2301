@@ -26,22 +26,22 @@ preNoiseChoiceDialog({
         child: Column(
           children: [
             RichText(
-  text: const TextSpan(
-    children: <InlineSpan>[
-      TextSpan(
-        text: '발생한 소음의 종류를 선택해주세요\n',
-        style: TextStyle(fontSize: 16,color: Colors.black),
-      ),
-         WidgetSpan(
-        child: SizedBox(height: 10), // 간격을 조절할 너비를 지정
-      ),
-      TextSpan(
-        text: '소음이 발생하지 않았다면 다음을 선택해주세요',
-        style: TextStyle(fontSize: 13, color: Colors.black),
-      ),
-    ],
-  ),
-),
+              text: const TextSpan(
+                children: <InlineSpan>[
+                  TextSpan(
+                    text: '발생한 소음의 종류를 선택해주세요\n',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                  WidgetSpan(
+                    child: SizedBox(height: 10), // 간격을 조절할 너비를 지정
+                  ),
+                  TextSpan(
+                    text: '소음이 발생하지 않았다면 다음을 선택해주세요',
+                    style: TextStyle(fontSize: 13, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
             // const Text('발생한 소음의 종류를 선택해주세요', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 15),
             SizedBox(

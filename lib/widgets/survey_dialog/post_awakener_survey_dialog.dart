@@ -5,7 +5,9 @@ import 'package:home_therapy_app/model/version.dart';
 import 'package:home_therapy_app/utils/assets_list.dart';
 import 'package:home_therapy_app/utils/http_request.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/utils/track_play.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
+import 'package:home_therapy_app/widgets/track_player_widget.dart';
 
 List<String>? postAwakeList;
 int postAwakeValue = 0;
@@ -16,12 +18,12 @@ postAwakeServeyDialog({
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
   int? preAwakeCheckResult,
-  List<dynamic>? playTrackTitleReuslt,
+  List<Map<String, dynamic>>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
   int? noiseTypeValue,
   int? noiseTypeScoreValue,
   List? comportPlotResult,
-  int? comportPlotRatingResult, 
+  int? comportPlotRatingResult,
   String? comportPlotTitleResult,
 }) {
   loadAssetSVGs('awakener').then((value) {
@@ -56,30 +58,47 @@ postAwakeServeyDialog({
                 child: Column(
                   children: [
                     const Text('만약 듣고 있는 음원이 있으면 종료가 됩니다.\n종료하시겠습니까?',
-                        style: TextStyle(fontSize: 17)),
+                        style: TextStyle(fontSize: 16)),
                     const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         TextButton(
                             onPressed: () async {
+                              playStop();
+                              endTime = DateTime.now();
+                              await calculateElapsedTime(
+                                      playTrackTitleReuslt?.last['time']!,
+                                      endTime!)
+                                  .then((playingTime) {
+                                playTrackTitleReuslt?.last = ({
+                                  "name": playTrackTitleReuslt.last['name'],
+                                  "time": playingTime,
+                                });
+                              });
                               final sn = await getStoredValue('sn');
                               final username = await getStoredValue('username');
                               httpPostServer(
                                       path: 'api/runs',
                                       data: SurveyResult(
-                                        sn: sn,
-                                        username: username,
-                                        noise: noiseCheckResult,
-                                        noiseType: [noiseTypeValue,noiseTypeScoreValue],
-                                        preEmotion: preEmotionCheckResult,
-                                        preAwake: preAwakeCheckResult,
-                                        tracks: playTrackTitleReuslt,
-                                        comportPlotRating: comportPlotResult,
-                                        postEmotion: postEmotionCheckResult,
-                                        postAwake: postAwakeValue,
-                                        version:currentVersion.versionValue
-                                      ).toJson())
+                                              sn: sn,
+                                              username: username,
+                                              noise: noiseCheckResult,
+                                              noiseType: [
+                                                noiseTypeValue,
+                                                noiseTypeScoreValue
+                                              ],
+                                              preEmotion: preEmotionCheckResult,
+                                              preAwake: preAwakeCheckResult,
+                                              tracks: playTrackTitleReuslt,
+                                              comportPlotRating:
+                                                  comportPlotResult,
+                                              postEmotion:
+                                                  postEmotionCheckResult,
+                                              postAwake: postAwakeValue,
+                                              version:
+                                                  currentVersion.versionValue)
+                                          .toJson())
                                   .then((value) async {
                                 if (value == 200) {
                                   postAwakeValue = 0;
