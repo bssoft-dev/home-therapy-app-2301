@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:home_therapy_app/utils/current_version.dart';
 import 'package:home_therapy_app/utils/share_rreferences_request.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_survey_dialog.dart';
@@ -27,6 +28,7 @@ class _DevicePlayerState extends State<DevicePlayer> {
   void initState() {
     super.initState();
     asyncMethodFuture = asyncTrackPlayListMethod();
+    checkVersion();
   }
 
   @override

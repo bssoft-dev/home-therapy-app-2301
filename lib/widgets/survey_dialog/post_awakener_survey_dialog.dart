@@ -25,7 +25,6 @@ postAwakeServeyDialog({
   String? comportPlotTitleResult,
 }) {
   loadAssetSVGs('awakener').then((value) {
-    // print(value);
     postAwakeList = value;
     postAwakeValueList =
         List<int>.generate(postAwakeList!.length, (index) => index);
