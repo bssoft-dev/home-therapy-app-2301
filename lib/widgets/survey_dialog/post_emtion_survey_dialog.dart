@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/utils/assets_list.dart';
+import 'package:home_therapy_app/utils/assets_image_list_future.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/post_awakener_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 
 List<String>? postEmotionList;
-int postEmotionValue = 0;
 List<int>? postEmotionValueList;
+int postEmotionValue = 0;
 postEmotionServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
@@ -16,7 +16,7 @@ postEmotionServeyDialog({
   int? postEmotionCheckResult,
   int? noiseTypeValue,
   int? noiseTypeScoreValue,
-  List? comportPlotResult,
+  List? wordPositionResult,
 }) {
   loadAssetSVGs('emotion').then((value) {
     postEmotionList = value;
@@ -41,7 +41,7 @@ postEmotionServeyDialog({
         debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
         debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
         debugPrint(('tracks:$playTrackTitleReuslt'));
-        debugPrint(('comportPlotDialog:$comportPlotResult'));
+        debugPrint(('wordPositionDialog:$wordPositionResult'));
         debugPrint(('PostemotionDialog:$postEmotionValue'));
 
         await postAwakeServeyDialog(
@@ -52,7 +52,7 @@ postEmotionServeyDialog({
           preEmotionCheckResult: preEmotionCheckResult,
           preAwakeCheckResult: preAwakeCheckResult,
           playTrackTitleReuslt: playTrackTitleReuslt,
-          comportPlotResult: comportPlotResult,
+          wordPositionResult: wordPositionResult,
           postEmotionCheckResult: postEmotionValue,
         );
         postEmotionValue = 0;

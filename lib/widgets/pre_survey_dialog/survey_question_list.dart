@@ -8,7 +8,7 @@ List<String> note = [
 
 List<String> ratingText = ['전혀', '조금', '비교적', '아주', '엄청나게'];
 List<String> tipiRatingText = ['전혀', '별로', '조금', '비교적', '꽤', '아주', '엄청나게'];
-List<String> comportPlotText = [
+List<String> wordPositionText = [
   '풍부한',
   '흥미로운',
   '편안한',
@@ -18,7 +18,7 @@ List<String> comportPlotText = [
   '짜증스러운',
   '방해되는,통제되지 않은'
 ];
-List<String> comportPlotRatingText = [
+List<String> wordPositionRatingText = [
   '전혀',
   '별로',
   '조금',

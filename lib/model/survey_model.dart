@@ -26,24 +26,23 @@ class SurveyResult {
   int? preEmotion;
   int? preAwake;
   List<dynamic>? tracks;
-  List? comportPlotRating;
+  List? wordPositionRating;
   int? postEmotion;
   int? postAwake;
   int? version;
 
-  SurveyResult({
-    this.sn,
-    this.username,
-    this.noise,
-    this.noiseType,
-    this.preEmotion,
-    this.preAwake,
-    this.tracks,
-    this.comportPlotRating,
-    this.postEmotion,
-    this.postAwake,
-    this.version
-  });
+  SurveyResult(
+      {this.sn,
+      this.username,
+      this.noise,
+      this.noiseType,
+      this.preEmotion,
+      this.preAwake,
+      this.tracks,
+      this.wordPositionRating,
+      this.postEmotion,
+      this.postAwake,
+      this.version});
 
   SurveyResult.fromJson(Map<String, dynamic> json) {
     sn = json['sn'];
@@ -53,7 +52,7 @@ class SurveyResult {
     preEmotion = json['preEmotion'];
     preAwake = json['preAwake'];
     tracks = json['tracks'];
-    comportPlotRating = json['comportPlot'];
+    wordPositionRating = json['wordPosition'];
     postEmotion = json['postEmotion'];
     postAwake = json['postAwake'];
     version = json['version'];
@@ -68,7 +67,7 @@ class SurveyResult {
     data['preEmotion'] = this.preEmotion;
     data['preAwake'] = this.preAwake;
     data['tracks'] = this.tracks;
-    data['comportPlotRating'] = this.comportPlotRating;
+    data['wordPositionRating'] = this.wordPositionRating;
     data['postEmotion'] = this.postEmotion;
     data['postAwake'] = this.postAwake;
     data['version'] = this.version;

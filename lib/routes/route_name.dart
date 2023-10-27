@@ -1,6 +1,6 @@
 class RouteName {
   static const home = '/home';
   static const therapyDevice = '/therapyDevice';
-  static const therapyDeviceManage = '/therapyDeviceManage';
+  static const setting = '/setting';
   static const trackMixing = '/trackMixing';
 }

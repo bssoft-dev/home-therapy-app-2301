@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/model/comport_survey.dart';
+import 'package:home_therapy_app/model/survey_word_position_model.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
 
 preCommonSurveyDialog({
@@ -14,7 +14,7 @@ preCommonSurveyDialog({
   required int questionValue,
   required List<int> questionResultList,
   required VoidCallback surveyOnPressed,
-  ValueChanged<SurveyComport>? onSurveyMapValueChange,
+  ValueChanged<WordPositionSurvey>? onSurveyMapValueChange,
   required ValueChanged<int> onSurveyContentValueChange,
 }) {
   return Get.dialog(
@@ -72,7 +72,7 @@ preCommonSurveyDialog({
                                     Text(tipiRatingText[choiceIndex],
                                         style: const TextStyle(fontSize: 15)),
                                   if (surveyTitle.contains('공간'))
-                                    Text(comportPlotRatingText[choiceIndex],
+                                    Text(wordPositionRatingText[choiceIndex],
                                         style: const TextStyle(fontSize: 15)),
                                   Radio(
                                     visualDensity:
@@ -84,7 +84,9 @@ preCommonSurveyDialog({
                                       setDialog(() {
                                         questionResultList[questionIndex] =
                                             value as int;
-                                            onSurveyMapValueChange!(SurveyComport(questionIndex, value));
+                                        onSurveyMapValueChange!(
+                                            WordPositionSurvey(
+                                                questionIndex, value));
                                         onSurveyContentValueChange(value);
                                       });
                                     },

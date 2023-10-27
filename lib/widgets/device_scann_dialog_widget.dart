@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
-import 'package:home_therapy_app/utils/share_rreferences_request.dart';
+import 'package:home_therapy_app/utils/share_rreferences_future.dart';
 import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
 
 class DeviceScannDialog extends StatefulWidget {

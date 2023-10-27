@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/post_image_rating_survey_dialog.dart';
+import 'package:home_therapy_app/widgets/survey_dialog/post_word_position_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
 
@@ -26,7 +26,7 @@ therapyPlay({
       debugPrint(('tracks:$playTrackTitle'));
       Get.back();
       playTrackTitleTime = [];
-      return postComportPlotRatingServeyDialog(
+      return postWordPositionServeyDialog(
         context: context,
         noiseCheckResult: noiseCheckResult,
         noiseTypeValue: noiseTypeValue,

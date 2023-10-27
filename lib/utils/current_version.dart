@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/utils/http_request.dart';
+import 'package:home_therapy_app/utils/http_request_api.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/post_awakener_survey_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void checkVersion() async {
   final serverVersion = await httpGetServer(path: '/api/survey/recent-ver');
-  print('server:$serverVersion');
-  print('class:${currentVersion.versionValue}');
   if (currentVersion.versionValue == serverVersion) {
     Get.dialog(
         barrierDismissible: false,

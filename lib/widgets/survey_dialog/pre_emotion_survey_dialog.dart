@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/utils/assets_list.dart';
+import 'package:home_therapy_app/utils/assets_image_list_future.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/pre_awakener_survey_dialog.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 

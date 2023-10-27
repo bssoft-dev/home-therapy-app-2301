@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/model/survey_model.dart';
-import 'package:home_therapy_app/model/version.dart';
-import 'package:home_therapy_app/utils/assets_list.dart';
-import 'package:home_therapy_app/utils/http_request.dart';
-import 'package:home_therapy_app/utils/share_rreferences_request.dart';
-import 'package:home_therapy_app/utils/track_play.dart';
+import 'package:home_therapy_app/model/version_model.dart';
+import 'package:home_therapy_app/utils/assets_image_list_future.dart';
+import 'package:home_therapy_app/utils/http_request_api.dart';
+import 'package:home_therapy_app/utils/share_rreferences_future.dart';
+import 'package:home_therapy_app/utils/track_play_api.dart';
 import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 
@@ -22,9 +22,9 @@ postAwakeServeyDialog({
   int? postEmotionCheckResult,
   int? noiseTypeValue,
   int? noiseTypeScoreValue,
-  List? comportPlotResult,
-  int? comportPlotRatingResult,
-  String? comportPlotTitleResult,
+  List? wordPositionResult,
+  int? wordPositionRatingResult,
+  String? wordPositionTitleResult,
 }) {
   loadAssetSVGs('awakener').then((value) {
     postAwakeList = value;
@@ -91,8 +91,8 @@ postAwakeServeyDialog({
                                               preEmotion: preEmotionCheckResult,
                                               preAwake: preAwakeCheckResult,
                                               tracks: playTrackTitleReuslt,
-                                              comportPlotRating:
-                                                  comportPlotResult,
+                                              wordPositionRating:
+                                                  wordPositionResult,
                                               postEmotion:
                                                   postEmotionCheckResult,
                                               postAwake: postAwakeValue,
