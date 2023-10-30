@@ -5,8 +5,8 @@ import 'package:home_therapy_app/widgets/survey_dialog/post_awakener_survey_dial
 import 'package:url_launcher/url_launcher.dart';
 
 void checkVersion() async {
-  final serverVersion = await httpGetServer(path: '/api/survey/recent-ver');
-  if (currentVersion.versionValue == serverVersion) {
+  final serverVersion = await httpGetServer(path: 'api/survey/recent-ver');
+  if (currentVersion.versionValue != serverVersion) {
     Get.dialog(
         barrierDismissible: false,
         name: 'version 업데이트 알림',

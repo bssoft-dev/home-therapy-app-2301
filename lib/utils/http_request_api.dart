@@ -72,11 +72,12 @@ httpGetServer({
 }) async {
   String baseUrl = 'https://home-therapy.bs-soft.co.kr/$path';
   try {
-    http.Response response = await http.post(Uri.parse(baseUrl), headers: {
+    http.Response response = await http.get(Uri.parse(baseUrl), headers: {
       "accept": "application/json",
       "Content-Type": "application/json",
     });
-    return response.statusCode;
+    Map<String, dynamic> resBody = jsonDecode(utf8.decode(response.bodyBytes));
+    return resBody['result'];
   } catch (e) {
     // 서버가 응답하지 않는 경우
     httpFailureNotice();
