@@ -5,7 +5,7 @@
 
 ## Getting Started
 
-<p align ="center" width="50%">
+<p align ="center" width="50%" height="50%">
   <img src = "https://github.com/bssoft-dev/home-therapy-app-2301/assets/97154689/f5c773c8-24c6-478f-b1a0-d5a5967b21f3">
   <img src = "https://github.com/bssoft-dev/home-therapy-app-2301/assets/97154689/c296da3f-bc8d-4471-b1a9-dc6e553c620d">
   <img src = "https://github.com/bssoft-dev/home-therapy-app-2301/assets/97154689/1c2ce785-94c9-4808-b9a1-f782c9b4220b">
@@ -20,4 +20,5 @@
 ### flutter
 
 flutter_version : 3.13.8
+
 dart_version : 3.1.4
