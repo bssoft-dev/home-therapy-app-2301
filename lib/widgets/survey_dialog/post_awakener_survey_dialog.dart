@@ -65,17 +65,19 @@ postAwakeServeyDialog({
                       children: [
                         TextButton(
                             onPressed: () async {
-                              playStop();
-                              endTime = DateTime.now();
-                              await calculateElapsedTime(
-                                      playTrackTitleReuslt?.last['time']!,
-                                      endTime!)
-                                  .then((playingTime) {
-                                playTrackTitleReuslt?.last = ({
-                                  "name": playTrackTitleReuslt.last['name'],
-                                  "time": playingTime,
+                              if (playTrackTitleReuslt?.last['time'] is! int) {
+                                playStop();
+                                endTime = DateTime.now();
+                                await calculateElapsedTime(
+                                        playTrackTitleReuslt?.last['time']!,
+                                        endTime!)
+                                    .then((playingTime) {
+                                  playTrackTitleReuslt?.last = ({
+                                    "name": playTrackTitleReuslt.last['name'],
+                                    "time": playingTime,
+                                  });
                                 });
-                              });
+                              }
                               final sn = await getStoredValue('sn');
                               final username = await getStoredValue('username');
                               httpPostServer(

@@ -14,7 +14,7 @@ preCommonSurveyDialog({
   required int questionValue,
   required List<int> questionResultList,
   required VoidCallback surveyOnPressed,
-  ValueChanged<WordPositionSurvey>? onSurveyMapValueChange,
+  required ValueChanged<WordPositionSurvey> onSurveyMapValueChange,
   required ValueChanged<int> onSurveyContentValueChange,
 }) {
   return Get.dialog(
@@ -84,7 +84,7 @@ preCommonSurveyDialog({
                                       setDialog(() {
                                         questionResultList[questionIndex] =
                                             value as int;
-                                        onSurveyMapValueChange!(
+                                        onSurveyMapValueChange(
                                             WordPositionSurvey(
                                                 questionIndex, value));
                                         onSurveyContentValueChange(value);

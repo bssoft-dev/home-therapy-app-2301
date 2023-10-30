@@ -25,6 +25,7 @@ pssServeyDialogQ({
       questionNumber: pssQ.length,
       questionResultList: selectedPValues,
       questionValue: valueP,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
@@ -58,6 +59,7 @@ tipiServeyDialogQ({required BuildContext context}) {
       questionNumber: tipiQ.length,
       questionResultList: selectedTValues,
       questionValue: valueT,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');

@@ -37,6 +37,7 @@ apartmentNoiseServeyDialogQ1({
       questionNumber: apartmentNoiseQ1_2.length,
       questionResultList: selectedA1Values,
       questionValue: valueA1,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
@@ -72,6 +73,7 @@ apartmentNoiseServeyDialogQ2({
       questionNumber: apartmentNoiseQ1_2.length,
       questionResultList: selectedA2Values,
       questionValue: valueA2,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
@@ -104,6 +106,7 @@ apartmentNoiseServeyDialogQ3({required BuildContext context}) {
       questionNumber: apartmentNoiseQ3_4.length,
       questionResultList: selectedA3Values,
       questionValue: valueA3,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
@@ -136,6 +139,7 @@ apartmentNoiseServeyDialogQ4({required BuildContext context}) {
       questionNumber: apartmentNoiseQ3_4.length,
       questionResultList: selectedA4Values,
       questionValue: valueA4,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
@@ -169,6 +173,7 @@ apartmentNoiseServeyDialogQ5({required BuildContext context}) {
       questionNumber: apartmentNoiseQ5.length,
       questionResultList: selectedA5Values,
       questionValue: valueA5,
+      onSurveyMapValueChange: (value) {},
       surveyOnPressed: () async {
         final sn = await getStoredValue('sn');
         final username = await getStoredValue('username');
