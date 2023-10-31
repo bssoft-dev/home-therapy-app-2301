@@ -16,6 +16,7 @@ preCommonSurveyDialog({
   required VoidCallback surveyOnPressed,
   required ValueChanged<WordPositionSurvey> onSurveyMapValueChange,
   required ValueChanged<int> onSurveyContentValueChange,
+  final String? surveyStageTitle,
 }) {
   return Get.dialog(
       barrierDismissible: false, name: dialogName, useSafeArea: false,
@@ -25,11 +26,29 @@ preCommonSurveyDialog({
       actionsPadding: const EdgeInsets.only(bottom: 10),
       contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
       title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          surveyStageTitle != null
+              ? Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      surveyStageTitle,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 15),
+                  ],
+                )
+              : const SizedBox.shrink(),
           Text(
             surveyTitle,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
           ),
           // const SizedBox(height: 10),
           // Text(
@@ -39,18 +58,20 @@ preCommonSurveyDialog({
         ],
       ),
       content: SingleChildScrollView(
-        child: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: ListView.builder(
+                  // shrinkWrap: false,
+                  // physics: const NeverScrollableScrollPhysics(),
                   itemCount: questionNumber,
                   itemBuilder: (BuildContext context, int questionIndex) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           '${questionIndex + 1}.${questionTitle[questionIndex]}',
@@ -100,8 +121,8 @@ preCommonSurveyDialog({
                       ],
                     );
                   }),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       actions: [

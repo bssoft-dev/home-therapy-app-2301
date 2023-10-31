@@ -16,7 +16,8 @@ postEmotionServeyDialog({
   int? postEmotionCheckResult,
   int? noiseTypeValue,
   int? noiseTypeScoreValue,
-  List? wordPositionResult,
+  int? postNoise,
+  // List? wordPositionResult,
 }) {
   loadAssetSVGs('emotion').then((value) {
     postEmotionList = value;
@@ -26,7 +27,7 @@ postEmotionServeyDialog({
     return commonSurveyDialog(
       context: context,
       dialogName: '청취후 정서가설문',
-      surveyTitle: '질문 2/3',
+      surveyTitle: '질문 2/4',
       surveyContentTitle: '[정서가]',
       surveyContent: '현재 본인과 가장 알맞는 감정 상태를 고르시오',
       surveyImageList: postEmotionList,
@@ -41,8 +42,9 @@ postEmotionServeyDialog({
         debugPrint(('PreemotionDialog:$preEmotionCheckResult'));
         debugPrint(('PreawakeDialog:$preAwakeCheckResult'));
         debugPrint(('tracks:$playTrackTitleReuslt'));
-        debugPrint(('wordPositionDialog:$wordPositionResult'));
         debugPrint(('PostemotionDialog:$postEmotionValue'));
+        debugPrint(('postNoise:${(postNoise)}'));
+        // debugPrint(('wordPositionDialog:$wordPositionResult'));
 
         await postAwakeServeyDialog(
           context: context,
@@ -52,8 +54,9 @@ postEmotionServeyDialog({
           preEmotionCheckResult: preEmotionCheckResult,
           preAwakeCheckResult: preAwakeCheckResult,
           playTrackTitleReuslt: playTrackTitleReuslt,
-          wordPositionResult: wordPositionResult,
+          // wordPositionResult: wordPositionResult,
           postEmotionCheckResult: postEmotionValue,
+          postNoise: postNoise,
         );
         postEmotionValue = 0;
       },

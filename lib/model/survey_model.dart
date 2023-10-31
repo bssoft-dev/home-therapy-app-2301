@@ -5,14 +5,14 @@ class Survey {
 
   Survey.fromJson(Map<String, dynamic> json) {
     surveyResult = json['surveyResult'] != null
-        ? new SurveyResult.fromJson(json['surveyResult'])
+        ? SurveyResult.fromJson(json['surveyResult'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.surveyResult != null) {
-      data['surveyResult'] = this.surveyResult!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (surveyResult != null) {
+      data['surveyResult'] = surveyResult!.toJson();
     }
     return data;
   }
@@ -30,19 +30,22 @@ class SurveyResult {
   int? postEmotion;
   int? postAwake;
   int? version;
+  int? postNoise;
 
-  SurveyResult(
-      {this.sn,
-      this.username,
-      this.noise,
-      this.noiseType,
-      this.preEmotion,
-      this.preAwake,
-      this.tracks,
-      this.wordPositionRating,
-      this.postEmotion,
-      this.postAwake,
-      this.version});
+  SurveyResult({
+    this.sn,
+    this.username,
+    this.noise,
+    this.noiseType,
+    this.preEmotion,
+    this.preAwake,
+    this.tracks,
+    this.wordPositionRating,
+    this.postEmotion,
+    this.postAwake,
+    this.version,
+    this.postNoise,
+  });
 
   SurveyResult.fromJson(Map<String, dynamic> json) {
     sn = json['sn'];
@@ -56,21 +59,23 @@ class SurveyResult {
     postEmotion = json['postEmotion'];
     postAwake = json['postAwake'];
     version = json['version'];
+    postNoise = json['postNoise'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['sn'] = this.sn;
-    data['username'] = this.username;
-    data['noise'] = this.noise;
-    data['noiseType'] = this.noiseType;
-    data['preEmotion'] = this.preEmotion;
-    data['preAwake'] = this.preAwake;
-    data['tracks'] = this.tracks;
-    data['wordPositionRating'] = this.wordPositionRating;
-    data['postEmotion'] = this.postEmotion;
-    data['postAwake'] = this.postAwake;
-    data['version'] = this.version;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['sn'] = sn;
+    data['username'] = username;
+    data['noise'] = noise;
+    data['noiseType'] = noiseType;
+    data['preEmotion'] = preEmotion;
+    data['preAwake'] = preAwake;
+    data['tracks'] = tracks;
+    data['wordPositionRating'] = wordPositionRating;
+    data['postEmotion'] = postEmotion;
+    data['postAwake'] = postAwake;
+    data['version'] = version;
+    data['postNoise'] = postNoise;
     return data;
   }
 }
