@@ -75,13 +75,13 @@ class _HomeState extends State<Home> {
 
   void checkAndSurveyDialog(BuildContext context) async {
     final snCheck = await getStoredValue('sn');
-    final surveyA1 = await getStoredValue('surveyA1');
-    final surveyA2 = await getStoredValue('surveyA2');
-    final surveyA3 = await getStoredValue('surveyA3');
-    final surveyA4 = await getStoredValue('surveyA4');
-    final surveyA5 = await getStoredValue('surveyA5');
-    final surveyP = await getStoredValue('surveyP');
-    final surveyT = await getStoredValue('surveyT');
+    // final surveyA1 = await getStoredValue('surveyA1');
+    // final surveyA2 = await getStoredValue('surveyA2');
+    // final surveyA3 = await getStoredValue('surveyA3');
+    // final surveyA4 = await getStoredValue('surveyA4');
+    // final surveyA5 = await getStoredValue('surveyA5');
+    // final surveyP = await getStoredValue('surveyP');
+    // final surveyT = await getStoredValue('surveyT');
     if (snCheck == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showUserInfoDialog(
@@ -97,20 +97,21 @@ class _HomeState extends State<Home> {
             cancelText: '취소',
             saveText: '저장');
       });
-    } else if (surveyA1 == null) {
-      apartmentNoiseServeyDialogQ1(context: context);
-    } else if (surveyA2 == null) {
-      apartmentNoiseServeyDialogQ2(context: context);
-    } else if (surveyA3 == null) {
-      apartmentNoiseServeyDialogQ3(context: context);
-    } else if (surveyA4 == null) {
-      apartmentNoiseServeyDialogQ4(context: context);
-    } else if (surveyA5 == null) {
-      apartmentNoiseServeyDialogQ5(context: context);
-    } else if (surveyP == null) {
-      pssServeyDialogQ(context: context);
-    } else if (surveyT == null) {
-      tipiServeyDialogQ(context: context);
     }
+    // else if (surveyA1 == null) {
+    //   apartmentNoiseServeyDialogQ1(context: context);
+    // } else if (surveyA2 == null) {
+    //   apartmentNoiseServeyDialogQ2(context: context);
+    // } else if (surveyA3 == null) {
+    //   apartmentNoiseServeyDialogQ3(context: context);
+    // } else if (surveyA4 == null) {
+    //   apartmentNoiseServeyDialogQ4(context: context);
+    // } else if (surveyA5 == null) {
+    //   apartmentNoiseServeyDialogQ5(context: context);
+    // } else if (surveyP == null) {
+    //   pssServeyDialogQ(context: context);
+    // } else if (surveyT == null) {
+    //   tipiServeyDialogQ(context: context);
+    // }
   }
 }

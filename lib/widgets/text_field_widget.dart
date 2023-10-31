@@ -134,8 +134,8 @@ Future<dynamic> showUserInfoDialog({
                                         saveStoredValue('username',
                                             usernameController.text);
                                         Get.back();
-                                        apartmentNoiseServeyDialogQ1(
-                                            context: context);
+                                        // apartmentNoiseServeyDialogQ1(
+                                        //     context: context);
                                       } else {
                                         failSnackBar(
                                             '오류', '개인정보 저장에 실패했습니다. 다시 시도해주세요');
