@@ -7,9 +7,9 @@ import 'package:home_therapy_app/utils/share_rreferences_future.dart';
 import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
 
 class DeviceScannDialog extends StatefulWidget {
-  final List<String> ipv4addresses;
+  final List<String> filteredAddresses;
 
-  const DeviceScannDialog(this.ipv4addresses, {Key? key}) : super(key: key);
+  const DeviceScannDialog(this.filteredAddresses, {Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _DeviceScannDialogState();
 }
@@ -125,21 +125,21 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
     liveIpAddresses.clear();
     const port = [80, 23019];
     final stream80 = NetworkAnalyzer.discover2(
-      widget.ipv4addresses[0],
+      widget.filteredAddresses[0],
       port[1],
       // timeout: Duration(milliseconds: 1000),
     );
 
     int found = 0;
     await for (NetworkAddress addr in stream80) {
-      print(addr.ip);
+      debugPrint(addr.ip);
       if (addr.exists) {
         found++;
-        print('Found device: ${addr.ip}:${port[1]}');
-        liveIpAddresses.add('${addr.ip}');
+        debugPrint('Found device: ${addr.ip}:${port[1]}');
+        liveIpAddresses.add(addr.ip);
       }
     }
-    print('Finish. Found $found device(s)');
+    debugPrint('Finish. Found $found device(s)');
 
     liveIpAddresses.sort((a, b) {
       final aLastNumber = int.parse(a.split('.').last);

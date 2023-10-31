@@ -12,6 +12,7 @@ import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/utils/track_play_api.dart';
 
 List<String> ipv4Addresses = [];
+List<String> filteredAddresses = [];
 late List<String> trackPlayList;
 late List<bool> trackPlayIndex;
 String? trackTitle;
@@ -49,21 +50,28 @@ Future<void> initTrackTitle(trackPlayList) async {
 }
 
 Future<void> getIpAddress() async {
+  ipv4Addresses.clear();
   await NetworkInterface.list().then((interfaces) {
     for (var interface in interfaces) {
       for (var address in interface.addresses) {
         if (address.type == InternetAddressType.IPv4) {
           String ipAddress = address.address;
+          debugPrint('IP address: $ipAddress');
           int dotIndex = ipAddress.lastIndexOf('.');
           if (dotIndex != -1) {
             ipv4Addresses.add(ipAddress.substring(0, dotIndex));
           } else {
             ipv4Addresses.add(ipAddress);
           }
+          // ".맨 뒤에 값이 1"인 아이템 필터링
+          filteredAddresses = ipv4Addresses.where((address) {
+            final parts = address.split(".");
+            return parts.isNotEmpty && parts.last == "1";
+          }).toList();
         }
       }
     }
-    debugPrint('$ipv4Addresses');
+    debugPrint('$filteredAddresses');
   });
 }
 

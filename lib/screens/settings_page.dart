@@ -50,7 +50,7 @@ class _SettingsState extends State<Settings> {
                     barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
-                      return DeviceScannDialog(ipv4Addresses);
+                      return DeviceScannDialog(filteredAddresses);
                     },
                   );
                 }),
