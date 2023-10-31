@@ -27,24 +27,48 @@ preNoiseChoiceScoreDialog({
       content: SingleChildScrollView(
         child: Column(
           children: [
-                        RichText(
-  text: const TextSpan(
-    children: <InlineSpan>[
-      TextSpan(
-        text: '선택한 소음의 신경쓰임 정도를 선택해주세요\n',
-        style: TextStyle(fontSize: 16,color: Colors.black),
-      ),
-         WidgetSpan(
-        child: SizedBox(height: 10), // 간격을 조절할 너비를 지정
-      ),
-      TextSpan(
-        text: '소음이 발생하지 않았다면 다음을 선택해주세요',
-        style: TextStyle(fontSize: 13, color: Colors.black),
-      ),
-    ],
-  ),
-),
-
+            const Text(
+              '선택한 소음의 신경쓰임 정도를\n선택해주세요',
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.black,
+                height: 1.2,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            RichText(
+              text: const TextSpan(
+                children: <InlineSpan>[
+                  TextSpan(
+                    text: '※ ',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                  TextSpan(
+                    text: '소음이 발생하지 않았다면',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      decoration: TextDecoration.underline,
+                      height: 1,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' "다음"',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                    text: '을 선택해 주세요',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 15),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,

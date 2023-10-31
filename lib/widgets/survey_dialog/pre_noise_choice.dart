@@ -25,19 +25,38 @@ preNoiseChoiceDialog({
       content: SingleChildScrollView(
         child: Column(
           children: [
+            const Text(
+              '발생한 소음의 종류를 선택해주세요',
+              style: TextStyle(fontSize: 25, color: Colors.black),
+            ),
+            const SizedBox(
+              height: 2,
+            ),
             RichText(
               text: const TextSpan(
                 children: <InlineSpan>[
                   TextSpan(
-                    text: '발생한 소음의 종류를 선택해주세요\n',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  WidgetSpan(
-                    child: SizedBox(height: 10), // 간격을 조절할 너비를 지정
+                    text: '※ ',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   TextSpan(
-                    text: '소음이 발생하지 않았다면 다음을 선택해주세요',
-                    style: TextStyle(fontSize: 13, color: Colors.black),
+                    text: '소음이 발생하지 않았다면',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' "다음"',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                    text: '을 선택해 주세요',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                 ],
               ),

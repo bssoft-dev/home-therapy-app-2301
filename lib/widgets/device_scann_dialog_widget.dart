@@ -127,7 +127,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
     final stream80 = NetworkAnalyzer.discover2(
       widget.filteredAddresses[0],
       port[1],
-      // timeout: Duration(milliseconds: 1000),
+      timeout: const Duration(milliseconds: 5000),
     );
 
     int found = 0;
@@ -136,7 +136,9 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
       if (addr.exists) {
         found++;
         debugPrint('Found device: ${addr.ip}:${port[1]}');
-        liveIpAddresses.add(addr.ip);
+        setState(() {
+          liveIpAddresses.add(addr.ip);
+        });
       }
     }
     debugPrint('Finish. Found $found device(s)');
