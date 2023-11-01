@@ -11,8 +11,9 @@ import 'package:home_therapy_app/widgets/track_player_widget.dart';
 
 int wordPositionTitleValue = 0;
 int wordPositionRatingValue = 0;
-List comportValueResult = List.generate(wordPositionText.length, (index) => 0);
-List<int> selectedValues = List.generate(wordPositionText.length, (index) => 0);
+List comportValueResult = List.generate(wordPositionText.length, (index) => 50);
+List<int> selectedValues =
+    List.generate(wordPositionText.length, (index) => 50);
 VersionCurrent currentVersion = VersionCurrent();
 
 postWordPositionServeyDialog({
@@ -22,7 +23,7 @@ postWordPositionServeyDialog({
   int? preAwakeCheckResult,
   List<Map<String, dynamic>>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
-  int? noiseTypeValue,
+  List<int>? noiseTypeValue,
   int? noiseTypeScoreValue,
   List? wordPositionResult,
   int? wordPositionRatingResult,
@@ -34,17 +35,17 @@ postWordPositionServeyDialog({
     context: context,
     surveyStageTitle: '질문 4/4',
     dialogName: '소리와 공간에 맞는 단어 위치 선택 설문',
-    surveyTitle: '각 단어가 현재 들리는 소리와 공간의 상황에 어울리는 정도를 평가해주십시오.',
+    surveyTitle:
+        '다음은 현재 공간에서 들리는 음환경을 평가하는 것입니다. 아래의 항목에 대해 동의하는 정도를 0 (전혀 동의하지 않는다)부터 100 (매우 동의한다)까지 평가하여 주십시오.',
     questionTitle: wordPositionText,
     noteNumber: 0,
     radioNumber: 7,
     questionNumber: wordPositionText.length,
     questionResultList: selectedValues,
     questionValue: wordPositionRatingValue,
+    prefixQuestionTitle: '현재 거주공간에서 들리는 음환경이 ',
     surveyOnPressed: () async {
-      selectedValues = List.generate(wordPositionText.length, (index) => 0);
-      comportValueResult = List.generate(wordPositionText.length, (index) => 0);
-      Get.dialog(
+      return Get.dialog(
           barrierDismissible: false,
           name: '최종 종료 질문',
           AlertDialog(
@@ -83,32 +84,32 @@ postWordPositionServeyDialog({
                             final sn = await getStoredValue('sn');
                             final username = await getStoredValue('username');
                             httpPostServer(
-                                    path: 'api/runs',
-                                    data: SurveyResult(
-                                            sn: sn,
-                                            username: username,
-                                            noise: noiseCheckResult,
-                                            noiseType: [
-                                              noiseTypeValue,
-                                              noiseTypeScoreValue
-                                            ],
-                                            preEmotion: preEmotionCheckResult,
-                                            preAwake: preAwakeCheckResult,
-                                            tracks: playTrackTitleReuslt,
-                                            wordPositionRating:
-                                                comportValueResult,
-                                            postEmotion: postEmotionCheckResult,
-                                            postAwake: postAwakeValue,
-                                            postNoise: postNoise,
-                                            version:
-                                                currentVersion.versionValue)
-                                        .toJson())
-                                .then((value) async {
+                              path: 'api/runs',
+                              data: SurveyResult(
+                                      sn: sn,
+                                      username: username,
+                                      noise: noiseCheckResult,
+                                      noiseTypeValue: noiseTypeValue,
+                                      noiseScore: noiseTypeScoreValue,
+                                      preEmotion: preEmotionCheckResult,
+                                      preAwake: preAwakeCheckResult,
+                                      tracks: playTrackTitleReuslt,
+                                      wordPositionRating: comportValueResult,
+                                      postEmotion: postEmotionCheckResult,
+                                      postAwake: postAwakeValue,
+                                      postNoise: postNoise,
+                                      version: currentVersion.versionValue)
+                                  .toJson(),
+                            ).then((value) async {
                               if (value == 200) {
                                 postAwakeValue = 0;
                                 await Get.offAllNamed('/therapyDevice');
                               }
                               debugPrint('httpPostServer: $value');
+                              selectedValues = List.generate(
+                                  wordPositionText.length, (index) => 50);
+                              comportValueResult = List.generate(
+                                  wordPositionText.length, (index) => 50);
                             });
                           },
                           child:

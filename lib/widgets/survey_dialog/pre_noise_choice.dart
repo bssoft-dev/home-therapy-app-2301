@@ -4,7 +4,8 @@ import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_choice_score.da
 import 'package:home_therapy_app/widgets/survey_dialog/pre_survey_question_list.dart';
 
 List<int>? noiseTypeValueList;
-int noiseTypeValue = 0;
+List<int> noiseTypeValue = [];
+List<bool> noiseTypeCheckbox = List<bool>.filled(noiseType.length, false);
 
 preNoiseChoiceDialog({
   required BuildContext context,
@@ -75,17 +76,23 @@ preNoiseChoiceDialog({
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            Checkbox(
+                              value: noiseTypeCheckbox[questionIndexntext],
+                              onChanged: (value) {
+                                setDialog(
+                                  () {
+                                    noiseTypeCheckbox[questionIndexntext] =
+                                        value!;
+                                    if (value) {
+                                      noiseTypeValue.add(questionIndexntext);
+                                    } else {
+                                      noiseTypeValue.remove(questionIndexntext);
+                                    }
+                                  },
+                                );
+                              },
+                            ),
                             Text(noiseType[questionIndexntext]),
-                            Radio(
-                                value: noiseTypeValueList![questionIndexntext],
-                                groupValue: noiseTypeValue,
-                                onChanged: (value) {
-                                  setDialog(() {
-                                    noiseTypeValue = value as int;
-                                    noiseTypeValueList![questionIndexntext] =
-                                        value;
-                                  });
-                                })
                           ],
                         )
                       ],
@@ -98,14 +105,16 @@ preNoiseChoiceDialog({
       actions: [
         TextButton(
             onPressed: () async {
+              print(noiseTypeValue);
               Get.back();
               await preNoiseChoiceScoreDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   noiseTypeValue: noiseTypeValue);
+              debugPrint(('noiseType:$noiseTypeValue'));
               debugPrint(('noiseDialog:$noiseCheckResult'));
-              debugPrint(('noiseType:${noiseType[noiseTypeValue]}'));
-              noiseTypeValue = 0;
+              noiseTypeCheckbox = List<bool>.filled(noiseType.length, false);
+              noiseTypeValue = [];
             },
             child: const Text(
               '다음',

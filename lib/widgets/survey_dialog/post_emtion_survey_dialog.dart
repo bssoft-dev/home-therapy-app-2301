@@ -14,7 +14,7 @@ postEmotionServeyDialog({
   int? preAwakeCheckResult,
   List<Map<String, dynamic>>? playTrackTitleReuslt,
   int? postEmotionCheckResult,
-  int? noiseTypeValue,
+  List<int>? noiseTypeValue,
   int? noiseTypeScoreValue,
   int? postNoise,
   // List? wordPositionResult,

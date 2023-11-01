@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/model/survey_word_position_model.dart';
 import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
+import 'package:home_therapy_app/widgets/range_dropdown_widget.dart';
+
+Future<List<int>> fetchData() async {
+  return List<int>.generate(101 - 0, (i) => i + 0);
+}
 
 preCommonSurveyDialog({
   required BuildContext context,
@@ -17,6 +22,7 @@ preCommonSurveyDialog({
   required ValueChanged<WordPositionSurvey> onSurveyMapValueChange,
   required ValueChanged<int> onSurveyContentValueChange,
   final String? surveyStageTitle,
+  final String? prefixQuestionTitle,
 }) {
   return Get.dialog(
       barrierDismissible: false, name: dialogName, useSafeArea: false,
@@ -73,51 +79,124 @@ preCommonSurveyDialog({
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          '${questionIndex + 1}.${questionTitle[questionIndex]}',
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(fontSize: 17),
-                        ),
+                        prefixQuestionTitle != null
+                            ? RichText(
+                                text: TextSpan(
+                                  style: DefaultTextStyle.of(context).style,
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          '${questionIndex + 1}. $prefixQuestionTitle',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: questionTitle[questionIndex],
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Text(
+                                '${questionIndex + 1}.${questionTitle[questionIndex]}',
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(fontSize: 17),
+                              ),
                         const SizedBox(height: 10),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal, // 가로 스크롤 사용
-                          child: Row(
-                            children: List.generate(radioNumber, (choiceIndex) {
-                              return Column(
+                        if (surveyTitle.contains('매우 동의한다'))
+                          Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  if (!surveyTitle.contains('성격 특성') &&
-                                      !surveyTitle.contains('공간'))
-                                    Text(ratingText[choiceIndex],
-                                        style: const TextStyle(fontSize: 15)),
-                                  if (surveyTitle.contains('성격 특성'))
-                                    Text(tipiRatingText[choiceIndex],
-                                        style: const TextStyle(fontSize: 15)),
-                                  if (surveyTitle.contains('공간'))
-                                    Text(wordPositionRatingText[choiceIndex],
-                                        style: const TextStyle(fontSize: 15)),
-                                  Radio(
-                                    visualDensity:
-                                        const VisualDensity(vertical: -4),
-                                    value: choiceIndex,
-                                    groupValue:
-                                        questionResultList[questionIndex],
-                                    onChanged: (value) {
-                                      setDialog(() {
-                                        questionResultList[questionIndex] =
-                                            value as int;
-                                        onSurveyMapValueChange(
-                                            WordPositionSurvey(
-                                                questionIndex, value));
-                                        onSurveyContentValueChange(value);
-                                      });
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text('평가점수:'),
+                                  const SizedBox(
+                                    width: 14,
+                                  ),
+                                  FutureBuilder<List<int>>(
+                                    future: fetchData(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        return RangeDropdownMenu(
+                                          onSelected: (int? value) {
+                                            print(value);
+                                            setDialog(() {
+                                              questionResultList[
+                                                  questionIndex] = value as int;
+                                              onSurveyMapValueChange(
+                                                  WordPositionSurvey(
+                                                      questionIndex, value));
+                                              onSurveyContentValueChange(value);
+                                            });
+                                          },
+                                          questionResultList: snapshot.data!,
+                                          selectedValue: 50,
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return Text("Error: ${snapshot.error}");
+                                      }
+                                      // 데이터를 기다리는 동안 보여줄 로딩 인디케이터를 반환합니다.
+                                      return const SizedBox(
+                                        height: 10,
+                                      );
                                     },
                                   ),
-                                  const SizedBox(height: 10)
                                 ],
-                              );
-                            }),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          )
+                        else
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal, // 가로 스크롤 사용
+                            child: Row(
+                              children:
+                                  List.generate(radioNumber, (choiceIndex) {
+                                return Column(
+                                  children: [
+                                    if (!surveyTitle.contains('성격 특성') &&
+                                        !surveyTitle.contains('공간'))
+                                      Text(ratingText[choiceIndex],
+                                          style: const TextStyle(fontSize: 15)),
+                                    if (surveyTitle.contains('성격 특성'))
+                                      Text(tipiRatingText[choiceIndex],
+                                          style: const TextStyle(fontSize: 15)),
+                                    // if (surveyTitle
+                                    //     .contains('공간')) // 사운드 스케이프 질문
+                                    //   Text(wordPositionRatingText[choiceIndex],
+                                    //       style: const TextStyle(fontSize: 15)),
+                                    Radio(
+                                      visualDensity:
+                                          const VisualDensity(vertical: -4),
+                                      value: choiceIndex,
+                                      groupValue:
+                                          questionResultList[questionIndex],
+                                      onChanged: (value) {
+                                        setDialog(() {
+                                          questionResultList[questionIndex] =
+                                              value as int;
+                                          onSurveyMapValueChange(
+                                              WordPositionSurvey(
+                                                  questionIndex, value));
+                                          onSurveyContentValueChange(value);
+                                        });
+                                      },
+                                    ),
+                                    const SizedBox(height: 10)
+                                  ],
+                                );
+                              }),
+                            ),
                           ),
-                        ),
                       ],
                     );
                   }),

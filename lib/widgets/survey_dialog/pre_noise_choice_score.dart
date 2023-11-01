@@ -9,7 +9,7 @@ int noiseScoreValue = 0;
 preNoiseChoiceScoreDialog({
   required BuildContext context,
   bool? noiseCheckResult,
-  int? noiseTypeValue,
+  List<int>? noiseTypeValue,
 }) {
   noiseScoreValueList =
       List<int>.generate(noiseTypeScore.length, (index) => index);
@@ -106,6 +106,7 @@ preNoiseChoiceScoreDialog({
         TextButton(
             onPressed: () async {
               Get.back();
+              print(noiseTypeValue);
               await preEmotionServeyDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,

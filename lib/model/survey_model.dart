@@ -22,7 +22,8 @@ class SurveyResult {
   String? sn;
   String? username;
   bool? noise;
-  List? noiseType;
+  List? noiseTypeValue;
+  int? noiseScore;
   int? preEmotion;
   int? preAwake;
   List<dynamic>? tracks;
@@ -36,7 +37,8 @@ class SurveyResult {
     this.sn,
     this.username,
     this.noise,
-    this.noiseType,
+    this.noiseTypeValue,
+    this.noiseScore,
     this.preEmotion,
     this.preAwake,
     this.tracks,
@@ -51,7 +53,8 @@ class SurveyResult {
     sn = json['sn'];
     username = json['username'];
     noise = json['noise'];
-    noiseType = json['noiseType'];
+    noiseTypeValue = json['noiseTypeValue'];
+    noiseScore = json['noiseScore'];
     preEmotion = json['preEmotion'];
     preAwake = json['preAwake'];
     tracks = json['tracks'];
@@ -67,7 +70,8 @@ class SurveyResult {
     data['sn'] = sn;
     data['username'] = username;
     data['noise'] = noise;
-    data['noiseType'] = noiseType;
+    data['noiseTypeValue'] = noiseTypeValue;
+    data['noiseScore'] = noiseScore;
     data['preEmotion'] = preEmotion;
     data['preAwake'] = preAwake;
     data['tracks'] = tracks;
