@@ -18,7 +18,7 @@ class RangeDropdownMenu extends StatefulWidget {
 }
 
 class _RangeDropdownMenuState extends State<RangeDropdownMenu> {
-  int selectedValue;
+  int? selectedValue;
 
   _RangeDropdownMenuState(this.selectedValue);
 
@@ -31,21 +31,22 @@ class _RangeDropdownMenuState extends State<RangeDropdownMenu> {
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(4.0),
       ),
-      child: DropdownButton<int>(
+      child: DropdownButton(
         isExpanded: true,
         isDense: true,
         menuMaxHeight: MediaQuery.of(context).size.height * 0.6,
-        value: selectedValue,
+        value:
+            selectedValue ?? widget.questionResultList[50], // null 체크를 추가했습니다.
         underline: Container(),
         padding: EdgeInsets.zero,
-        onChanged: (int? value) {
+        onChanged: (value) {
           setState(() {
-            selectedValue = value!;
-            widget.onSelected(selectedValue);
+            selectedValue = value;
+            widget.onSelected(selectedValue!);
           });
         },
-        items: widget.questionResultList.map((int value) {
-          return DropdownMenuItem<int>(
+        items: widget.questionResultList.map((value) {
+          return DropdownMenuItem(
             value: value,
             child: Text(value.toString()),
           );
