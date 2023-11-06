@@ -63,10 +63,13 @@ Future<void> getIpAddress() async {
           } else {
             ipv4Addresses.add(ipAddress);
           }
-          // ".맨 뒤에 값이 1"인 아이템 필터링
+          // 두번째 값이 0이 아닌값을 필터링합니다.
           filteredAddresses = ipv4Addresses.where((address) {
             final parts = address.split(".");
-            return parts.isNotEmpty && parts.last == "1";
+
+            if (parts.length < 3) return false; // IPv4 주소가 네 부분으로 나뉘어야 합니다.
+            final twoPart = int.tryParse(parts[1]); // 두 번째 부분을 정수로 파싱
+            return twoPart != null && twoPart != 0;
           }).toList();
         }
       }
