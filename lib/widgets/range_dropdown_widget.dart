@@ -34,6 +34,7 @@ class _RangeDropdownMenuState extends State<RangeDropdownMenu> {
       child: DropdownButton<int>(
         isExpanded: true,
         isDense: true,
+        menuMaxHeight: MediaQuery.of(context).size.height * 0.6,
         value: selectedValue,
         underline: Container(),
         padding: EdgeInsets.zero,

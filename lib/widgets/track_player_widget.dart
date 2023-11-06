@@ -184,8 +184,9 @@ Future prePlayTrack({
         volumeSlider ?? const SizedBox(height: 0),
         TextButton(
           child: Text(actionText, style: const TextStyle(fontSize: 20)),
-          onPressed: () {
+          onPressed: () async {
             Get.back();
+            await playStop();
           },
         ),
       ],

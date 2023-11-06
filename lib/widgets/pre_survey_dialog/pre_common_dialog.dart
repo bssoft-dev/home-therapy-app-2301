@@ -68,11 +68,10 @@ preCommonSurveyDialog({
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
               width: MediaQuery.of(context).size.width * 0.8,
               child: ListView.builder(
-                  // shrinkWrap: false,
-                  // physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: questionNumber,
                   itemBuilder: (BuildContext context, int questionIndex) {
                     return Column(
