@@ -40,17 +40,18 @@ preNoiseChoiceScoreDialog({
               height: 2,
             ),
             RichText(
-              text: const TextSpan(
-                children: <InlineSpan>[
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 15 * MediaQuery.of(context).textScaleFactor,
+                  color: Colors.black,
+                ),
+                children: const <InlineSpan>[
                   TextSpan(
                     text: '※ ',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   TextSpan(
                     text: '소음이 발생하지 않았다면',
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
                       decoration: TextDecoration.underline,
                       height: 1,
                     ),
@@ -58,13 +59,15 @@ preNoiseChoiceScoreDialog({
                   TextSpan(
                     text: ' "다음"',
                     style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   TextSpan(
                     text: '을 선택해 주세요',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    style: TextStyle(
+                      // fontSize: 14,
+                      color: Colors.black,
+                    ),
                   ),
                 ],
               ),

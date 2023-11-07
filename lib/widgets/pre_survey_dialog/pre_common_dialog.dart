@@ -27,6 +27,7 @@ preCommonSurveyDialog({
   return Get.dialog(
       barrierDismissible: false, name: dialogName, useSafeArea: false,
       StatefulBuilder(builder: (context, StateSetter setDialog) {
+    var fontFactor = MediaQuery.of(context).textScaleFactor;
     return AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.only(bottom: 10),
@@ -71,11 +72,14 @@ preCommonSurveyDialog({
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             surveyTitle.contains('매우 동의한다')
-                ? Text(
-                    surveyTitle,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      surveyTitle,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
                   )
                 : const SizedBox.shrink(),
             SizedBox(
@@ -89,20 +93,19 @@ preCommonSurveyDialog({
                     prefixQuestionTitle != null
                         ? RichText(
                             text: TextSpan(
+                              style: TextStyle(
+                                fontSize:
+                                    fontFactor != null ? 15 * fontFactor : 15,
+                                color: Colors.black,
+                              ),
                               children: [
                                 TextSpan(
                                   text:
                                       '${questionIndex + 1}. $prefixQuestionTitle',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
                                 ),
                                 TextSpan(
                                   text: questionTitle[questionIndex],
                                   style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

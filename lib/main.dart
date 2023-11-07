@@ -17,12 +17,18 @@ class HomeTherapyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: mainColor.mainColor(),
-        ),
-        getPages: RoutePage.page,
-        initialRoute: RouteName.home);
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: mainColor.mainColor(),
+      ),
+      getPages: RoutePage.page,
+      initialRoute: RouteName.home,
+      // builder: (context, child) {
+      //   return MediaQuery(
+      //       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      //       child: child!);
+      // },
+    );
   }
 }
