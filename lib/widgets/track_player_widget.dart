@@ -218,7 +218,7 @@ Widget trackList({
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(trackPlayList[index]),
+                    Expanded(child: Text(trackPlayList[index])),
                     Padding(
                         padding: const EdgeInsets.only(right: 10),
                         child: playIconButton(

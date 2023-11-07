@@ -62,39 +62,43 @@ preNoiseChoiceDialog({
             // const Text('발생한 소음의 종류를 선택해주세요', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 15),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
               width: MediaQuery.of(context).size.width * 0.8,
-              child: ListView.builder(
-                  itemCount: noiseType.length,
-                  itemBuilder: (BuildContext context, int questionIndexntext) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              value: noiseTypeCheckbox[questionIndexntext],
-                              onChanged: (value) {
-                                setDialog(
-                                  () {
-                                    noiseTypeCheckbox[questionIndexntext] =
-                                        value!;
-                                    if (value) {
-                                      noiseTypeValue.add(questionIndexntext);
-                                    } else {
-                                      noiseTypeValue.remove(questionIndexntext);
-                                    }
-                                  },
-                                );
-                              },
+              child: Column(
+                children: List.generate(noiseType.length, (questionIndexntext) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            value: noiseTypeCheckbox[questionIndexntext],
+                            onChanged: (value) {
+                              setDialog(
+                                () {
+                                  noiseTypeCheckbox[questionIndexntext] =
+                                      value!;
+                                  if (value) {
+                                    noiseTypeValue.add(questionIndexntext);
+                                  } else {
+                                    noiseTypeValue.remove(questionIndexntext);
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                          Expanded(
+                            child: Text(
+                              noiseType[questionIndexntext],
+                              textWidthBasis: TextWidthBasis.longestLine,
                             ),
-                            Text(noiseType[questionIndexntext]),
-                          ],
-                        )
-                      ],
-                    );
-                  }),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                }),
+              ),
             ),
           ],
         ),

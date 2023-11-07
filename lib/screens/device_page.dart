@@ -91,38 +91,42 @@ class _DevicePlayerState extends State<DevicePlayer> {
           ),
         ),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Lottie.asset('assets/lottie/click.json',
-                  width: 60, height: 60, repeat: true, animate: true),
-              const Text('큰원을 클릭해주세요',
-                  style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold, height: 3))
-            ],
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: mainColor.mainColor(),
+      Padding(
+        padding: const EdgeInsets.all(24),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Lottie.asset('assets/lottie/click.json',
+                width: 60, height: 60, repeat: true, animate: true),
+            const Flexible(
+              child: Text(
+                '큰원을 클릭해주세요',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            child: const SizedBox(width: 10),
-          ),
-          const SizedBox(width: 30),
-          Container(
+            Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color: mainColor.mainColor(),
               ),
-              child:
-                  simpleIconButton(Icons.tune_outlined, 25, Colors.white, () {
-                Get.toNamed('trackMixing');
-              }))
-        ],
+              child: const SizedBox(width: 10),
+            ),
+            const SizedBox(width: 30),
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: mainColor.mainColor(),
+                ),
+                child:
+                    simpleIconButton(Icons.tune_outlined, 25, Colors.white, () {
+                  Get.toNamed('trackMixing');
+                }))
+          ],
+        ),
       ),
     ]);
   }
