@@ -110,7 +110,7 @@ Future<dynamic> showUserInfoDialog({
                                   cancelText,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 15,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w400),
                                 )),
                             TextButton(
@@ -146,7 +146,7 @@ Future<dynamic> showUserInfoDialog({
                                 child: Text(saveText,
                                     style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w400)))
                           ],
                         )
@@ -202,7 +202,7 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
             children: [
               Row(
                 children: [
-                  Text(firstValue, style: const TextStyle(fontSize: 15)),
+                  Text(firstValue, style: const TextStyle(fontSize: 16)),
                   Radio(
                       value: firstValue,
                       groupValue: groupValue,
@@ -218,7 +218,7 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
                   const SizedBox(
                     width: 30,
                   ),
-                  Text(secondValue, style: const TextStyle(fontSize: 15)),
+                  Text(secondValue, style: const TextStyle(fontSize: 16)),
                   Radio(
                       value: secondValue,
                       groupValue: groupValue,
@@ -235,7 +235,7 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
                     const SizedBox(
                       width: 30,
                     ),
-                    Text(thirdValue, style: const TextStyle(fontSize: 15)),
+                    Text(thirdValue, style: const TextStyle(fontSize: 16)),
                     Radio(
                         value: thirdValue,
                         groupValue: groupValue,

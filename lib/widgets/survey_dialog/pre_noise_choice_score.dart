@@ -37,15 +37,15 @@ preNoiseChoiceScoreDialog({
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 2,
+              height: 4,
             ),
-            RichText(
-              text: TextSpan(
+            const Text.rich(
+              TextSpan(
                 style: TextStyle(
-                  fontSize: 15 * MediaQuery.of(context).textScaleFactor,
                   color: Colors.black,
+                  fontSize: 16,
                 ),
-                children: const <InlineSpan>[
+                children: <InlineSpan>[
                   TextSpan(
                     text: '※ ',
                   ),
@@ -65,7 +65,6 @@ preNoiseChoiceScoreDialog({
                   TextSpan(
                     text: '을 선택해 주세요',
                     style: TextStyle(
-                      // fontSize: 14,
                       color: Colors.black,
                     ),
                   ),
@@ -85,17 +84,21 @@ preNoiseChoiceScoreDialog({
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(noiseTypeScore[questionIndexntext]),
                             Radio(
-                                value: noiseScoreValueList![questionIndexntext],
-                                groupValue: noiseScoreValue,
-                                onChanged: (value) {
-                                  setDialog(() {
-                                    noiseScoreValue = value as int;
-                                    noiseScoreValueList![questionIndexntext] =
-                                        value;
-                                  });
-                                })
+                              value: noiseScoreValueList![questionIndexntext],
+                              groupValue: noiseScoreValue,
+                              onChanged: (value) {
+                                setDialog(() {
+                                  noiseScoreValue = value as int;
+                                  noiseScoreValueList![questionIndexntext] =
+                                      value;
+                                });
+                              },
+                            ),
+                            Text(
+                              noiseTypeScore[questionIndexntext],
+                              style: const TextStyle(fontSize: 16),
+                            ),
                           ],
                         )
                       ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:home_therapy_app/utils/share_rreferences_future.dart';
+import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 
 class DeviceInfoDialog extends StatefulWidget {
@@ -31,56 +32,93 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           const Center(
-              child: Text('홈테라피 기기 정보', style: TextStyle(fontSize: 20))),
-          if (deviceIPName == null)
-            const Column(children: [
-              SizedBox(height: 16),
-              Text('등록된 기기가 없습니다'),
-              SizedBox(height: 16)
-            ]),
-          if (deviceIPName != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.device_hub), // 기기 아이콘
-                      const SizedBox(width: 8),
-                      Text(
-                        '$deviceIPName',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                ],
+            child: Text(
+              '홈테라피 기기 정보',
+              style: TextStyle(
+                fontSize: 28,
               ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(30),
+            child: deviceIPName == null
+                ? const Text(
+                    '등록된 기기가 없습니다',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xff5a5a5a),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: mainColor.mainColor().withOpacity(0.65),
+                            ),
+                            child: Transform.translate(
+                              offset: const Offset(0, -1),
+                              child: const Icon(
+                                Icons.device_hub,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ), // 기기 아이콘
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Text(
+                            '$deviceIPName',
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+          ),
           ButtonBar(
-            alignment: MainAxisAlignment.center,
+            alignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  removeStoredValue('therapy_device');
-                  successSnackBar(
-                      context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
-                  Get.offAllNamed('/home');
-                },
-                icon: const Icon(Icons.close),
-                label: const Text("삭제"),
+              Expanded(
+                flex: 1,
+                child: TextButton.icon(
+                  onPressed: () {
+                    removeStoredValue('therapy_device');
+                    successSnackBar(
+                        context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
+                    Get.offAllNamed('/home');
+                  },
+                  icon: const Icon(Icons.close),
+                  label: const Text(
+                    "삭제",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(width: 20),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.check_circle_outlined),
-                label: const Text("확인"),
+              Expanded(
+                flex: 1,
+                child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.check_circle_outlined),
+                  label: const Text(
+                    "확인",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

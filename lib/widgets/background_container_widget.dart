@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 Widget backgroundContainer({
@@ -11,6 +13,9 @@ Widget backgroundContainer({
         fit: BoxFit.fill,
       ),
     ),
-    child: child,
+    child: BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+      child: child,
+    ),
   );
 }

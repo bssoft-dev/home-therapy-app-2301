@@ -23,8 +23,8 @@ class _TrackMixingState extends State<TrackMixing> {
           key: _scaffoldKey,
           backgroundColor: Colors.transparent,
           leading: IconButton(
-              icon: Icon(
-                color: mainColor.mainColor(),
+              icon: const Icon(
+                color: Color(0xff5a5a5a),
                 Icons.close,
                 size: 50,
               ),

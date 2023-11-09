@@ -55,18 +55,22 @@ postNoiseChoiceScoreDialog({
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(noiseTypeScore[questionIndexntext]),
                             Radio(
-                                value: postNoiseScoreValueList![
-                                    questionIndexntext],
-                                groupValue: postNoiseScoreValue,
-                                onChanged: (value) {
-                                  setDialog(() {
-                                    postNoiseScoreValue = value as int;
-                                    postNoiseScoreValueList![
-                                        questionIndexntext] = value;
-                                  });
-                                })
+                              value:
+                                  postNoiseScoreValueList![questionIndexntext],
+                              groupValue: postNoiseScoreValue,
+                              onChanged: (value) {
+                                setDialog(() {
+                                  postNoiseScoreValue = value as int;
+                                  postNoiseScoreValueList![questionIndexntext] =
+                                      value;
+                                });
+                              },
+                            ),
+                            Text(
+                              noiseTypeScore[questionIndexntext],
+                              style: const TextStyle(fontSize: 16),
+                            ),
                           ],
                         )
                       ],

@@ -23,84 +23,96 @@ preNoiseChoiceDialog({
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
-      content: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Text(
-              '발생한 소음의 종류를 선택해주세요',
-              style: TextStyle(fontSize: 25, color: Colors.black),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            RichText(
-              text: TextSpan(
-                style: TextStyle(
-                  fontSize: 15 * MediaQuery.of(context).textScaleFactor,
-                  color: Colors.black,
-                ),
-                children: const <InlineSpan>[
-                  TextSpan(
-                    text: '※ ',
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Text(
+                '발생한 소음의 종류를 선택해주세요',
+                style: TextStyle(fontSize: 25, color: Colors.black),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              const Text.rich(
+                TextSpan(
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
                   ),
-                  TextSpan(
-                    text: '소음이 발생하지 않았다면',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: '※ ',
                     ),
-                  ),
-                  TextSpan(
-                    text: ' "다음"',
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                  TextSpan(
-                    text: '을 선택해 주세요',
-                  ),
-                ],
+                    TextSpan(
+                      text: '소음이 발생하지 않았다면',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        height: 1,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' "다음"',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '을 선택해 주세요',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            // const Text('발생한 소음의 종류를 선택해주세요', style: TextStyle(fontSize: 20)),
-            const SizedBox(height: 15),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Column(
-                children: List.generate(noiseType.length, (questionIndexntext) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            value: noiseTypeCheckbox[questionIndexntext],
-                            onChanged: (value) {
-                              setDialog(
-                                () {
-                                  noiseTypeCheckbox[questionIndexntext] =
-                                      value!;
-                                  if (value) {
-                                    noiseTypeValue.add(questionIndexntext);
-                                  } else {
-                                    noiseTypeValue.remove(questionIndexntext);
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                          Expanded(
-                            child: Text(
-                              noiseType[questionIndexntext],
-                              textWidthBasis: TextWidthBasis.longestLine,
+              // const Text('발생한 소음의 종류를 선택해주세요', style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 15),
+              SizedBox(
+                child: Column(
+                  children:
+                      List.generate(noiseType.length, (questionIndexntext) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              value: noiseTypeCheckbox[questionIndexntext],
+                              onChanged: (value) {
+                                setDialog(
+                                  () {
+                                    noiseTypeCheckbox[questionIndexntext] =
+                                        value!;
+                                    if (value) {
+                                      noiseTypeValue.add(questionIndexntext);
+                                    } else {
+                                      noiseTypeValue.remove(questionIndexntext);
+                                    }
+                                  },
+                                );
+                              },
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  );
-                }),
+                            Expanded(
+                              child: Text(
+                                noiseType[questionIndexntext],
+                                textWidthBasis: TextWidthBasis.longestLine,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  }),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       actions: [

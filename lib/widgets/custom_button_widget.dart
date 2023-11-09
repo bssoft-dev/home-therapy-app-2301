@@ -11,19 +11,21 @@ Widget simpleOutlineButton({
   required bool isPlaying,
   IconData? alternateIcon,
 }) {
+  Color activeColor =
+      isPlaying ? mainColor.mainColor() : const Color(0xff5a5a5a);
   return OutlinedButton.icon(
     label: Text(
       text,
-      style: TextStyle(color: mainColor.mainColor()),
+      style: TextStyle(color: activeColor),
     ),
     icon: Icon(
       isPlaying ? alternateIcon : icon,
       size: size,
-      color: mainColor.mainColor(),
+      color: activeColor,
     ),
     onPressed: onPressed,
     style: OutlinedButton.styleFrom(
-      side: BorderSide(color: mainColor.mainColor()),
+      side: BorderSide(color: activeColor),
     ),
   );
 }
@@ -51,7 +53,7 @@ Widget playIconButton(
     icon: Icon(
       isPlaying ? alternateIcon : icon,
       size: size,
-      color: mainColor.mainColor(),
+      color: isPlaying ? mainColor.mainColor() : const Color(0xff5a5a5a),
     ),
     onPressed: onPressed,
   );

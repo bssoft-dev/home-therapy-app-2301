@@ -32,8 +32,18 @@ commonSurveyDialog({
           const SizedBox(
             height: 15,
           ),
-          Text(surveyContentTitle!, style: const TextStyle(fontSize: 15)),
-          Text(surveyContent, style: const TextStyle(fontSize: 15)),
+          Text(
+            surveyContentTitle!,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            surveyContent,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
           const SizedBox(height: 10),
           SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
