@@ -78,7 +78,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                                         child: Transform.translate(
                                           offset: const Offset(0, -1),
                                           child: const Icon(
-                                            Icons.device_hub,
+                                            Icons.device_hub_rounded,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -138,8 +138,9 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                       startScanning();
                     }
                   },
-                  icon: Icon(
-                      _isInitialScan ? Icons.search_outlined : Icons.refresh),
+                  icon: Icon(_isInitialScan
+                      ? Icons.search_rounded
+                      : Icons.refresh_rounded),
                   label: Text(
                     _isInitialScan ? "검색" : "재검색",
                     style: const TextStyle(
@@ -155,7 +156,7 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                     stopScanning();
                     Navigator.of(context).pop();
                   },
-                  icon: const Icon(Icons.close),
+                  icon: const Icon(Icons.close_rounded),
                   label: const Text(
                     "닫기",
                     style: TextStyle(

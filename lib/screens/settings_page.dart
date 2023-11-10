@@ -34,7 +34,7 @@ class _SettingsState extends State<Settings> {
           backgroundColor: Colors.transparent,
           leading: IconButton(
               icon: const Icon(
-                Icons.close,
+                Icons.close_rounded,
                 color: Color(0xff5a5a5a),
                 size: 50,
               ),
@@ -107,7 +107,7 @@ Widget settingTile(String title, IconData icon, void Function()? onTap) {
         ),
         onTap: onTap,
         trailing: const Icon(
-          Icons.arrow_forward_ios,
+          Icons.arrow_forward_ios_rounded,
           // color: mainColor.mainColor(),
         ),
       ),

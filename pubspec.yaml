@@ -1,5 +1,5 @@
 name: home_therapy_app
-description: A new Flutter project.
+description: 층간 소음을 완화시켜주는 소리를 재생시켜줍니다.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -17,7 +17,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1+6
+version: 1.0.2+7
 
 environment:
   sdk: ">=2.18.2 <3.1.5"
@@ -90,17 +90,27 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+fonts:
+    - family: Pretendard
+      fonts:
+        # - asset: assets/fonts/Pretendard-Thin.otf
+        #   weight: 100
+        # - asset: assets/fonts/Pretendard-ExtraLight.otf
+        #   weight: 200
+        # - asset: assets/fonts/Pretendard-Light.otf
+        #   weight: 300
+        - asset: assets/fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Pretendard-Medium.otf
+          weight: 500
+        # - asset: assets/fonts/Pretendard-SemiBold.otf
+        #   weight: 600
+        # - asset: assets/fonts/Pretendard-Bold.otf
+        #   weight: 700
+        # - asset: assets/fonts/Pretendard-ExtraBold.otf
+        #   weight: 800
+        # - asset: assets/fonts/Pretendard-Black.otf
+        #   weight: 900
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -6,7 +6,7 @@ basicAppBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) {
   return AppBar(
     backgroundColor: Colors.transparent,
     actions: [
-      simpleIconButton(Icons.settings, 50, const Color(0xff5A5A5A), () {
+      simpleIconButton(Icons.settings_rounded, 50, const Color(0xff5A5A5A), () {
         Get.toNamed('setting');
       }),
     ],

@@ -25,7 +25,7 @@ class _TrackMixingState extends State<TrackMixing> {
           leading: IconButton(
               icon: const Icon(
                 color: Color(0xff5a5a5a),
-                Icons.close,
+                Icons.close_rounded,
                 size: 50,
               ),
               onPressed: () => Navigator.pop(context))),

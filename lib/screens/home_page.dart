@@ -54,16 +54,15 @@ class _HomeState extends State<Home> {
                 Column(
                   children: [
                     Icon(
-                      Icons.phonelink_erase_outlined,
-                      size: 304,
+                      Icons.phonelink_erase_rounded,
+                      size: MediaQuery.of(context).size.width * 0.6,
                       color: mainColor.mainColor(),
                     ),
                     const SizedBox(height: 24),
                     const Text(
                       '등록된 기기가 없습니다.',
                       style: TextStyle(
-                        fontSize: 22,
-                        fontFamily: "Pretendard",
+                        fontSize: 24,
                         fontWeight: FontWeight.w500,
                       ),
                     )

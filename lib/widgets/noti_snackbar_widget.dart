@@ -9,7 +9,8 @@ failSnackBar(String notiTitle, String notiContent) {
     notiContent,
     snackPosition: SnackPosition.BOTTOM,
     duration: const Duration(seconds: 3),
-    icon: const Icon(Icons.error, size: 30, color: Colors.white),
+    icon:
+        const Icon(Icons.error_outline_rounded, size: 30, color: Colors.white),
     backgroundColor: mainColor.mainColor(),
     titleText: Text(notiTitle,
         style: const TextStyle(
@@ -27,25 +28,25 @@ successSnackBar(BuildContext context, String notiTitle, String notiContent) {
     SnackBar(
       content: Container(
         height: 50,
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: mainColor.mainColor(),
           borderRadius: BorderRadius.circular(25),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
+          padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 height: 40,
                 width: 40,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
                 child: Icon(
-                  Icons.check_circle,
+                  Icons.check_circle_rounded,
                   size: 30,
                   color: mainColor.mainColor(),
                 ),
@@ -55,7 +56,7 @@ successSnackBar(BuildContext context, String notiTitle, String notiContent) {
                 children: [
                   Text(
                     notiTitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15, // 예시에서 글자 크기를 키움
                       fontWeight: FontWeight.bold,
                     ),
@@ -63,7 +64,7 @@ successSnackBar(BuildContext context, String notiTitle, String notiContent) {
                   ),
                   Text(
                     notiContent,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12, // 예시에서 글자 크기를 키움
                     ),
                     textAlign: TextAlign.center,
@@ -74,8 +75,8 @@ successSnackBar(BuildContext context, String notiTitle, String notiContent) {
                 onPressed: () {
                   scaffoldMessenger.hideCurrentSnackBar(); // 현재 표시 중인 스낵바 숨기기
                 },
-                icon: Icon(
-                  Icons.close,
+                icon: const Icon(
+                  Icons.close_rounded,
                   color: Colors.white,
                   size: 18,
                 ),
@@ -86,37 +87,37 @@ successSnackBar(BuildContext context, String notiTitle, String notiContent) {
       ),
       backgroundColor: Colors.transparent,
       elevation: 500,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     ),
   );
 }
 
 failureSnackBar(BuildContext context, String notiTitle, String notiContent) {
   final scaffoldMessenger = ScaffoldMessenger.of(context);
-  Color failureColor = Color(0xffFC2222);
+  Color failureColor = const Color(0xffFC2222);
   return scaffoldMessenger.showSnackBar(
     SnackBar(
       content: Container(
         height: 50,
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: failureColor,
           borderRadius: BorderRadius.circular(25),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
+          padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 height: 40,
                 width: 40,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
                 child: Icon(
-                  Icons.cancel,
+                  Icons.cancel_rounded,
                   color: failureColor,
                   size: 30,
                 ),
@@ -126,7 +127,7 @@ failureSnackBar(BuildContext context, String notiTitle, String notiContent) {
                 children: [
                   Text(
                     notiTitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
@@ -134,7 +135,7 @@ failureSnackBar(BuildContext context, String notiTitle, String notiContent) {
                   ),
                   Text(
                     notiContent,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                     ),
                     textAlign: TextAlign.center,
@@ -145,8 +146,8 @@ failureSnackBar(BuildContext context, String notiTitle, String notiContent) {
                 onPressed: () {
                   scaffoldMessenger.hideCurrentSnackBar();
                 },
-                icon: Icon(
-                  Icons.close,
+                icon: const Icon(
+                  Icons.close_rounded,
                   color: Colors.white,
                   size: 18,
                 ),
@@ -157,38 +158,38 @@ failureSnackBar(BuildContext context, String notiTitle, String notiContent) {
       ),
       backgroundColor: Colors.transparent,
       elevation: 500,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     ),
   );
 }
 
 warningSnackBar(BuildContext context, String notiTitle, String notiContent) {
   final scaffoldMessenger = ScaffoldMessenger.of(context);
-  Color waringColor = Color.fromARGB(255, 255, 159, 5);
+  Color waringColor = const Color.fromARGB(255, 255, 159, 5);
 
   return scaffoldMessenger.showSnackBar(
     SnackBar(
       content: Container(
         height: 50,
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: waringColor,
           borderRadius: BorderRadius.circular(25),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
+          padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 height: 40,
                 width: 40,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
                 child: Icon(
-                  Icons.report,
+                  Icons.report_rounded,
                   color: waringColor,
                   size: 30,
                 ),
@@ -198,7 +199,7 @@ warningSnackBar(BuildContext context, String notiTitle, String notiContent) {
                 children: [
                   Text(
                     notiTitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
@@ -206,7 +207,7 @@ warningSnackBar(BuildContext context, String notiTitle, String notiContent) {
                   ),
                   Text(
                     notiContent,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                     ),
                     textAlign: TextAlign.center,
@@ -217,8 +218,8 @@ warningSnackBar(BuildContext context, String notiTitle, String notiContent) {
                 onPressed: () {
                   scaffoldMessenger.hideCurrentSnackBar(); // 현재 표시 중인 스낵바 숨기기
                 },
-                icon: Icon(
-                  Icons.close,
+                icon: const Icon(
+                  Icons.close_rounded,
                   color: Colors.white,
                   size: 18,
                 ),
@@ -229,7 +230,7 @@ warningSnackBar(BuildContext context, String notiTitle, String notiContent) {
       ),
       backgroundColor: Colors.transparent,
       elevation: 500,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     ),
   );
 }
@@ -239,7 +240,7 @@ yammySnackBar(BuildContext context, String message) {
     SnackBar(
       content: Text('Received message: $message'),
       backgroundColor: Colors.teal,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       behavior: SnackBarBehavior.floating,
       // action: SnackBarAction(
       //   label: 'Undo',

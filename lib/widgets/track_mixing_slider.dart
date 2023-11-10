@@ -37,7 +37,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                 Row(
                   children: [
                     Icon(
-                      Icons.palette,
+                      Icons.palette_rounded,
                       color: mainColor.mainColor().withOpacity(0.65),
                     ),
                     const SizedBox(
@@ -63,7 +63,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                 Row(
                   children: [
                     Icon(
-                      Icons.palette,
+                      Icons.palette_rounded,
                       color: mainColor.mainColor().withOpacity(0.35),
                     ),
                     const SizedBox(
@@ -142,7 +142,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
               isPlaying: isPlaying,
               text: '믹싱 미리듣기',
               icon: Icons.play_arrow_rounded,
-              alternateIcon: Icons.pause_circle_outline,
+              alternateIcon: Icons.pause_circle_outline_rounded,
               size: 30,
               onPressed: () async {
                 String? deviceIP = await getStoredValue('therapy_device');
@@ -172,7 +172,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
             simpleOutlineButton(
                 isPlaying: false,
                 text: '믹싱 저장하기',
-                icon: Icons.save,
+                icon: Icons.save_rounded,
                 size: 30,
                 onPressed: () {
                   showDialog(

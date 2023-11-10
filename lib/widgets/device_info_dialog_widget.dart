@@ -65,7 +65,7 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
                             child: Transform.translate(
                               offset: const Offset(0, -1),
                               child: const Icon(
-                                Icons.device_hub,
+                                Icons.device_hub_rounded,
                                 color: Colors.white,
                               ),
                             ),
@@ -96,7 +96,9 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
                         context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
                     Get.offAllNamed('/home');
                   },
-                  icon: const Icon(Icons.close),
+                  icon: const Icon(
+                    Icons.close_rounded,
+                  ),
                   label: const Text(
                     "삭제",
                     style: TextStyle(
@@ -111,7 +113,7 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.check_circle_outlined),
+                  icon: const Icon(Icons.check_circle_outline_rounded),
                   label: const Text(
                     "확인",
                     style: TextStyle(

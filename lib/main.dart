@@ -19,6 +19,7 @@ class HomeTherapyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Pretendard',
         useMaterial3: true,
         colorSchemeSeed: mainColor.mainColor(),
         dialogTheme: const DialogTheme(
