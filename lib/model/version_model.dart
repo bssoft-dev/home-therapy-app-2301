@@ -1,3 +1,3 @@
 class VersionCurrent {
-  int versionValue = 5;
+  int versionValue = 6;
 }

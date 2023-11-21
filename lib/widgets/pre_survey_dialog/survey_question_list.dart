@@ -16,16 +16,14 @@ List<String> wordPositionText = [
   '공허하다.',
   '고립적이다.',
   '짜증스럽다.',
-  '방해되고 통제적이지 않다.',
+  '방해되고 통제적이지 않다.'
 ];
 List<String> wordPositionRatingText = [
-  '전혀',
-  '별로',
-  '조금',
-  '비교적',
-  '꽤',
-  '매우',
-  '엄청나게'
+  '전혀 동의하지 않는다.',
+  '동의하지 않는다.',
+  '동의하지도 비동의하지도 않는다.',
+  '동의한다.',
+  '매우 동의한다.'
 ];
 
 List<int> wordPositionSelectNumbers = List<int>.generate(101 - 0, (i) => i + 0);

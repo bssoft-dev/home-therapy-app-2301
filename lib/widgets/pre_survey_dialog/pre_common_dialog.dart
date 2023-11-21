@@ -117,58 +117,39 @@ preCommonSurveyDialog({
                               style: const TextStyle(fontSize: 17),
                             ),
                       const SizedBox(height: 10),
-                      if (surveyTitle.contains('매우 동의한다'))
-                        Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const Text(
-                                  '평가점수:',
-                                  style: TextStyle(
-                                    fontSize: 16,
+                      if (surveyTitle.contains('동의하는 정도를'))
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2, bottom: 12),
+                          child: Column(
+                            children: List.generate(radioNumber, (choiceIndex) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Radio(
+                                    visualDensity:
+                                        const VisualDensity(vertical: -4),
+                                    value: choiceIndex,
+                                    groupValue:
+                                        questionResultList[questionIndex],
+                                    onChanged: (value) {
+                                      setDialog(() {
+                                        questionResultList[questionIndex] =
+                                            value as int;
+                                        onSurveyMapValueChange(
+                                            WordPositionSurvey(
+                                                questionIndex, value));
+                                        onSurveyContentValueChange(value);
+                                      });
+                                    },
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 14,
-                                ),
-                                FutureBuilder<List<int>>(
-                                  future: fetchData(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return RangeDropdownMenu(
-                                        onSelected: (int? value) {
-                                          print(value);
-                                          setDialog(() {
-                                            questionResultList[questionIndex] =
-                                                value as int;
-                                            onSurveyMapValueChange(
-                                                WordPositionSurvey(
-                                                    questionIndex, value));
-                                            onSurveyContentValueChange(value);
-                                          });
-                                        },
-                                        questionResultList: snapshot.data!,
-                                        selectedValue: 50,
-                                      );
-                                    } else if (snapshot.hasError) {
-                                      return Text("Error: ${snapshot.error}");
-                                    }
-                                    // 데이터를 기다리는 동안 보여줄 로딩 인디케이터를 반환합니다.
-                                    return const SizedBox(
-                                      height: 10,
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                                  Text(
+                                    wordPositionRatingText[choiceIndex],
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ],
+                              );
+                            }),
+                          ),
                         )
                       else
                         SingleChildScrollView(

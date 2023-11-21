@@ -11,9 +11,8 @@ import 'package:home_therapy_app/widgets/track_player_widget.dart';
 
 int wordPositionTitleValue = 0;
 int wordPositionRatingValue = 0;
-List comportValueResult = List.generate(wordPositionText.length, (index) => 50);
-List<int> selectedValues =
-    List.generate(wordPositionText.length, (index) => 50);
+List comportValueResult = List.generate(wordPositionText.length, (index) => 0);
+List<int> selectedValues = List.generate(wordPositionText.length, (index) => 0);
 VersionCurrent currentVersion = VersionCurrent();
 
 postWordPositionServeyDialog({
@@ -35,11 +34,10 @@ postWordPositionServeyDialog({
     context: context,
     surveyStageTitle: '질문 4/4',
     dialogName: '소리와 공간에 맞는 단어 위치 선택 설문',
-    surveyTitle:
-        '다음은 현재 공간에서 들리는 음환경을 평가하는 것입니다. 아래의 항목에 대해 동의하는 정도를 0 (전혀 동의하지 않는다)부터 100 (매우 동의한다)까지 평가하여 주십시오.',
+    surveyTitle: '다음은 현재 공간에서 들리는 음환경을 평가하는 것입니다. 아래의 항목에 대해 동의하는 정도를 고르시오',
     questionTitle: wordPositionText,
     noteNumber: 0,
-    radioNumber: 7,
+    radioNumber: wordPositionRatingText.length,
     questionNumber: wordPositionText.length,
     questionResultList: selectedValues,
     questionValue: wordPositionRatingValue,
@@ -107,9 +105,9 @@ postWordPositionServeyDialog({
                               }
                               debugPrint('httpPostServer: $value');
                               selectedValues = List.generate(
-                                  wordPositionText.length, (index) => 50);
+                                  wordPositionText.length, (index) => 0);
                               comportValueResult = List.generate(
-                                  wordPositionText.length, (index) => 50);
+                                  wordPositionText.length, (index) => 0);
                             });
                           },
                           child:
