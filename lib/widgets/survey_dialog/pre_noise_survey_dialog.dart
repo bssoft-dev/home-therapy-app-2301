@@ -22,53 +22,61 @@ noiseServeyDialog({
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('현재 소음이 발생하였습니까?', style: TextStyle(fontSize: 25)),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              changeIconButton(
-                icon: Icons.check_circle_outline,
-                size: 80,
-                isChange: isYesCheck,
-                iconColor: Colors.black,
-                alternateIconColor: mainColor.mainColor(),
-                onPressed: () {
-                  setDialog(() {
-                    isYesCheck = !isYesCheck;
-                    if (isYesCheck) {
-                      isNoCheck = false;
-                    }
-                    noiseCheckResult = true;
-                  });
-                },
-              ),
-              changeIconButton(
-                icon: Icons.highlight_off,
-                size: 80,
-                isChange: isNoCheck,
-                iconColor: Colors.black,
-                alternateIconColor: mainColor.mainColor(),
-                onPressed: () {
-                  setDialog(() {
-                    isNoCheck = !isNoCheck;
-                    if (isNoCheck) {
-                      isYesCheck = false;
-                    }
-                    noiseCheckResult = false;
-                  });
-                },
-              ),
-            ],
-          )
-        ],
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('현재 소음이 발생하였습니까?', style: TextStyle(fontSize: 25)),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                changeIconButton(
+                  icon: Icons.check_circle_outline_rounded,
+                  size: 60,
+                  isChange: isYesCheck,
+                  iconColor: const Color(0xff5a5a5a),
+                  alternateIconColor: mainColor.mainColor(),
+                  onPressed: () {
+                    setDialog(() {
+                      isYesCheck = !isYesCheck;
+                      if (isYesCheck) {
+                        isNoCheck = false;
+                      }
+                      noiseCheckResult = true;
+                    });
+                  },
+                ),
+                changeIconButton(
+                  icon: Icons.highlight_off_rounded,
+                  size: 60,
+                  isChange: isNoCheck,
+                  iconColor: const Color(0xff5a5a5a),
+                  alternateIconColor: mainColor.mainColor(),
+                  onPressed: () {
+                    setDialog(() {
+                      isNoCheck = !isNoCheck;
+                      if (isNoCheck) {
+                        isYesCheck = false;
+                      }
+                      noiseCheckResult = false;
+                    });
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
       actions: [
         TextButton(
-          child: const Text('확인', style: TextStyle(fontSize: 20)),
+          child: const Text(
+            '확인',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
           onPressed: () async {
             if (isNoCheck || isYesCheck) {
               Get.back();

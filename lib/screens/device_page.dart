@@ -68,62 +68,103 @@ class _DevicePlayerState extends State<DevicePlayer> {
   }
 
   Widget playerBody(BuildContext context) {
-    return Column(children: [
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(150),
-          color: mainColor.mainColor().withOpacity(0.1),
-        ),
-        child: GestureDetector(
-          onTap: () async {
-            final userCheck = await getStoredValue('username');
-            if (userCheck != null) {
-              noiseServeyDialog(context: context);
-            } else {
-              failSnackBar('오류', '개인정보를 먼저 입력해주세요.');
-            }
-          },
-          child: Image.asset(
-            'assets/app_main_image.png',
-            width: 300,
-            height: 300,
-            fit: BoxFit.fill,
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(200),
+            color: mainColor.mainColor().withOpacity(0.05),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(200),
+              color: mainColor.mainColor().withOpacity(0.05),
+            ),
+            padding: const EdgeInsets.all(10),
+            child: GestureDetector(
+              onTap: () async {
+                final userCheck = await getStoredValue('username');
+                if (userCheck != null) {
+                  noiseServeyDialog(context: context);
+                } else {
+                  failSnackBar('오류', '개인정보를 먼저 입력해주세요.');
+                }
+              },
+              child: Image.asset(
+                'assets/app_main_image.png',
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.width * 0.7,
+                fit: BoxFit.fill,
+              ),
+            ),
           ),
         ),
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
+        Padding(
+          padding: const EdgeInsets.all(24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Lottie.asset('assets/lottie/click.json',
-                  width: 60, height: 60, repeat: true, animate: true),
-              const Text('큰원을 클릭해주세요',
-                  style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold, height: 3))
+              Lottie.asset(
+                'assets/lottie/click.json',
+                width: 50,
+                height: 50,
+                repeat: true,
+                animate: true,
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              const Flexible(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Text(
+                    '큰 원을 클릭해주세요',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(100),
+              //     color: mainColor.mainColor(),
+              //   ),
+              //   child: const SizedBox(width: 10),
+              // ),
             ],
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: mainColor.mainColor(),
-            ),
-            child: const SizedBox(width: 10),
-          ),
-          const SizedBox(width: 30),
-          Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: mainColor.mainColor(),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: mainColor.mainColor().withOpacity(0.7),
+                ),
+                child: simpleIconButton(
+                  Icons.tune_outlined,
+                  25,
+                  Colors.white,
+                  () {
+                    Get.toNamed('trackMixing');
+                  },
+                ),
               ),
-              child:
-                  simpleIconButton(Icons.tune_outlined, 25, Colors.white, () {
-                Get.toNamed('trackMixing');
-              }))
-        ],
-      ),
-    ]);
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

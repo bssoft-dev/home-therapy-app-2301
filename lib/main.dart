@@ -17,12 +17,36 @@ class HomeTherapyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: mainColor.mainColor(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Pretendard',
+        useMaterial3: true,
+        colorSchemeSeed: mainColor.mainColor(),
+        dialogTheme: const DialogTheme(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.0),
+            ),
+          ),
         ),
-        getPages: RoutePage.page,
-        initialRoute: RouteName.home);
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+          ),
+        ),
+        brightness: Brightness.light,
+      ),
+
+      getPages: RoutePage.page,
+      initialRoute: RouteName.home,
+      // builder: (context, child) {
+      //   return MediaQuery(
+
+      //       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      //       child: child!);
+      // },
+    );
   }
 }

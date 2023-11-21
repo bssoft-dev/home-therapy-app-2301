@@ -4,7 +4,8 @@ import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_choice_score.da
 import 'package:home_therapy_app/widgets/survey_dialog/pre_survey_question_list.dart';
 
 List<int>? noiseTypeValueList;
-int noiseTypeValue = 0;
+List<int> noiseTypeValue = [];
+List<bool> noiseTypeCheckbox = List<bool>.filled(noiseType.length, false);
 
 preNoiseChoiceDialog({
   required BuildContext context,
@@ -22,71 +23,111 @@ preNoiseChoiceDialog({
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
-      content: SingleChildScrollView(
-        child: Column(
-          children: [
-            RichText(
-              text: const TextSpan(
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: '발생한 소음의 종류를 선택해주세요\n',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  WidgetSpan(
-                    child: SizedBox(height: 10), // 간격을 조절할 너비를 지정
-                  ),
-                  TextSpan(
-                    text: '소음이 발생하지 않았다면 다음을 선택해주세요',
-                    style: TextStyle(fontSize: 13, color: Colors.black),
-                  ),
-                ],
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Text(
+                '발생한 소음의 종류를 선택해주세요',
+                style: TextStyle(fontSize: 25, color: Colors.black),
               ),
-            ),
-            // const Text('발생한 소음의 종류를 선택해주세요', style: TextStyle(fontSize: 20)),
-            const SizedBox(height: 15),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: ListView.builder(
-                  itemCount: noiseType.length,
-                  itemBuilder: (BuildContext context, int questionIndexntext) {
+              const SizedBox(
+                height: 4,
+              ),
+              const Text.rich(
+                TextSpan(
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: '※ ',
+                    ),
+                    TextSpan(
+                      text: '소음이 발생하지 않았다면',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        height: 1,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' "다음"',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '을 선택해 주세요',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // const Text('발생한 소음의 종류를 선택해주세요', style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 15),
+              SizedBox(
+                child: Column(
+                  children:
+                      List.generate(noiseType.length, (questionIndexntext) {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(noiseType[questionIndexntext]),
-                            Radio(
-                                value: noiseTypeValueList![questionIndexntext],
-                                groupValue: noiseTypeValue,
-                                onChanged: (value) {
-                                  setDialog(() {
-                                    noiseTypeValue = value as int;
-                                    noiseTypeValueList![questionIndexntext] =
-                                        value;
-                                  });
-                                })
+                            Checkbox(
+                              value: noiseTypeCheckbox[questionIndexntext],
+                              onChanged: (value) {
+                                setDialog(
+                                  () {
+                                    noiseTypeCheckbox[questionIndexntext] =
+                                        value!;
+                                    if (value) {
+                                      noiseTypeValue.add(questionIndexntext);
+                                    } else {
+                                      noiseTypeValue.remove(questionIndexntext);
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                            Expanded(
+                              child: Text(
+                                noiseType[questionIndexntext],
+                                textWidthBasis: TextWidthBasis.longestLine,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
                           ],
                         )
                       ],
                     );
                   }),
-            ),
-          ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         TextButton(
             onPressed: () async {
+              print(noiseTypeValue);
               Get.back();
               await preNoiseChoiceScoreDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,
                   noiseTypeValue: noiseTypeValue);
+              debugPrint(('noiseType:$noiseTypeValue'));
               debugPrint(('noiseDialog:$noiseCheckResult'));
-              debugPrint(('noiseType:${noiseType[noiseTypeValue]}'));
-              noiseTypeValue = 0;
+              noiseTypeCheckbox = List<bool>.filled(noiseType.length, false);
+              noiseTypeValue = [];
             },
             child: const Text(
               '다음',

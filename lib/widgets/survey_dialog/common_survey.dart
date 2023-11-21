@@ -29,42 +29,58 @@ commonSurveyDialog({
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(surveyContentTitle!, style: const TextStyle(fontSize: 15)),
-          Text(surveyContent, style: const TextStyle(fontSize: 15)),
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            surveyContentTitle!,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            surveyContent,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
           const SizedBox(height: 10),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: GridView.builder(
-                itemCount: surveyImageList!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: MediaQuery.of(context).size.height * 0.01,
-                  mainAxisExtent: MediaQuery.of(context).size.height * 0.177,
-                ),
-                itemBuilder: ((BuildContext context, index) {
-                  return Column(
-                    children: [
-                      SvgPicture.asset(
-                        surveyImageList[index],
-                        width: 75,
-                        height: 75,
-                      ),
-                      Radio(
-                        value: surveyContentValueList![index],
-                        groupValue: surveyContentValue,
-                        onChanged: (value) {
-                          setDialog(() {
-                            onSurveyContentValueChange(value as int);
-                            surveyContentValue = value;
-                            surveyContentValueList[index] = surveyContentValue!;
-                          });
-                        },
-                      ),
-                    ],
-                  );
-                })),
-          ),
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.01),
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        SvgPicture.asset(
+                          surveyImageList[index],
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          height: MediaQuery.of(context).size.width * 0.4,
+                        ),
+                        Radio(
+                          value: surveyContentValueList![index],
+                          groupValue: surveyContentValue,
+                          onChanged: (value) {
+                            setDialog(() {
+                              onSurveyContentValueChange(value as int);
+                              surveyContentValue = value;
+                              surveyContentValueList[index] =
+                                  surveyContentValue!;
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.02,
+                    );
+                  },
+                  itemCount: surveyImageList!.length)),
         ],
       ),
       actions: [

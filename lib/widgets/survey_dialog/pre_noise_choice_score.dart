@@ -9,7 +9,7 @@ int noiseScoreValue = 0;
 preNoiseChoiceScoreDialog({
   required BuildContext context,
   bool? noiseCheckResult,
-  int? noiseTypeValue,
+  List<int>? noiseTypeValue,
 }) {
   noiseScoreValueList =
       List<int>.generate(noiseTypeScore.length, (index) => index);
@@ -27,24 +27,50 @@ preNoiseChoiceScoreDialog({
       content: SingleChildScrollView(
         child: Column(
           children: [
-                        RichText(
-  text: const TextSpan(
-    children: <InlineSpan>[
-      TextSpan(
-        text: '선택한 소음의 신경쓰임 정도를 선택해주세요\n',
-        style: TextStyle(fontSize: 16,color: Colors.black),
-      ),
-         WidgetSpan(
-        child: SizedBox(height: 10), // 간격을 조절할 너비를 지정
-      ),
-      TextSpan(
-        text: '소음이 발생하지 않았다면 다음을 선택해주세요',
-        style: TextStyle(fontSize: 13, color: Colors.black),
-      ),
-    ],
-  ),
-),
-
+            const Text(
+              '선택한 소음의 신경쓰임 정도를\n선택해주세요',
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.black,
+                height: 1.2,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            const Text.rich(
+              TextSpan(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+                children: <InlineSpan>[
+                  TextSpan(
+                    text: '※ ',
+                  ),
+                  TextSpan(
+                    text: '소음이 발생하지 않았다면',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      height: 1,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' "다음"',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '을 선택해 주세요',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 15),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,
@@ -58,17 +84,21 @@ preNoiseChoiceScoreDialog({
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(noiseTypeScore[questionIndexntext]),
                             Radio(
-                                value: noiseScoreValueList![questionIndexntext],
-                                groupValue: noiseScoreValue,
-                                onChanged: (value) {
-                                  setDialog(() {
-                                    noiseScoreValue = value as int;
-                                    noiseScoreValueList![questionIndexntext] =
-                                        value;
-                                  });
-                                })
+                              value: noiseScoreValueList![questionIndexntext],
+                              groupValue: noiseScoreValue,
+                              onChanged: (value) {
+                                setDialog(() {
+                                  noiseScoreValue = value as int;
+                                  noiseScoreValueList![questionIndexntext] =
+                                      value;
+                                });
+                              },
+                            ),
+                            Text(
+                              noiseTypeScore[questionIndexntext],
+                              style: const TextStyle(fontSize: 16),
+                            ),
                           ],
                         )
                       ],
@@ -82,6 +112,7 @@ preNoiseChoiceScoreDialog({
         TextButton(
             onPressed: () async {
               Get.back();
+              print(noiseTypeValue);
               await preEmotionServeyDialog(
                   context: context,
                   noiseCheckResult: noiseCheckResult,

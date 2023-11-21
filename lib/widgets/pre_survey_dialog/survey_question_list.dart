@@ -9,24 +9,24 @@ List<String> note = [
 List<String> ratingText = ['전혀', '조금', '비교적', '아주', '엄청나게'];
 List<String> tipiRatingText = ['전혀', '별로', '조금', '비교적', '꽤', '아주', '엄청나게'];
 List<String> wordPositionText = [
-  '풍부한',
-  '흥미로운',
-  '편안한',
-  '개인적인,통제된',
-  '공허한',
-  '고립된',
-  '짜증스러운',
-  '방해되는,통제되지 않은'
+  '풍부하다.',
+  '흥미롭다.',
+  '편안하다.',
+  '개인적이고 통제적이다.',
+  '공허하다.',
+  '고립적이다.',
+  '짜증스럽다.',
+  '방해되고 통제적이지 않다.'
 ];
 List<String> wordPositionRatingText = [
-  '전혀',
-  '별로',
-  '조금',
-  '비교적',
-  '꽤',
-  '매우',
-  '엄청나게'
+  '전혀 동의하지 않는다.',
+  '동의하지 않는다.',
+  '동의하지도 비동의하지도 않는다.',
+  '동의한다.',
+  '매우 동의한다.'
 ];
+
+List<int> wordPositionSelectNumbers = List<int>.generate(101 - 0, (i) => i + 0);
 
 List<String> apartmentNoiseQ1_2 = [
   '옆집에서 전달되는 음악소리 또는 대화소리',

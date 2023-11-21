@@ -11,7 +11,7 @@ preAwakeServeyDialog({
   required BuildContext context,
   bool? noiseCheckResult,
   int? preEmotionCheckResult,
-  int? noiseTypeValue,
+  List<int>? noiseTypeValue,
   int? noiseTypeScoreValue,
 }) {
   loadAssetSVGs('awakener').then((value) {

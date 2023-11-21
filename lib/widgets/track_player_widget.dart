@@ -63,10 +63,13 @@ Future<void> getIpAddress() async {
           } else {
             ipv4Addresses.add(ipAddress);
           }
-          // ".맨 뒤에 값이 1"인 아이템 필터링
+          // 두번째 값이 0이 아닌값을 필터링합니다.
           filteredAddresses = ipv4Addresses.where((address) {
             final parts = address.split(".");
-            return parts.isNotEmpty && parts.last == "1";
+
+            if (parts.length < 3) return false; // IPv4 주소가 네 부분으로 나뉘어야 합니다.
+            final twoPart = int.tryParse(parts[1]); // 두 번째 부분을 정수로 파싱
+            return twoPart != null && twoPart != 0;
           }).toList();
         }
       }
@@ -85,14 +88,14 @@ Future playTrack({
   return Get.dialog(barrierDismissible: false, name: '음원재생',
       StatefulBuilder(builder: ((context, StateSetter setDialog) {
     return AlertDialog(
-      contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+      contentPadding: const EdgeInsets.only(top: 40),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.7,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 25),
               child: Row(
                 children: [
                   Container(
@@ -104,11 +107,13 @@ Future playTrack({
                         width: 40, height: 40, fit: BoxFit.fill, animate: true),
                   ),
                   const SizedBox(width: 10),
-                  Text(trackTitle,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ))
+                  Text(
+                    trackTitle,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
                 ],
               ),
             ),
@@ -144,14 +149,14 @@ Future prePlayTrack({
   return Get.dialog(barrierDismissible: false, name: '음원재생',
       StatefulBuilder(builder: ((context, StateSetter setDialog) {
     return AlertDialog(
-      contentPadding: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+      contentPadding: const EdgeInsets.only(top: 40),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.7,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 25),
               child: Row(
                 children: [
                   Container(
@@ -181,8 +186,9 @@ Future prePlayTrack({
         volumeSlider ?? const SizedBox(height: 0),
         TextButton(
           child: Text(actionText, style: const TextStyle(fontSize: 20)),
-          onPressed: () {
+          onPressed: () async {
             Get.back();
+            await playStop();
           },
         ),
       ],
@@ -200,69 +206,93 @@ Widget trackList({
         shrinkWrap: true,
         itemCount: trackPlayList.length,
         itemBuilder: (BuildContext context, int index) {
-          return Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10, left: 10),
-                child: Lottie.asset('assets/lottie/sound_play.json',
-                    width: 40,
-                    height: 40,
-                    fit: BoxFit.fill,
-                    animate: trackPlayIndex[index]),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(trackPlayList[index]),
-                    Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: playIconButton(
-                            Icons.play_arrow,
-                            Icons.pause_circle_outline,
-                            40,
-                            trackPlayIndex[index], () async {
-                          bool hasTrueValue = trackPlayIndex.contains(true);
-                          if (hasTrueValue) {
-                            // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
-                            int playingTrackIndex =
-                                trackPlayIndex.indexOf(true);
+          return Container(
+            decoration: BoxDecoration(
+              color: trackPlayIndex[index]
+                  ? mainColor.mainColor().withOpacity(0.1)
+                  : Colors.transparent,
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 20),
+                  child: Lottie.asset('assets/lottie/sound_play.json',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.fill,
+                      animate: trackPlayIndex[index]),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          trackPlayList[index],
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: playIconButton(
+                              Icons.play_arrow_rounded,
+                              Icons.pause_circle_outline_rounded,
+                              40,
+                              trackPlayIndex[index], () async {
+                            bool hasTrueValue = trackPlayIndex.contains(true);
+                            if (hasTrueValue) {
+                              // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
+                              int playingTrackIndex =
+                                  trackPlayIndex.indexOf(true);
 
-                            if (playingTrackIndex == index) {
-                              // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
-                              setDialog(() {
-                                trackPlayIndex[playingTrackIndex] =
-                                    false; // 현재 재생 중인 트랙을 중지합니다.
-                              });
-                              await playStop();
-                              endTime = DateTime.now();
-                              await calculateElapsedTime(
-                                      playTrackTitleTime.last['time']!,
-                                      endTime!)
-                                  .then((playingTime) {
-                                playTrackTitleTime.last = ({
-                                  "name": trackPlayList[playingTrackIndex],
-                                  "time": playingTime,
+                              if (playingTrackIndex == index) {
+                                // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
+                                setDialog(() {
+                                  trackPlayIndex[playingTrackIndex] =
+                                      false; // 현재 재생 중인 트랙을 중지합니다.
                                 });
-                              });
+                                await playStop();
+                                endTime = DateTime.now();
+                                await calculateElapsedTime(
+                                        playTrackTitleTime.last['time']!,
+                                        endTime!)
+                                    .then((playingTime) {
+                                  playTrackTitleTime.last = ({
+                                    "name": trackPlayList[playingTrackIndex],
+                                    "time": playingTime,
+                                  });
+                                });
+                              } else {
+                                // 선택한 트랙이 다른 트랙이면 현재 재생 중인 트랙 중지하고 선택한 트랙 재생
+                                setDialog(() {
+                                  trackPlayIndex[playingTrackIndex] =
+                                      false; // 현재 재생 중인 트랙을 중지합니다.
+                                  trackPlayIndex[index] =
+                                      true; // 선택한 트랙을 재생 상태로 설정합니다.
+                                });
+                                await playStop();
+                                endTime = DateTime.now();
+                                await calculateElapsedTime(
+                                        playTrackTitleTime.last['time']!,
+                                        endTime!)
+                                    .then((playingTime) {
+                                  playTrackTitleTime.last = ({
+                                    "name": trackPlayList[playingTrackIndex],
+                                    "time": playingTime,
+                                  });
+                                });
+                                await trackPlay('ready', trackPlayList[index]);
+                                startTime = DateTime.now();
+                                playTrackTitleTime.add({
+                                  "name": trackPlayList[index],
+                                  "time": startTime,
+                                });
+                              }
                             } else {
-                              // 선택한 트랙이 다른 트랙이면 현재 재생 중인 트랙 중지하고 선택한 트랙 재생
+                              // true인 항목이 없다면, 선택한 트랙을 재생
                               setDialog(() {
-                                trackPlayIndex[playingTrackIndex] =
-                                    false; // 현재 재생 중인 트랙을 중지합니다.
                                 trackPlayIndex[index] =
                                     true; // 선택한 트랙을 재생 상태로 설정합니다.
-                              });
-                              await playStop();
-                              endTime = DateTime.now();
-                              await calculateElapsedTime(
-                                      playTrackTitleTime.last['time']!,
-                                      endTime!)
-                                  .then((playingTime) {
-                                playTrackTitleTime.last = ({
-                                  "name": trackPlayList[playingTrackIndex],
-                                  "time": playingTime,
-                                });
                               });
                               await trackPlay('ready', trackPlayList[index]);
                               startTime = DateTime.now();
@@ -271,24 +301,12 @@ Widget trackList({
                                 "time": startTime,
                               });
                             }
-                          } else {
-                            // true인 항목이 없다면, 선택한 트랙을 재생
-                            setDialog(() {
-                              trackPlayIndex[index] =
-                                  true; // 선택한 트랙을 재생 상태로 설정합니다.
-                            });
-                            await trackPlay('ready', trackPlayList[index]);
-                            startTime = DateTime.now();
-                            playTrackTitleTime.add({
-                              "name": trackPlayList[index],
-                              "time": startTime,
-                            });
-                          }
-                        })),
-                  ],
+                          })),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }),
   );
@@ -327,15 +345,19 @@ Widget mixTrackList({required List containerColors}) {
                           }
                           // if (selectedTracks.length >= 2) {
                           showModalBottomSheet(
+                              clipBehavior: Clip.antiAlias,
                               isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
-                                return SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: TrackMixingSlider(
-                                      trackSelectOne: selectedTracks[0],
-                                      trackSelectTwo: selectedTracks[1]),
+                                return Container(
+                                  color: Colors.white,
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: TrackMixingSlider(
+                                        trackSelectOne: selectedTracks[0],
+                                        trackSelectTwo: selectedTracks[1]),
+                                  ),
                                 );
                               });
                           // }
@@ -349,25 +371,30 @@ Widget mixTrackList({required List containerColors}) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child: Text(
-                              trackPlayList[index],
-                              style: const TextStyle(fontSize: 20),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 30),
+                              child: Text(
+                                trackPlayList[index],
+                                style: const TextStyle(fontSize: 20),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ),
                           Row(
                             children: [
                               Icon(
                                   containerColors[index]
-                                      ? Icons.check_circle
-                                      : Icons.check_circle_outline,
-                                  color: mainColor.mainColor()),
+                                      ? Icons.check_circle_rounded
+                                      : Icons.check_circle_outline_rounded,
+                                  color: containerColors[index]
+                                      ? mainColor.mainColor()
+                                      : const Color(0xff5a5a5a)),
                               Padding(
-                                padding: const EdgeInsets.only(right: 30),
+                                padding: const EdgeInsets.only(right: 20),
                                 child: playIconButton(
-                                    Icons.play_arrow,
-                                    Icons.pause_circle_outline,
+                                    Icons.play_arrow_rounded,
+                                    Icons.pause_circle_outline_rounded,
                                     40,
                                     trackPlayIndex[index], () async {
                                   setState(() {

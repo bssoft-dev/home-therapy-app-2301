@@ -30,20 +30,22 @@ Future<dynamic> showUserInfoDialog({
   required String saveText,
   VoidCallback? saveOnPressed,
 }) {
-  return Get.dialog(barrierDismissible: false, name: '개인정보', StatefulBuilder(
-    builder: (context, StateSetter setState) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false, // 이 부분을 추가
-
-        body: Align(
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-                  child: StatefulBuilder(
-                      builder: (context, StateSetter setDialog) {
+  return Get.dialog(
+    barrierDismissible: false,
+    name: '개인정보',
+    // barrierColor: Colors.red.withOpacity(0.5),
+    StatefulBuilder(
+      builder: (context, StateSetter setState) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false, // 이 부분을 추가
+          backgroundColor: Colors.transparent,
+          body: Align(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: StatefulBuilder(
+                  builder: (context, StateSetter setDialog) {
                     return AlertDialog(
                       actionsPadding: const EdgeInsets.only(bottom: 10),
                       content: Column(
@@ -95,8 +97,8 @@ Future<dynamic> showUserInfoDialog({
                         ],
                       ),
                       actions: [
-                        Divider(
-                          color: mainColor.mainColor(),
+                        const Divider(
+                          color: Colors.black12,
                           thickness: 0.8, //thickness of divier line
                         ),
                         Row(
@@ -110,62 +112,75 @@ Future<dynamic> showUserInfoDialog({
                                   cancelText,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 15,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w400),
                                 )),
                             TextButton(
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
-                                    await httpPostServer(
-                                            path:
-                                                'api/users/${snController.text}/${usernameController.text}',
-                                            data: userInfo(
-                                              username: usernameController.text,
-                                              age: ageController.text,
-                                              job: jobController.text,
-                                              sn: snController.text,
-                                            ).toJson())
-                                        .then((value) {
-                                      if (value == 200) {
-                                        //한번만 호출되도록 하는 캐시 저장코드
-                                        saveStoredValue(
-                                            'sn', snController.text);
-                                        saveStoredValue('username',
-                                            usernameController.text);
-                                        Get.back();
-                                        apartmentNoiseServeyDialogQ1(
-                                            context: context);
-                                      } else {
-                                        failSnackBar(
-                                            '오류', '개인정보 저장에 실패했습니다. 다시 시도해주세요');
-                                      }
-                                    });
-                                  }
-                                },
-                                child: Text(saveText,
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400)))
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  await httpPostServer(
+                                          path:
+                                              'api/users/${snController.text}/${usernameController.text}',
+                                          data: userInfo(
+                                            username: usernameController.text,
+                                            age: ageController.text,
+                                            job: jobController.text,
+                                            sn: snController.text,
+                                          ).toJson())
+                                      .then((value) {
+                                    if (value == 200) {
+                                      //한번만 호출되도록 하는 캐시 저장코드
+                                      saveStoredValue('sn', snController.text);
+                                      saveStoredValue(
+                                          'username', usernameController.text);
+                                      Get.back();
+                                      // apartmentNoiseServeyDialogQ1(
+                                      //     context: context);
+                                    } else {
+                                      failSnackBar(
+                                          '오류', '개인정보 저장에 실패했습니다. 다시 시도해주세요');
+                                    }
+                                  });
+                                }
+                              },
+                              child: Text(
+                                saveText,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
                           ],
                         )
                       ],
                     );
-                  })),
+                  },
+                ),
+              ),
             ),
           ),
-        ),
-      );
-    },
-  ));
+        );
+      },
+    ),
+  );
 }
 
 Widget textBox(String formTitle, TextEditingController textEditingController,
     String hintText, String? validatorText) {
   return ListTile(
-    title: Text(formTitle,
-        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+    title: Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Text(
+        formTitle,
+        style: const TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+          color: Color(0xff5a5a5a),
+        ),
+      ),
+    ),
     subtitle: TextFormField(
       autovalidateMode: AutovalidateMode.always,
       controller: textEditingController,
@@ -177,9 +192,46 @@ Widget textBox(String formTitle, TextEditingController textEditingController,
         return null;
       },
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 12,
+        ),
         border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+          borderSide: BorderSide(
+            color: Color(0xff5cb85c),
+            width: 2,
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2,
+          ),
+        ),
         hintText: hintText,
+        errorStyle: const TextStyle(
+          color: Colors.red,
+        ),
       ),
     ),
   );
@@ -202,7 +254,7 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
             children: [
               Row(
                 children: [
-                  Text(firstValue, style: const TextStyle(fontSize: 15)),
+                  Text(firstValue, style: const TextStyle(fontSize: 16)),
                   Radio(
                       value: firstValue,
                       groupValue: groupValue,
@@ -218,7 +270,7 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
                   const SizedBox(
                     width: 30,
                   ),
-                  Text(secondValue, style: const TextStyle(fontSize: 15)),
+                  Text(secondValue, style: const TextStyle(fontSize: 16)),
                   Radio(
                       value: secondValue,
                       groupValue: groupValue,
@@ -235,7 +287,7 @@ Widget radioBox(String radioTitle, String groupValue, String firstValue,
                     const SizedBox(
                       width: 30,
                     ),
-                    Text(thirdValue, style: const TextStyle(fontSize: 15)),
+                    Text(thirdValue, style: const TextStyle(fontSize: 16)),
                     Radio(
                         value: thirdValue,
                         groupValue: groupValue,

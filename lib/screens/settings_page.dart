@@ -33,9 +33,9 @@ class _SettingsState extends State<Settings> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           leading: IconButton(
-              icon: Icon(
-                Icons.close,
-                color: mainColor.mainColor(),
+              icon: const Icon(
+                Icons.close_rounded,
+                color: Color(0xff5a5a5a),
                 size: 50,
               ),
               onPressed: () => Navigator.pop(context)),
@@ -45,7 +45,7 @@ class _SettingsState extends State<Settings> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                settingTile('기기 검색', Icons.search, () {
+                settingTile('기기 검색', Icons.search_rounded, () {
                   showDialog(
                     barrierDismissible: false,
                     context: context,
@@ -54,7 +54,7 @@ class _SettingsState extends State<Settings> {
                     },
                   );
                 }),
-                settingTile('기기 정보', Icons.info, () {
+                settingTile('기기 정보', Icons.info_rounded, () {
                   showDialog(
                     barrierDismissible: false,
                     context: context,
@@ -68,7 +68,8 @@ class _SettingsState extends State<Settings> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data == true) {
-                          return settingTile('음원 미리듣기', Icons.audiotrack, () {
+                          return settingTile(
+                              '음원 미리듣기', Icons.audiotrack_rounded, () {
                             prePlayTrack(
                                 context: context,
                                 trackTitle: '미리듣기',
@@ -94,24 +95,24 @@ Widget settingTile(String title, IconData icon, void Function()? onTap) {
       ListTile(
         leading: Icon(
           icon,
-          color: mainColor.mainColor(),
+          // color: mainColor.mainColor(),
           size: 35,
         ),
         title: Text(
           title,
-          style: TextStyle(
-            color: mainColor.mainColor(),
+          style: const TextStyle(
+            // color: mainColor.mainColor(),
             fontSize: 20,
           ),
         ),
         onTap: onTap,
-        trailing: Icon(
-          Icons.arrow_forward_ios,
-          color: mainColor.mainColor(),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_rounded,
+          // color: mainColor.mainColor(),
         ),
       ),
-      Divider(
-        color: mainColor.mainColor(),
+      const Divider(
+        color: Colors.black12,
         indent: 20,
         endIndent: 20,
       )

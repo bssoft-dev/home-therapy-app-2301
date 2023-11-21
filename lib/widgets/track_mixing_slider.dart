@@ -37,8 +37,11 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                 Row(
                   children: [
                     Icon(
-                      Icons.palette,
-                      color: mainColor.mainColor(),
+                      Icons.palette_rounded,
+                      color: mainColor.mainColor().withOpacity(0.65),
+                    ),
+                    const SizedBox(
+                      width: 4,
                     ),
                     Text(
                       '${widget.trackSelectOne}',
@@ -51,7 +54,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: mainColor.mainColor()),
+                      color: mainColor.mainColor().withOpacity(0.65)),
                 )
               ],
             ),
@@ -60,8 +63,11 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                 Row(
                   children: [
                     Icon(
-                      Icons.palette,
-                      color: mainColor.mainColor().withOpacity(0.3),
+                      Icons.palette_rounded,
+                      color: mainColor.mainColor().withOpacity(0.35),
+                    ),
+                    const SizedBox(
+                      width: 4,
                     ),
                     Text(
                       '${widget.trackSelectTwo}',
@@ -74,7 +80,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: mainColor.mainColor().withOpacity(0.3)),
+                      color: mainColor.mainColor().withOpacity(0.35)),
                 )
               ],
             )
@@ -100,14 +106,14 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                   length: 0.04, lengthUnit: GaugeSizeUnit.factor, thickness: 1),
               axisLineStyle: AxisLineStyle(
                 thickness: 100,
-                color: mainColor.mainColor().withOpacity(0.3),
+                color: mainColor.mainColor().withOpacity(0.35),
                 thicknessUnit: GaugeSizeUnit.logicalPixel,
               ),
               pointers: [
                 RangePointer(
                   value: _firstvoluemValue, // We declared this in state class.
                   enableDragging: true,
-                  color: mainColor.mainColor(),
+                  color: mainColor.mainColor().withOpacity(0.65),
                   width: 100,
                   onValueChanged: onVolumeChanged,
                 ),
@@ -115,13 +121,13 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
                     value: _firstvoluemValue,
                     enableDragging: true,
                     onValueChanged: onVolumeChanged,
-                    needleColor: mainColor.mainColor(),
+                    needleColor: mainColor.mainColor().withOpacity(0.65),
                     needleStartWidth: 1.5,
                     needleEndWidth: 1.5,
                     needleLength: 0.8,
                     knobStyle: KnobStyle(
                         color: Colors.white,
-                        borderColor: mainColor.mainColor(),
+                        borderColor: mainColor.mainColor().withOpacity(0.65),
                         borderWidth: 10,
                         knobRadius: 20,
                         sizeUnit: GaugeSizeUnit.logicalPixel))
@@ -135,8 +141,8 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
             simpleOutlineButton(
               isPlaying: isPlaying,
               text: '믹싱 미리듣기',
-              icon: Icons.play_arrow,
-              alternateIcon: Icons.pause_circle_outline,
+              icon: Icons.play_arrow_rounded,
+              alternateIcon: Icons.pause_circle_outline_rounded,
               size: 30,
               onPressed: () async {
                 String? deviceIP = await getStoredValue('therapy_device');
@@ -166,7 +172,7 @@ class _TrackMixingSliderState extends State<TrackMixingSlider> {
             simpleOutlineButton(
                 isPlaying: false,
                 text: '믹싱 저장하기',
-                icon: Icons.save,
+                icon: Icons.save_rounded,
                 size: 30,
                 onPressed: () {
                   showDialog(
