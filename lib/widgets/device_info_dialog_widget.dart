@@ -84,41 +84,35 @@ class _DeviceInfoDialogState extends State<DeviceInfoDialog> {
                     ],
                   ),
           ),
-          ButtonBar(
+          OverflowBar(
             alignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                flex: 1,
-                child: TextButton.icon(
-                  onPressed: () {
-                    removeStoredValue('therapy_device');
-                    successSnackBar(
-                        context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
-                    Get.offAllNamed('/home');
-                  },
-                  icon: const Icon(
-                    Icons.close_rounded,
-                  ),
-                  label: const Text(
-                    "삭제",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
+              TextButton.icon(
+                onPressed: () {
+                  removeStoredValue('therapy_device');
+                  successSnackBar(
+                      context, '기기 삭제 완료', '$deviceIPName 기기가 삭제되었습니다.');
+                  Get.offAllNamed('/home');
+                },
+                icon: const Icon(
+                  Icons.close_rounded,
+                ),
+                label: const Text(
+                  "삭제",
+                  style: TextStyle(
+                    fontSize: 20,
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: TextButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.check_circle_outline_rounded),
-                  label: const Text(
-                    "확인",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.check_circle_outline_rounded),
+                label: const Text(
+                  "확인",
+                  style: TextStyle(
+                    fontSize: 20,
                   ),
                 ),
               ),
