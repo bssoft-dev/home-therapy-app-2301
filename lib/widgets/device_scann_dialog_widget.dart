@@ -59,63 +59,61 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                         shrinkWrap: true,
                         itemCount: liveIpAddresses.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          color: mainColor
-                                              .mainColor()
-                                              .withOpacity(0.65),
-                                        ),
-                                        child: Transform.translate(
-                                          offset: const Offset(0, -1),
-                                          child: const Icon(
-                                            Icons.device_hub_rounded,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ), // 기기 아이콘
-                                      const SizedBox(
-                                        width: 12,
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        color: mainColor
+                                            .mainColor()
+                                            .withOpacity(0.65),
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          liveIpAddresses[index],
-                                          style: const TextStyle(
-                                              fontSize: 20, height: 1),
+                                      child: Transform.translate(
+                                        offset: const Offset(0, -1),
+                                        child: const Icon(
+                                          Icons.device_hub_rounded,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ), // 기기 아이콘
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        liveIpAddresses[index],
+                                        style: const TextStyle(
+                                            fontSize: 20, height: 1),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await saveStoredValue('therapy_device',
-                                        liveIpAddresses[index]);
-                                    // ignore: use_build_context_synchronously
-                                    successSnackBar(
-                                        context, '등록완료', '홈 스피커 기기가 등록되었습니다.');
-                                    Get.offAllNamed('/therapyDevice',
-                                        arguments: Get.context);
-                                  },
-                                  child: const Text(
-                                    '선택',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Color(0xff8E8E8E),
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await saveStoredValue(
+                                      'therapy_device', liveIpAddresses[index]);
+                                  // ignore: use_build_context_synchronously
+                                  successSnackBar(
+                                      context, '등록완료', '홈 스피커 기기가 등록되었습니다.');
+                                  Get.offAllNamed('/therapyDevice',
+                                      arguments: Get.context);
+                                },
+                                child: const Text(
+                                  '선택',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xff8E8E8E),
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -125,46 +123,40 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                     height: 20,
                   ),
           ),
-          ButtonBar(
+          OverflowBar(
             alignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                flex: 1,
-                child: TextButton.icon(
-                  onPressed: () {
-                    if (_isScanning) {
-                      stopScanning();
-                    } else {
-                      startScanning();
-                    }
-                  },
-                  icon: Icon(_isInitialScan
-                      ? Icons.search_rounded
-                      : Icons.refresh_rounded),
-                  label: Text(
-                    _isInitialScan ? "검색" : "재검색",
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+              TextButton.icon(
+                onPressed: () {
+                  if (_isScanning) {
+                    stopScanning();
+                  } else {
+                    startScanning();
+                  }
+                },
+                icon: Icon(_isInitialScan
+                    ? Icons.search_rounded
+                    : Icons.refresh_rounded),
+                label: Text(
+                  _isInitialScan ? "검색" : "재검색",
+                  style: const TextStyle(
+                    fontSize: 20,
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: TextButton.icon(
-                  onPressed: () {
-                    stopScanning();
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.close_rounded),
-                  label: const Text(
-                    "닫기",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
+              TextButton.icon(
+                onPressed: () {
+                  stopScanning();
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.close_rounded),
+                label: const Text(
+                  "닫기",
+                  style: TextStyle(
+                    fontSize: 20,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
